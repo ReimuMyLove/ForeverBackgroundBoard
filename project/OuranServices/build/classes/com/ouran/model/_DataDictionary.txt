@@ -33,6 +33,7 @@ Table: likes
  id      | INT(10) | NO   | PRI |         |         
  tuwenid | INT(10) | YES  |     |         |         
  topicid | INT(10) | YES  |     |         |         
+ userid  | INT(10) | NO   |     |         |         
 ---------+---------+------+-----+---------+---------
 
 Table: topic
@@ -65,11 +66,12 @@ Table: tuwen
  title      | CHAR(255)    | YES  |     |         |         
  pic        | CHAR(255)    | YES  |     |         |         
  writer     | CHAR(255)    | YES  |     |         |         
- type       | CHAR(255)    | NO   |     |         |         
- user       | CHAR(255)    | NO   |     |         |         
- likes      | INT(10)      | NO   |     |         |         
- time       | DATETIME(19) | NO   |     |         |         
- isoriginal | INT(10)      | NO   |     |         |         
+ typeid     | INT(10)      | YES  |     |         |         
+ userid     | INT(10)      | YES  |     |         |         
+ likes      | INT(10)      | YES  |     |         |         
+ time       | DATETIME(19) | YES  |     |         |         
+ isoriginal | INT(10)      | YES  |     |         |         
+ text       | CHAR(255)    | YES  |     |         |         
 ------------+--------------+------+-----+---------+---------
 
 Table: types

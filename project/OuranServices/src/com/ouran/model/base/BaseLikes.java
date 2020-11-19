@@ -36,4 +36,13 @@ public abstract class BaseLikes<M extends BaseLikes<M>> extends Model<M> impleme
 		return getInt("topicid");
 	}
 
+	public M setUserid(java.lang.Integer userid) {
+		set("userid", userid);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getUserid() {
+		return getInt("userid");
+	}
+
 }

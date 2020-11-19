@@ -45,22 +45,22 @@ public abstract class BaseTuwen<M extends BaseTuwen<M>> extends Model<M> impleme
 		return getStr("writer");
 	}
 
-	public M setType(java.lang.String type) {
-		set("type", type);
+	public M setTypeid(java.lang.Integer typeid) {
+		set("typeid", typeid);
 		return (M)this;
 	}
 	
-	public java.lang.String getType() {
-		return getStr("type");
+	public java.lang.Integer getTypeid() {
+		return getInt("typeid");
 	}
 
-	public M setUser(java.lang.String user) {
-		set("user", user);
+	public M setUserid(java.lang.Integer userid) {
+		set("userid", userid);
 		return (M)this;
 	}
 	
-	public java.lang.String getUser() {
-		return getStr("user");
+	public java.lang.Integer getUserid() {
+		return getInt("userid");
 	}
 
 	public M setLikes(java.lang.Integer likes) {
@@ -88,6 +88,15 @@ public abstract class BaseTuwen<M extends BaseTuwen<M>> extends Model<M> impleme
 	
 	public java.lang.Integer getIsoriginal() {
 		return getInt("isoriginal");
+	}
+
+	public M setText(java.lang.String text) {
+		set("text", text);
+		return (M)this;
+	}
+	
+	public java.lang.String getText() {
+		return getStr("text");
 	}
 
 }

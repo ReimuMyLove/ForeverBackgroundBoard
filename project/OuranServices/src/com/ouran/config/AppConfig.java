@@ -14,6 +14,7 @@ import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
+import com.ouran.control.TuwenController;
 import com.ouran.control.UserController;
 import com.ouran.model.Cheat;
 import com.ouran.model.Fen;
@@ -38,6 +39,7 @@ public class AppConfig extends JFinalConfig{
 	@Override
 	public void configRoute(Routes me) {
 		me.add("/user", UserController.class);
+		me.add("/tuwen",TuwenController.class);
 	}
 
 	@Override
