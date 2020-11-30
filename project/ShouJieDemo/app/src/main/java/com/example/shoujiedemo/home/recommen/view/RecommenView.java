@@ -8,4 +8,5 @@ public interface RecommenView {
     void changeHeadColor();//点赞按钮变色
 
     void changCollectionColor();//收藏按钮变色
+
 }

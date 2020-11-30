@@ -4,18 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.MessageFragment">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_alignParentTop="true"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#DCDCDC">
-        <TextView
-            android:text="消息"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </androidx.appcompat.widget.Toolbar>
+
     <!-- TODO: Update blank fragment layout -->
 </FrameLayout>

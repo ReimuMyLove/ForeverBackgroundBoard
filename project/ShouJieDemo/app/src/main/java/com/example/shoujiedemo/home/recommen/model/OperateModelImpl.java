@@ -1,7 +1,7 @@
 package com.example.shoujiedemo.home.recommen.model;
 
 /**
- * 操作接口实现类
+ * 点赞收藏接口实现类
  */
 public class OperateModelImpl implements OperateModel{
 

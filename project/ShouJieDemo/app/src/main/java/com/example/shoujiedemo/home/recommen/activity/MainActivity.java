@@ -1,12 +1,16 @@
 package com.example.shoujiedemo.home.recommen.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;;
+import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
@@ -14,37 +18,41 @@ import com.example.shoujiedemo.fragment.froundFragments.FroundFragment;
 import com.example.shoujiedemo.home.recommen.fragment.HomeFragment;
 import com.example.shoujiedemo.fragment.MessageFragment;
 import com.example.shoujiedemo.fragment.OwnerFragment;
+import com.example.shoujiedemo.util.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ViewPager2 viewPager2;
-    private int currentPosition = 0;//当前页面位置
-    private int oldPostion = 0;//上一个滑动的页面位置
+    private HomeFragment homeFragment;
+    private FroundFragment froundFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //初始化ViewPager2,Fragment列表
-        viewPager2 = findViewById(R.id.viewPager);
+        viewPager2 = findViewById(R.id.main_view);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new HomeFragment());
-        fragments.add(new FroundFragment());
+        homeFragment = new HomeFragment(viewPager2);
+        fragments.add(homeFragment);
+        froundFragment = new FroundFragment(viewPager2);
+        fragments.add(froundFragment);
         fragments.add(new MessageFragment());
         fragments.add(new OwnerFragment());
         //绑定Fragment
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(this,fragments);
         viewPager2.setOffscreenPageLimit(fragments.size());//设置预加载页
         viewPager2.setAdapter(myFragmentPagerAdapter);
-        viewPager2.setUserInputEnabled(false);
 
 
         //初始化BottomNative
-        final BottomNavigationView navigationView = findViewById(R.id.bottomNavigation);
+        final BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //监听页面状态
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 //滑动页面时底部按钮改变
-                navigationView.getMenu().getItem(position).setChecked(true);
+                //navigationView.getMenu().getItem(position).setChecked(true);
                 if(position > 1){
                     viewPager2.setUserInputEnabled(true);
                 }else{
@@ -63,16 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                currentPosition = position;
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
         });
 
 
-
     }
-
 
 
     //底部按钮绑定fragment改变
@@ -82,20 +87,21 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch(menuItem.getItemId()){
                 case R.id.item_home:
-                    viewPager2.setCurrentItem(0);
+                    viewPager2.setCurrentItem(0,false);
                     break;
                 case R.id.item_fround:
-                    viewPager2.setCurrentItem(1);
+                    viewPager2.setCurrentItem(1,false);
                     break;
                 case R.id.item_message:
-                    viewPager2.setCurrentItem(2);
+                    viewPager2.setCurrentItem(2,false);
                     break;
                 case R.id.item_owner:
-                    viewPager2.setCurrentItem(3);
+                    viewPager2.setCurrentItem(3,false);
                     break;
             }
             return true;
         }
 
     };
+
 }
