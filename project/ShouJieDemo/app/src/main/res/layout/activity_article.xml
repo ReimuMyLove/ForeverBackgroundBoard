@@ -7,7 +7,8 @@
     android:background="#fff"
     android:paddingTop="30dp"
     tools:context=".home.follow.activity.ArticleActivity">
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/follow_article_text_scrollview"
         android:layout_marginBottom="40dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -150,7 +151,7 @@
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:background="#BEBEBE"
@@ -158,22 +159,27 @@
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/operation"
         android:orientation="horizontal"
-        android:gravity="center"
         android:background="#fff"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:paddingTop="8dp"
         android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/follow_article_ed_comment"
+            android:background="@drawable/ed_cirle_shape"
+            android:layout_alignParentLeft="true"
+            android:hint="回复:"
+            android:layout_width="0dp"
+            android:layout_height="24dp"/>
 
             <Button
+                android:layout_toRightOf="@id/follow_poem_ed_comment"
                 android:id="@+id/follow_article_details_btn_share"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -181,19 +187,15 @@
 
             <TextView
                 android:id="@+id/follow_article_details_tv_share_num"
+                android:layout_toRightOf="@id/follow_article_details_btn_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="102" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
             <Button
                 android:background="@drawable/collectionunselect"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@id/follow_article_details_tv_share_num"
                 android:id="@+id/follow_article_details_btn_collection"
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
@@ -201,49 +203,40 @@
             <TextView
                 android:id="@+id/follow_article_details_tv_collection_num"
                 android:text="102"
+                android:layout_toRightOf="@id/follow_article_details_btn_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <Button
                 android:background="@drawable/comment"
                 android:id="@+id/follow_article_details_btn_comment"
+                android:layout_toRightOf="@id/follow_article_details_tv_collection_num"
+                android:layout_marginLeft="40dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
 
             <TextView
                 android:id="@+id/follow_article_details_tv_comment_num"
                 android:text="102"
+                android:layout_toRightOf="@id/follow_article_details_btn_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <Button
                 android:background="@drawable/likeunselect"
                 android:id="@+id/follow_article_details_btn_like"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@id/follow_article_details_tv_comment_num"
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>
 
             <TextView
                 android:id="@+id/follow_article_details_tv_like_num"
+                android:layout_toRightOf="@id/follow_article_details_btn_like"
                 android:text="102"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

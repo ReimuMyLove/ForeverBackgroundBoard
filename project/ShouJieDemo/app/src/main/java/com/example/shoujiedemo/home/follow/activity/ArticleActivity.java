@@ -2,16 +2,20 @@ package com.example.shoujiedemo.home.follow.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +51,8 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
     private Button like;
     private TextView likeNum;
     private ImageView followAnim;
+    private NestedScrollView scrollView;
+    private EditText edComment;
 
     private Content article;
     private User user;
@@ -67,6 +73,23 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         initView();
         setOnClikListener();
 
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(oldScrollY > scrollY){
+                    Log.i("方向","向上滑动");
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    Log.i("方向","滑动到底部");
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(edComment, "scaleX",
+                            1f, 0f, 1f);
+                    animator.setDuration(500);
+                    animator.start();
+                }
+            }
+        });
+
     }
 
     private void setOnClikListener() {
@@ -86,6 +109,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         text = findViewById(R.id.tv_content_details_article);
         like = findViewById(R.id.follow_article_details_btn_like);
         userName = findViewById(R.id.tv_userName_details_article);
+        edComment = findViewById(R.id.follow_poem_ed_comment);
 
         if (article.isLike())
             like.setBackgroundResource(R.drawable.likeselected);
@@ -108,6 +132,8 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         followAnim = findViewById(R.id.follow_article_details_iv_follow_anim);
         fanNum = findViewById(R.id.tv_fanNum_details_article);
         btnFollow = findViewById(R.id.follow_article_details_btn_follow);
+        scrollView = findViewById(R.id.follow_article_text_scrollview);
+
         if(isFollow){
             btnFollow.setText("关注+");
         }else{
