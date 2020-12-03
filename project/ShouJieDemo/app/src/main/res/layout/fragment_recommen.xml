@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#25D3D3D3"
+    android:id="@+id/fragment_recommen"
+    android:paddingTop="85dp"
+    tools:context=".home.recommen.fragment.RecommenFragment">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2_view"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <include layout="@layout/fragment_recommen_detail"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/touch_interceptor_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.alexvasilkov.foldablelayout.UnfoldableView
+            android:id="@+id/unfoldable_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+</RelativeLayout>
