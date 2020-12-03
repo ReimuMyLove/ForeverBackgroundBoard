@@ -25,6 +25,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".myCenter.setting.view.activity.SettingActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.SafeActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.FeedbackViewActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.AboutActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.safeActivity.DestroyActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.safeActivity.ChangePasswordActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.safeActivity.SetSafeQuestionActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.MyAgreementActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.MyFollowActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.StoringActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.UserInfoActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.HelpCenterActivity" />
+        <activity android:name=".myCenter.mySpace.view.activity.MySpaceActivity" />
     </application>
 
 </manifest>

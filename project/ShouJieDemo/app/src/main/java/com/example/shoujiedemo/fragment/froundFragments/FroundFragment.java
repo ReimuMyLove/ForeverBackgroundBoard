@@ -84,6 +84,7 @@ public class FroundFragment extends Fragment {
             }
         }).attach();
 
+
         froundViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback(){
 
             @Override

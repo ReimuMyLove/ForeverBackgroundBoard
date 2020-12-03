@@ -27,4 +27,6 @@ public interface MyFollowOperateModel {
     void report(MyFollowOperationPresenterListener listener);//举报
 
     void follow(MyFollowOperationPresenterListener listener);//关注
+
+    void loadComment(MyFollowOperationPresenterListener listener);//加载评论
 }

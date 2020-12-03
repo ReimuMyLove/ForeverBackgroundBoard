@@ -32,7 +32,12 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
 
     @Override
     public void comment(MyFollowOperationPresenterListener listener) {
-        listener.onCommentSuccess();
+        int n = 1;
+        if(n > 0)
+            listener.onCommentSuccess();
+        else
+            listener.onCommentError();
+
     }
 
     @Override
@@ -80,5 +85,13 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
             listener.onFollowSuccess();
         else
             listener.onFollowError();
+    }
+
+    @Override
+    public void loadComment(MyFollowOperationPresenterListener listener) {
+        String jsons = "{\"tuwendate\":[{\"tu_id\":18,\"musicid\":null,\"replyid\":null,\"user2id\":null,\"topic_detial_id\":null,\"id\":1,\"user1id\":2,\"text\":\"你好\",\"time\":\"2020-11-25 14:10:31\",\"likes\":0},{\"tu_id\":18,\"musicid\":null,\"replyid\":null,\"user2id\":null,\"topic_detial_id\":null,\"id\":4,\"user1id\":1,\"text\":\"好喜欢三毛\",\"time\":\"2020-11-28 10:05:27\",\"likes\":0}],\"userdate\":[{\"password\":\"wrk\",\"follownum\":3,\"backgroundpic2\":null,\"fennum\":1,\"sex\":\"男\",\"backgroundpic1\":null,\"name\":\"wrk\",\"picname\":\"wrk.jpg\",\"sign\":\"算了\",\"id\":2,\"age\":20},{\"password\":\"ljjy\",\"follownum\":0,\"backgroundpic2\":null,\"fennum\":3,\"sex\":\"男\",\"backgroundpic1\":\"1backpic01.png\",\"name\":\"ljjy\",\"picname\":\"ljjy.jpg\",\"sign\":\"冲冲冲\",\"id\":1,\"age\":22}]}\n";
+        if(jsons != null)
+            listener.onLoadCommentSuccess(jsons);
+
     }
 }

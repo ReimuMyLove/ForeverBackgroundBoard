@@ -21,6 +21,7 @@ import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.bean.DepthPageTransformer;
 import com.example.shoujiedemo.bean.ScaleInTransformer;
 import com.example.shoujiedemo.home.follow.fragment.FollowFragment;
+import com.example.shoujiedemo.util.StatusBarUtil;
 import com.google.android.material.tabs.TabLayout;
 
 import com.example.shoujiedemo.R;
@@ -58,10 +59,17 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         initView(view);
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.e("start","開水");
+    }
 
     /**
      * 初始化视图
@@ -103,6 +111,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+
                 if(position > 0){
                     homeView.setUserInputEnabled(true);
                 }else{

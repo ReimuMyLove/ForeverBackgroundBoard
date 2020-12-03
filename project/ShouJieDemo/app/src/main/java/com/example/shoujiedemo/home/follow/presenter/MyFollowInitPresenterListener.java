@@ -10,4 +10,6 @@ public interface MyFollowInitPresenterListener {
 
     void onLoadContentDataSuccess(String jsons);
 
+
+
 }

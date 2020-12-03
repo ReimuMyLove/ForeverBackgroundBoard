@@ -9,6 +9,7 @@ import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.model.MyFollowInitModel;
 import com.example.shoujiedemo.home.follow.model.MyFollowInitModelImpl;
+import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,8 +70,15 @@ public class MyFollowInitPresenterImpl implements MyFollowInitPresenter, MyFollo
                 }
             }
         }
+
+        for(Content content1:contents){
+            String time = content1.getTime().substring(5,16);
+            content1.setTime(time);
+        }
+
         followView.showContentListData(contents);
     }
+
 
 
 }

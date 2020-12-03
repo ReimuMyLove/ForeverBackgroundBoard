@@ -34,4 +34,6 @@ public interface MyFollowOperationPresenterListener {
 
     void onUnCollectError();
 
+    void onLoadCommentSuccess(String jsons);
+
 }

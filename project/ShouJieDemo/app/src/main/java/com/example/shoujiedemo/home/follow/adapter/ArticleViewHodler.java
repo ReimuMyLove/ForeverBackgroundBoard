@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.MsgEvent;
+import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.activity.ArticleActivity;
@@ -381,6 +382,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         bundle.putBoolean("isFollow",isFollow);
         intent.putExtra("bundle",bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void loadComment(List<Comment> commentList) {
+
     }
 
 

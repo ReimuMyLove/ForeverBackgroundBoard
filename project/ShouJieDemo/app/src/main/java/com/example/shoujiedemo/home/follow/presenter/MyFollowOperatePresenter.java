@@ -18,4 +18,7 @@ public interface MyFollowOperatePresenter {
 
     void confirmReport();//举报
 
+    void confirmComment();//评论
+
+    void loadComment();//加载评论
 }

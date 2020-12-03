@@ -12,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
+
+import java.util.List;
 
 public class MusicViewHodler  extends RecyclerView.ViewHolder implements ContentView {
 
@@ -78,6 +81,11 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
 
     @Override
     public void comment() {
+
+    }
+
+    @Override
+    public void loadComment(List<Comment> commentList) {
 
     }
 }

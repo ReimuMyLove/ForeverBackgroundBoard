@@ -45,7 +45,6 @@ public class FollowFragment extends Fragment implements FollowView {
     private List<Content> contents = new ArrayList<>();//关注内容列表
     private RecyclerView contentRlv;
     private FollowContentAdapter contentAdapter;
-    private ViewPager2 homeView;
     private MyFollowInitPresenter presenter;
     private List<Content> contentList;
     private MsgEvent msgEvent;
@@ -75,38 +74,7 @@ public class FollowFragment extends Fragment implements FollowView {
     @Override
     public void onStart() {
         super.onStart();
-        if(msgEvent != null){
-            switch(msgEvent.getType()){
-                case "like":
-                    if(msgEvent.isValue()){
-                        contentList.get(msgEvent.getPosition()).setLike(true);
-                        contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() + 1);
-                        contentAdapter.notifyDataSetChanged();
-                        Log.e("fragment","onStartMsgEvent");
-                    }else{
-                        contentList.get(msgEvent.getPosition()).setLike(false);
-                        contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() - 1);
-                        contentAdapter.notifyDataSetChanged();
-                        Log.e("fragment","onStartMsgEvent");
-                    }
-                    msgEvent = null;
-                break;
-                case "collect":
-                    if(msgEvent.isValue()){
-                        contentList.get(msgEvent.getPosition()).setCollect(true);
-                        contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() + 1);
-                        contentAdapter.notifyDataSetChanged();
-                        Log.e("fragment","onStartMsgEvent");
-                    }else{
-                        contentList.get(msgEvent.getPosition()).setCollect(false);
-                        contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() - 1);
-                        contentAdapter.notifyDataSetChanged();
-                        Log.e("fragment","onStartMsgEvent");
-                    }
-                    msgEvent = null;
-                    break;
-            }
-        }
+
     }
 
     /**
@@ -135,11 +103,47 @@ public class FollowFragment extends Fragment implements FollowView {
      * 点赞后回调改变fragment状态
      * @param event
      */
-   @Subscribe(threadMode = ThreadMode.BACKGROUND,sticky = true)
+   @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
    public void onMainEventThread(MsgEvent event){
        Log.d("event",event.getType() + "");
        msgEvent = event;
+       if(msgEvent != null){
+           switch(msgEvent.getType()){
+               case "like":
+                   if(msgEvent.isValue()){
+                       contentList.get(msgEvent.getPosition()).setLike(true);
+                       contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() + 1);
+                       contentAdapter.notifyDataSetChanged();
+                       Log.e("fragment","true");
+                   }else{
+                       contentList.get(msgEvent.getPosition()).setLike(false);
+                       contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() - 1);
+                       contentAdapter.notifyDataSetChanged();
+                       Log.e("fragment","false");
+                   }
+                   msgEvent = null;
+                   break;
+               case "collect":
+                   if(msgEvent.isValue()){
+                       contentList.get(msgEvent.getPosition()).setCollect(true);
+                       contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() + 1);
+                       contentAdapter.notifyDataSetChanged();
+                   }else{
+                       contentList.get(msgEvent.getPosition()).setCollect(false);
+                       contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() - 1);
+                       contentAdapter.notifyDataSetChanged();
+                   }
+                   msgEvent = null;
+                   break;
+               case "comment":
+                   contentList.get(msgEvent.getPosition()).setCheatnum(msgEvent.getIntValue());
+                   contentAdapter.notifyDataSetChanged();
+                   break;
+           }
+       }
    }
+
+
 
     @Override
     public void onDestroy() {

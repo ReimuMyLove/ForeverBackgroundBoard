@@ -4,9 +4,18 @@ public class MsgEvent {
     private String type;
     private boolean value;
     private int position;
+    private int intValue;
 
     public MsgEvent(){
 
+    }
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public void setIntValue(int intValue) {
+        this.intValue = intValue;
     }
 
     public int getPosition() {

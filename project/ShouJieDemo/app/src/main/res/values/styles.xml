@@ -2,8 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+
     </style>
 
     <!--底部导航字体样式-->

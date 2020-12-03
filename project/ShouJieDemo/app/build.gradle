@@ -12,6 +12,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layout/fragment',
+                            'src/main/res/layout/mainActivity',
+                            'src/main/res/layout/myCenter/setting/activity',
+                            'src/main/res/layout/myCenter/myCenter/activity',
+                            'src/main/res/layout/myCenter/mySpace/activity',
+                            'src/main/res/layout/myCenter/myCenter',
+                            'src/main/res/layout/myCenter/setting',
+                            'src/main/res/layout/myCenter/mySpace',
+                            'src/main/res/layout/myCenter',
+                            'src/main/res/layout',
+                            'src/main/res'
+                    ]
+        }
+    }
+
 
     buildTypes {
         release {
@@ -22,8 +41,8 @@ android {
 }
 
 dependencies {
-    //fastJson
-    implementation 'com.alibaba:fastjson:1.2.73'
+    //SmartRefreshLayout
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
     //Gilde
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     //Gson

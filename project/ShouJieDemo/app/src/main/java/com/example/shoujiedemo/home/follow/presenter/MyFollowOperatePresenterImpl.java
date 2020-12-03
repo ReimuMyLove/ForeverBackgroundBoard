@@ -1,9 +1,26 @@
 package com.example.shoujiedemo.home.follow.presenter;
 
+import android.util.Log;
+
+import com.example.shoujiedemo.entity.Comment;
+import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.model.MyFollowOperateModel;
 import com.example.shoujiedemo.home.follow.model.MyFollowOperateModelImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,MyFollowOperationPresenterListener{
 
@@ -37,7 +54,7 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
     */
    @Override
    public void onCommentSuccess() {
-
+      contentView.comment();
    }
 
    @Override
@@ -144,6 +161,41 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
       contentView.changeCollectionError();
    }
 
+   @Override
+   public void onLoadCommentSuccess(String jsons) {
+      List<Comment> comments = new ArrayList<>();
+      List<User> users = new ArrayList<>();
+      Gson gson = new Gson();
+      String user = null;
+      String comment = null;
+      try {
+         JSONObject jsonArray = new JSONObject(jsons);
+         JSONArray userArray = jsonArray.getJSONArray("userdate");
+         user = userArray.toString();
+         JSONArray contentArray = jsonArray.getJSONArray("tuwendate");
+         comment = contentArray.toString();
+         Log.e("comment",comment);
+      } catch (JSONException e) {
+         e.printStackTrace();
+      }
+      comments = gson.fromJson(comment, new TypeToken<List<Comment>>() {}.getType());
+      users = gson.fromJson(user, new TypeToken<List<User>>() {}.getType());
+      for(Comment comment1:comments){
+         for(User user1 :users){
+            if(comment1.getUser1id() == user1.getId()){
+               comment1.setUser(user1);
+               continue;
+            }
+         }
+      }
+      for(Comment comment1:comments){ ;
+         String time = comment1.getTime().substring(5,16);
+         comment1.setTime(time);
+      }
+
+      contentView.loadComment(comments);
+   }
+
    /**
     * 验证点赞
     */
@@ -154,7 +206,7 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    }
 
    /**
-    * 验证点赞
+    * 验证取消点赞
     */
    @Override
    public void confirmUnFavourite() {
@@ -206,6 +258,19 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    @Override
    public void confirmReport() {
       model.report(this);
+   }
+
+   /**
+    * 验证评论
+    */
+   @Override
+   public void confirmComment() {
+      model.comment(this);
+   }
+
+   @Override
+   public void loadComment() {
+      model.loadComment(this);
    }
 
 
