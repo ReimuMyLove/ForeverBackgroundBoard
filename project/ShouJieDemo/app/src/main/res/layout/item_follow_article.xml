@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:elevation="8dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    app:cardCornerRadius="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@color/itemBackGroundColorWhite"
+        android:id="@+id/follow_rl_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.shoujiedemo.util.CircleImageView
+            android:id="@+id/follow_article_iv_head"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/wangzuxian" />
+
+        <TextView
+            android:id="@+id/follow_article_tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@id/follow_article_iv_head"
+            android:text="王祖贤"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/follow_article_tv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/follow_article_tv_user_name"
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/follow_article_tv_user_name"
+            android:text="[文集]"
+            android:textColor="#ADD8E6"
+            android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/article_text_fan"
+                android:layout_below="@id/follow_article_tv_user_name"
+                android:layout_alignLeft="@id/follow_article_tv_user_name"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粉丝:"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_toRightOf="@id/article_text_fan"
+                android:layout_marginTop="3dp"
+                android:layout_below="@id/follow_article_tv_user_name"
+                android:id="@+id/follow_article_tv_fan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020"
+                android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/follow_article_iv_follow_anim"
+            android:visibility="invisible"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/follow_article_btn_pull"
+            android:src="@drawable/loading_anim"
+            />
+
+        <Button
+            android:id="@+id/follow_article_btn_follow"
+            android:layout_width="55dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/follow_article_btn_pull"
+            android:background="@drawable/btn_circle_shape"
+            android:text="已关注" />
+
+        <Button
+            android:id="@+id/follow_article_btn_pull"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/pull" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/follow_article_pull_menu"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/follow_article_btn_follow"
+            android:layout_marginRight="20dp"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/follow_article_ln_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="举报" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:background="@drawable/report" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/follow_article_tv_unLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不感兴趣" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/follow_article_rn_content"
+            android:background="@drawable/bg_border"
+            android:layout_below="@id/follow_article_iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="9dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/follow_article_iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/cover" />
+
+            <TextView
+                android:id="@+id/follow_actricle_tv_title"
+                android:layout_below="@id/follow_article_iv_cover"
+                android:text="文章标题"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_below="@id/follow_actricle_tv_title"
+                android:id="@+id/follow_actricle_tv_synopsis"
+                android:text="\t\t我与那个杨素瑶的相识还要上溯到十二年以前”，老陈从嘴上取下烟斗，在一团朦胧的烟雾里看着我。这时候我们正一同坐在公园的长椅上：“我可以把这段经历完全告诉你，因为你是我唯一的朋友，除了那个现在在太平洋海底的她。我敢凭良心保证，这是真的；当然了，信不信还是由你。”老陈在我的脸上发现了一个怀疑的微笑，就这样添上一句说。
+
+                    十二年前，我是一个五年级的小学生。我可以毫不吹牛的说，我在当初是被认为是超人的聪明，因为可以毫不费力看出同班同学都在想什么，就是心底最细微的思想。因此，我经常惹得那班孩子笑。我经常把老师最宠爱的学生心里那些不好见人的小小的虚荣、嫉妒统统揭发出来，弄得他们求死不得，因此老师们很恨我。就是老师们的念头也常常被我发现，可是我蠢得很，从不给他们留面子，都告诉了别人，可是别人就把我出卖了，所以老师都说我“复杂”，这真是一个可怕的形容词！在一般同学之中，我也不得人心。你看看我这副尊容，当年在小学生中间这张脸也很个别，所以我在同学中有一外号叫“怪物”。
+
+                    好，在小学的一班学生之中，有了一个“怪物”就够了吧，但是事情偏不如此。班上还有个女生，也是一样的精灵古怪，因为她太精，她妈管她叫“人妖”。这个称呼就被同学当作她的外号了。当然了，一般来说，叫一个女生的外号是很下流的。因此她的外号就变成了一个不算难听的昵称“妖妖”。这样就被叫开了，她自己也不很反感。喂，你不要笑，我知道你现在一定猜出了她就是那个水怪杨素瑶。你千万不要以为我会给你讲一个杜撰的故事，说她天天夜里骑着笤帚上天。这样事情是不会有的，而我给你讲的是一件真事呢。我记得有那么一天，班上来了一位新老师，原来我们的班主任孙老师升了教导主任了，我们都在感谢上苍：老天有眼，把我们从一位阎王爷手底下救出来了。我真想带头三呼万岁！孙老师长了一副晦气脸，四年级刚到我们班来上课时，大家都认为他是特务！也有人说他过去一定当过汉奸。这就是电影和小人书教给我们评判好赖人的方法，凭相貌取人。后来知道，他虽然并非特务和汉奸，却是一位地地道道的土匪，粗野得要命。“你没完成作业？为什么没完成！”照你肚子就捅上一指头！他还敢损你、骂你，就是骂你不骂你们家，免得家里人来找。你哭了吗？把你带到办公室让你洗了脸再走，免得到家泪痕让人看见。他还敢揪女生的小辫往外拽。谁都怕他，包括家长在内。他也会笼络人，也有一群好学生当他的爪牙。好家伙，简直建立了一个班级地狱！
+
+                    可是他终于离开我们班了。我们当时是小孩，否则真要酌酒庆贺。新来了一位刘老师，第一天上课大家都断定她一定是个好人，又和气，相貌又温柔。美中不足就是她和孙主任（现在升主任了）太亲热，简直不同一般。同学们欢庆自己走了大运，结果那堂课就不免上得非常之坏。大家在互相说话，谁也没想提高嗓门，但渐渐的不提高嗓门对方就听不见了。于是大家就渐渐感觉到胸口痛，嗓子痛，耳朵里面嗡嗡嗡。至于刘老师说了些什么，大家全都没有印象。到了最后下课疗响了，我们才发现：刘老师已经哭得满脸通红。
+
+                    于是第二节课大家先是安静了一会儿，然后课堂里又乱起来。可是我再也没有跟着乱，可以说是很遵守课堂纪律。我觉得同学们都很卑鄙，软的欺侮，硬的怕。至于我吗，我是个男子汉大丈夫，我不干那些卑鄙的勾当。
+
+                    下了课，我看见刘老师到教导处去了。我感到很好奇，就走到教导处门口去偷听。我听见孙主任在问："
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="2dp"
+                android:textSize="13sp"
+                android:textColor="#BBBBBB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/follow_article_tv_writer_name"
+                android:layout_below="@id/follow_actricle_tv_synopsis"
+                android:text="文by王小波"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/follow_article_tv_tag"
+            android:layout_below="@id/follow_article_rn_content"
+            android:text="#原创#文章"
+            android:textColor="#80008B8B"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+
+            android:layout_below="@id/follow_article_tv_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                    <Button
+                        android:background="@drawable/share"
+                        android:id="@+id/follow_article_btn_share"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:id="@+id/follow_article_tv_share_num"
+                        android:text="102"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:background="@drawable/collectionunselect"
+                    android:id="@+id/follow_article_btn_collection"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+
+                <TextView
+                    android:id="@+id/follow_article_tv_collection_num"
+                    android:text="102"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:background="@drawable/comment"
+                    android:id="@+id/follow_article_btn_comment"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+
+                <TextView
+                    android:id="@+id/follow_article_tv_comment_num"
+                    android:text="102"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:background="@drawable/likeunselect"
+                    android:id="@+id/follow_article_btn_like"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+
+                <TextView
+                    android:id="@+id/follow_article_tv_like_num"
+                    android:text="102"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

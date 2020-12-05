@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">偶然</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- 销毁账号页面的警告信息 -->
+    <!-- 肖帅 2020.11.26 -->
+    <string name="destroyAccountWarning">
+        如果您选择注销账号，您在本应用上保存的一切用户信息都将被删除，但您曾经发表过的文章及评论、动态会留存。\n注销账号操作不可逆，请您再三斟酌。
+    </string>
+</resources>
