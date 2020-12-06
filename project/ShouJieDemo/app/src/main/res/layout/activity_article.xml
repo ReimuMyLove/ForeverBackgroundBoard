@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:paddingTop="30dp"
+    tools:context=".activity.ArticleActivity">
+    <com.example.shoujiedemo.bean.StatusBarHeightView
+        app:use_type="use_height"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.core.widget.NestedScrollView
+        android:clickable="false"
+        android:id="@+id/follow_article_text_scrollview"
+        android:layout_marginBottom="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:context=".activity.ArticleActivity">
+
+
+                <TextView
+                    android:id="@+id/tv_title_details_article"
+                    android:textColor="@color/TitleTextBlack"
+                    android:textSize="30sp"
+                    android:text="绿毛水怪"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/title_right"
+                    android:textSize="16sp"
+                    android:text="收于"
+                    android:layout_toRightOf="@id/tv_title_details_article"
+                    android:layout_alignBottom="@id/tv_title_details_article"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="3.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_set_details_article"
+                    android:textSize="16sp"
+                    android:text="[文集]"
+                    android:textColor="#ADD8E6"
+                    android:layout_toRightOf="@id/title_right"
+                    android:layout_alignBottom="@id/tv_title_details_article"
+                    android:layout_marginBottom="3.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_userName_details_article"
+                    android:text="王祖贤"
+                    android:textColor="@color/articleLightBlack"
+                    android:layout_toRightOf="@id/iv_head_details_article"
+                    android:layout_alignTop="@id/iv_head_details_article"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_fanNumLeft_details_article"
+                    android:text="粉丝:"
+                    android:textColor="@color/articleLightBlack"
+                    android:layout_below="@id/tv_userName_details_article"
+                    android:layout_toRightOf="@id/iv_head_details_article"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_fanNum_details_article"
+                    android:text="--"
+                    android:textColor="@color/articleLightBlack"
+                    android:layout_below="@id/tv_userName_details_article"
+                    android:layout_toRightOf="@id/tv_fanNumLeft_details_article"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="2dp"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_date_details_article"
+                    android:textColor="@color/articleLightBlack"
+                    android:layout_toRightOf="@id/tv_userName_details_article"
+                    android:layout_alignBottom="@id/tv_userName_details_article"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="12sp"
+                    android:text="--月--日"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.example.shoujiedemo.util.CircleImageView
+                    android:layout_below="@id/tv_title_details_article"
+                    android:id="@+id/iv_head_details_article"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/wangzuxian" />
+
+                <ImageView
+                    android:id="@+id/follow_article_details_iv_follow_anim"
+                    android:visibility="invisible"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignTop="@id/tv_userName_details_article"
+                    android:background="@drawable/btn_circle_shape"
+                    android:src="@drawable/loading_anim"
+                    />
+
+                <Button
+                    android:id="@+id/follow_article_details_btn_follow"
+                    android:layout_width="55dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_alignTop="@id/tv_userName_details_article"
+                    android:background="@drawable/btn_circle_shape"
+                    android:text="已关注" />
+
+                <ImageView
+                    android:id="@+id/iv_cover_article_details"
+                    android:layout_below="@id/tv_fanNum_details_article"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/cover"
+                    android:layout_width="380dp"
+                    android:layout_height="270dp"/>
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/tv_content_details_article"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/articleLightBlack"
+                    android:textSize="17sp"
+                    android:lineHeight="30dp"
+                    android:layout_below="@id/iv_cover_article_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/tv_wen"
+                    android:text="文/"
+                    android:textSize="17sp"
+                    android:layout_below="@id/tv_content_details_article"
+                    android:layout_width="wrap_content"
+                    android:layout_toLeftOf="@id/tv_writer_details_article"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/tv_writer_details_article"
+                    android:text="徐志摩"
+                    android:textSize="17sp"
+                    android:layout_below="@id/tv_content_details_article"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/ln_num"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tv_writer_details_article"
+                android:elevation="2dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingBottom="8dp"
+                android:background="#509C9C9C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="评论"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#fff"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="0"
+                        android:textSize="12sp"
+                        android:id="@+id/follow_article_tv_comment_num2"
+                        android:textColor="#fff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="转发"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#fff"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="0"
+                        android:id="@+id/follow_article_tv_share_num2"
+                        android:textSize="12sp"
+                        android:textColor="#fff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingRight="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="收藏"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#fff"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="0"
+                        android:id="@+id/follow_article_tv_collection_num2"
+                        android:textSize="12sp"
+                        android:textColor="#fff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="点赞"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#fff"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="0"
+                        android:id="@+id/follow_article_tv_fa_num2"
+                        android:textSize="12sp"
+                        android:textColor="#fff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:background="#25E8E8E8"
+                    android:id="@+id/follow_article_comment_list"
+                    android:layout_below="@id/ln_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:clipToPadding="false"
+                    android:divider="@android:color/transparent"
+                    android:fadeScrollbars="true"
+                    android:listSelector="@android:color/transparent"
+                    android:paddingTop="25dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="20dp"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:nestedScrollingEnabled="true"
+                    android:scrollingCache="false"/>
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:background="#BEBEBE"
+        android:layout_above="@id/operation"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"/>
+
+    <RelativeLayout
+        android:id="@+id/operation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:paddingLeft="50dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/follow_article_details_btn_share"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/share" />
+
+        <TextView
+            android:id="@+id/follow_article_details_tv_share_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_article_details_btn_share"
+            android:text="102" />
+
+        <Button
+            android:id="@+id/follow_article_details_btn_collection"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@id/follow_article_details_tv_share_num"
+            android:background="@drawable/collectionunselect" />
+
+        <TextView
+            android:id="@+id/follow_article_details_tv_collection_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_article_details_btn_collection"
+            android:text="102" />
+
+        <Button
+            android:id="@+id/follow_article_details_btn_like"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@id/follow_article_details_tv_collection_num"
+            android:background="@drawable/likeunselect" />
+
+        <TextView
+            android:id="@+id/follow_article_details_tv_like_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_article_details_btn_like"
+            android:text="102" />
+
+        <Button
+            android:id="@+id/follow_article_details_btn_comment"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@id/follow_article_details_tv_like_num"
+            android:background="@drawable/comment" />
+
+        <TextView
+            android:id="@+id/follow_article_details_tv_comment_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_article_details_btn_comment"
+            android:text="102" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:textSize="13sp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/follow_article_ed_comment"
+        android:background="@drawable/ed_cirle_shape"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_width="1dp"
+        android:layout_height="24dp"/>
+
+    <Button
+        android:id="@+id/follow_article_btn_send_comment"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"
+        android:layout_width="48dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/follow_article_ed_comment"
+        android:background="@drawable/btn_circle_shape"
+        android:text="发送" />
+
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="22dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.example.shoujiedemo.util.CircleImageView
+        android:id="@+id/item_comment_user_img"
+        android:src="@drawable/bg02"
+        android:layout_width="35dp"
+        android:layout_height="35dp"/>
+
+    <TextView
+        android:id="@+id/item_comment_tv_user_name"
+        android:text="name"
+
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_comment_user_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/item_comment_text"
+        android:textSize="15sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="评论内容评论内容评论内容评论内容"
+        android:layout_below="@id/item_comment_tv_user_name"
+        android:layout_toRightOf="@id/item_comment_user_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_alignParentRight="true"
+        android:textSize="12sp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/item_comment_date"
+        android:text="12月18号"
+        android:layout_alignTop="@id/item_comment_tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

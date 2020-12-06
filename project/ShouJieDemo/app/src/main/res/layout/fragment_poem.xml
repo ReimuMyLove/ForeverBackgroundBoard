@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fround.fragments.PoemFragment">
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/poem_smartrefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srlAccentColor="#00000000"
+    app:srlPrimaryColor="#00000000"
+    app:srlEnablePreviewInEditMode="true">
+    <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/poem_rlv_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="15dp"
+        android:fadeScrollbars="true"
+        android:listSelector="@android:color/transparent"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollingCache="false"/>
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</FrameLayout>
