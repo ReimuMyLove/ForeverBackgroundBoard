@@ -2,7 +2,6 @@ package com.example.shoujiedemo.adapter;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
-import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
 
 import java.util.List;
 
