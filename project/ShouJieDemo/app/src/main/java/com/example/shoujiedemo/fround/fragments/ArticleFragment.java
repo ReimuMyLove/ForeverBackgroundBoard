@@ -26,6 +26,7 @@ import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.view.ArticleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,20 +84,28 @@ public class ArticleFragment extends Fragment implements ArticleView {
         recyclerView = view.findViewById(R.id.article_rlv_view);
         smartRefreshLayout = view.findViewById(R.id.article_smartrefresh);
         smartRefreshLayout.setHeaderHeight(100);
-        smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.setFooterHeight(150);
+        smartRefreshLayout.setEnableLoadMore(true);
+        if(pageNum == 0) {
+            smartRefreshLayout.autoRefresh();
+        }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 ++pageNum;
-                if(pageNum == 1){
-                    presenter.confirmInitContent(0,pageNum);
-                    refreshLayout.finishRefresh();
-                    Log.i("page",pageNum + "");
-                }else{
-                    presenter.confirmInitContent(0,pageNum);
-                    refreshLayout.finishRefresh();
-                    Log.i("page",pageNum + "");
-                }
+                presenter.confirmInitContent(0,pageNum);
+                refreshLayout.finishRefresh(400);
+
+            }
+
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNum++;
+                presenter.confirmInitContent(0,pageNum);
+                refreshLayout.finishLoadMore(400);
             }
         });
         return view;
@@ -125,7 +134,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
         pageNum--;
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
-        Toast.makeText(getContext(),"失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
     }
 
     /**

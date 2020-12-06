@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    //gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     //软键盘弹出
     implementation 'com.github.yoyoyaobin:PreventKeyboardBlockUtil:1.0.8'
     //SmartRefreshLayout

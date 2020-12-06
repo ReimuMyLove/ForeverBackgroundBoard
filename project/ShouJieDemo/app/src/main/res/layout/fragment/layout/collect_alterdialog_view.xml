@@ -5,8 +5,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:elevation="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/collect_circle2"
         android:id="@+id/collect_title"
-        android:background="@drawable/collect_circle"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/set_btn_dismss"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
@@ -30,6 +32,7 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/set_list"
+        android:listSelector="@android:color/transparent"
         android:layout_below="@id/collect_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

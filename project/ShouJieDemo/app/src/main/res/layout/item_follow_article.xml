@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginBottom="15dp"
+    android:background="#25D3D3D3"
+    android:layout_marginTop="15dp"
     android:layout_centerInParent="true"
-    android:elevation="8dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp"
-    app:cardCornerRadius="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:background="@color/itemBackGroundColorWhite"
+        android:paddingTop="10dp"
         android:id="@+id/follow_rl_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.example.shoujiedemo.util.CircleImageView
             android:id="@+id/follow_article_iv_head"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="3dp"
             android:src="@drawable/wangzuxian" />
@@ -34,7 +33,7 @@
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/follow_article_iv_head"
             android:text="王祖贤"
-            android:textSize="16sp" />
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/follow_article_tv_set"
@@ -45,8 +44,8 @@
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@id/follow_article_tv_user_name"
             android:text="[文集]"
-            android:textColor="#ADD8E6"
-            android:textSize="12sp" />
+            android:textColor="#96CDCD"
+            android:textSize="13sp" />
 
 
             <TextView
@@ -58,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="粉丝:"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_toRightOf="@id/article_text_fan"
@@ -68,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2020"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/follow_article_iv_follow_anim"
@@ -158,22 +157,27 @@
 
         </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:elevation="4dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/follow_article_rn_content"
-            android:background="@drawable/bg_border"
             android:layout_below="@id/follow_article_iv_head"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="9dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
+                android:src="@drawable/bg"
+                android:scaleType="fitXY"
                 android:id="@+id/follow_article_iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/cover" />
+                android:layout_height="250dp"
+                />
 
             <TextView
                 android:id="@+id/follow_actricle_tv_title"
@@ -182,7 +186,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -205,7 +209,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="2dp"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:textColor="#BBBBBB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -222,6 +226,7 @@
                 android:layout_height="wrap_content"/>
 
             </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
 
         <TextView
@@ -229,7 +234,7 @@
             android:layout_below="@id/follow_article_rn_content"
             android:text="#原创#文章"
             android:textColor="#80008B8B"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -238,12 +243,12 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="15dp"
-
             android:layout_below="@id/follow_article_tv_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:paddingRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -262,6 +267,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingRight="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -281,6 +287,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingRight="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -322,4 +329,4 @@
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

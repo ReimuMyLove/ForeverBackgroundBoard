@@ -7,6 +7,6 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenterLis
  */
 public interface MyFollowAtricleModel {
 
-    void loadAtricleCover(MyFollowAtriclePresenterListener listener);//加载文章封面
+    void loadAtricleContent(MyFollowAtriclePresenterListener listener,int id);//加载文章
 
 }

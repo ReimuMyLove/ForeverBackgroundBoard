@@ -45,7 +45,12 @@ public class HomeFragment extends Fragment {
     private int currentState = 0;        //记录当前手指按下状态
     private List<Integer> scrolledPixeledList = new ArrayList<>(); //记录手指滑动时的像素坐标记录
     private RecommenFragment recommenFragment;
+    private FollowFragment followFragment;
 
+
+    public HomeFragment(){
+
+    }
 
     public HomeFragment(ViewPager2 viewPager2) {
         // Required empty public constructor
@@ -59,7 +64,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        Log.e("Recommen","onCreate");
         initView(view);
         return view;
     }
@@ -78,74 +83,77 @@ public class HomeFragment extends Fragment {
         homeView = view.findViewById(R.id.home_view);
         homeTab = view.findViewById(R.id.tab_layout);
 
-        recommenFragment = new RecommenFragment(homeView);
-        homeFragments.add(recommenFragment);
-        homeFragments.add(new FollowFragment());
+        if(recommenFragment == null) {
+            recommenFragment = new RecommenFragment(homeView);
+            followFragment = new FollowFragment();
+            homeFragments.add(recommenFragment);
+            homeFragments.add(followFragment);
+        }
 
-        homeView.setOffscreenPageLimit(1);
-        homeView.setUserInputEnabled(true);
-        homeView.setPageTransformer(new DepthPageTransformer());
-        fragmentStatePagerAdapter = new MyFragmentPagerAdapter(getActivity(),homeFragments);
-        homeView.setAdapter(fragmentStatePagerAdapter);
 
-        //将ViewPager2与TabLayout绑定
-        new TabLayoutMediator(homeTab, homeView,true, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                if(position == 0){
-                    tab.setText("每日美文");
-                }else{
-                    tab.setText("我的关注");
+            homeView.setUserInputEnabled(true);
+            homeView.setPageTransformer(new DepthPageTransformer());
+            fragmentStatePagerAdapter = new MyFragmentPagerAdapter(getActivity(), homeFragments);
+            homeView.setAdapter(fragmentStatePagerAdapter);
+
+            //将ViewPager2与TabLayout绑定
+            new TabLayoutMediator(homeTab, homeView, true, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    if (position == 0) {
+                        tab.setText("每日美文");
+                    } else {
+                        tab.setText("我的关注");
+                    }
                 }
-            }
-        }).attach();
+            }).attach();
 
-        homeView.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback(){
+            homeView.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                currentPosition = position;
-                if(currentState == 1){
-                    scrolledPixeledList.add(positionOffsetPixels);
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    currentPosition = position;
+                    if (currentState == 1) {
+                        scrolledPixeledList.add(positionOffsetPixels);
+                    }
                 }
-            }
 
-            @Override
-            public void onPageSelected(int position) {
+                @Override
+                public void onPageSelected(int position) {
 
-                if(position > 0){
-                    homeView.setUserInputEnabled(true);
-                }else{
-                    homeView.setUserInputEnabled(false);
+                    if (position > 0) {
+                        homeView.setUserInputEnabled(true);
+                    } else {
+                        homeView.setUserInputEnabled(false);
+                    }
                 }
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                currentState = state;
-                if(state ==0){
-                    if(currentPosition == oldPositon){
-                        Log.d("position", oldPositon + "");
-                        if(currentPosition == 0){
-                            if (scrolledPixeledList.size() > 1 && scrolledPixeledList.get(scrolledPixeledList.size() - 1) == 0) {
-                                //有可能出现滑到一半放弃的情况也是可以出现currentPosition == oldPositon=0，则先判断是否是往右滑时放弃
-                                return;
-                            }
-                            //若还有上一个bottom fragment页面则切换
-                            if(viewPager2.getCurrentItem() > 0){
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    currentState = state;
+                    if (state == 0) {
+                        if (currentPosition == oldPositon) {
+                            Log.d("position", oldPositon + "");
+                            if (currentPosition == 0) {
+                                if (scrolledPixeledList.size() > 1 && scrolledPixeledList.get(scrolledPixeledList.size() - 1) == 0) {
+                                    //有可能出现滑到一半放弃的情况也是可以出现currentPosition == oldPositon=0，则先判断是否是往右滑时放弃
+                                    return;
+                                }
+                                //若还有上一个bottom fragment页面则切换
+                                if (viewPager2.getCurrentItem() > 0) {
 
-                            }
-                        }else if(currentPosition == fragmentStatePagerAdapter.getItemCount() - 1){
-                            if(viewPager2.getCurrentItem() <  fragmentStatePagerAdapter.getItemCount() - 1){
-                                viewPager2.setCurrentItem(1);
+                                }
+                            } else if (currentPosition == fragmentStatePagerAdapter.getItemCount() - 1) {
+                                if (viewPager2.getCurrentItem() < fragmentStatePagerAdapter.getItemCount() - 1) {
+                                    viewPager2.setCurrentItem(1);
+                                }
                             }
                         }
+                        oldPositon = currentPosition;
+                        scrolledPixeledList.clear();//清空滑动记录
                     }
-                    oldPositon = currentPosition;
-                    scrolledPixeledList.clear();//清空滑动记录
                 }
-            }
-        });
+            });
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.shoujiedemo.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,27 +12,41 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.CommentAdapter;
+import com.example.shoujiedemo.adapter.SetAdapter;
 import com.example.shoujiedemo.bean.ArticleEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
+import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenter;
+import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenterImpl;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
+import com.example.shoujiedemo.home.follow.view.ArticleView;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.myCenter.myCenter.service.UserImgView;
+import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
 import com.example.shoujiedemo.util.ViewWrapper;
 import com.hyb.library.PreventKeyboardBlockUtil;
@@ -41,7 +56,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity implements ContentView {
+public class ArticleActivity extends AppCompatActivity implements ContentView, ArticleView {
 
     private TextView title;
     private TextView userName;
@@ -71,12 +86,21 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
     private TextView collectNum2;
     private CommentAdapter commentAdapter;
     private TextView writer;
+    private ListView setList;
+    private Button btnCollect;
+    private Button dismiss;
+    private ImageView cover;
 
    // private View headView;
 
     private List<Comment> commentList = new ArrayList<>();
     private int screenHeight;//屏幕高度
     private int commentListHeight;//评论列表长度
+    private View setAlterView;
+    private AlertDialog alert = null;
+    private AlertDialog.Builder builder = null;
+    private SetAdapter setAdapter;
+    private Set set1;
 
     private Content article;
     private User user;
@@ -88,12 +112,13 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
     private MyFollowOperatePresenter presenter;
     private AnimationDrawable loadingDrawable;
     private MyOnClikListener myOnClikListener;
+    private MyFollowAtriclePresenter atriclePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-
+        builder = new AlertDialog.Builder(this);
 
         initData();
         initView();
@@ -249,6 +274,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         shareNum2 = findViewById(R.id.follow_article_tv_share_num2);
         commentNum2 = findViewById(R.id.follow_article_tv_comment_num2);
         writer = findViewById(R.id.tv_writer_details_article);
+        cover = findViewById(R.id.iv_cover_article_details);
 
 
 
@@ -281,7 +307,6 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         }else{
             btnFollow.setText("已关注");
         }
-        text.setText(article.getText());
         title.setText(article.getTitle());
         date.setText(article.getTime());
         fanNum.setText(new StringBuilder().append(user.getFennum()));
@@ -296,7 +321,26 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         shareNum2.setText(new StringBuilder().append(article.getForwardnum()));
         writer.setText(article.getWriter());
 
-        presenter.loadComment();//加载评论
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        Glide.with(this)
+                .load(ConfigUtil.BASE_IMG_URL + article.getPic())
+                .apply(requestOptions)
+                .into(cover);
+
+        Glide.with(this)
+                .load( ConfigUtil.BASE_HEAD_URL + article.getUser().getPicname())
+                .into(head);
+
+
+        presenter.loadComment(article.getId());//加载评论
+
+        atriclePresenter.confirmLoadAtricleContent(article.getId());
+
+        setAlterView = LayoutInflater.from(this).inflate(R.layout.collect_alterdialog_view,null,false);
+        setList = setAlterView.findViewById(R.id.set_list);
+        btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
+        dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
+        alert = builder.create();
 
 
     }
@@ -309,6 +353,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         user = (User)bundle.getSerializable("user");
         position = bundle.getInt("position");
         presenter = new MyFollowOperatePresenterImpl(this);
+        atriclePresenter = new MyFollowAtriclePresenterImpl(this);
 
 
     }
@@ -394,6 +439,11 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
         }*/
     }
 
+    @Override
+    public void loadContent(String article) {
+        text.setText(article);
+    }
+
     class MyOnClikListener implements View.OnClickListener{
 
         @Override
@@ -414,24 +464,14 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
                         collectionNum.setText(new StringBuilder().append(collectionNums));
                         collectNum2.setText(new StringBuilder().append(collectionNums));
                         article.setCollect(false);
-                        presenter.confirmUnCollect();
+                        presenter.confirmUnCollect(UserUtil.USER_ID,article.getId());
                         MsgEvent event = new MsgEvent();
                         event.setType("collect");
                         event.setValue(article.isCollect());
                         event.setPosition(position);
                         EventBus.getDefault().postSticky(event);
                     }else{
-                        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-                        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
-                        collectionNum.setText(new StringBuilder().append(collectionNums));
-                        collectNum2.setText(new StringBuilder().append(collectionNums));
-                        article.setCollect(true);
-                        presenter.confirmCollect();
-                        ArticleEvent event = new ArticleEvent();
-                        event.setType("collect");
-                        event.setValue(article.isCollect());
-                        event.setPosition(position);
-                        EventBus.getDefault().postSticky(event);
+                        presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_article_details_btn_comment://评论按扭下滑
@@ -444,7 +484,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
                         likeNum.setText(new StringBuilder().append(likeNums));
                         likeNum2.setText(new StringBuilder().append(likeNums));
                         article.setLike(true);
-                        presenter.confirmFavourite();
+                        presenter.confirmFavourite(UserUtil.USER_ID,article.getId());
                         Log.i("isLike",article.isLike() + "");
                         //通知点赞按钮改变
                         ArticleEvent event = new ArticleEvent();
@@ -458,7 +498,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
                         likeNum.setText(new StringBuilder().append(likeNums));
                         likeNum2.setText(new StringBuilder().append(likeNums));
                         article.setLike(false);
-                        presenter.confirmUnFavourite();
+                        presenter.confirmUnFavourite(UserUtil.USER_ID,article.getId());
                         Log.i("isLike",article.isLike() + "");
                         ArticleEvent event = new ArticleEvent();
                         event.setType("like");
@@ -474,14 +514,14 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
                     loadingDrawable.start();
                     if(isFollow) {  //关注
                         isFollow = false;
-                        presenter.confirmFollow();
+                        presenter.confirmFollow(UserUtil.USER_ID,user.getId());
                     }else {         //取关
                         isFollow= true;
-                        presenter.confirmUnFolly();
+                        presenter.confirmUnFolly(UserUtil.USER_ID,user.getId());
                     }
                     break;
                 case R.id.follow_article_btn_send_comment:
-                    presenter.confirmComment();
+                    presenter.confirmComment(UserUtil.USER_ID,article.getId());
                     edComment.setText(null);
 
                     break;
@@ -627,8 +667,21 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
-    public void loadComment(List<Comment> commentList) {
+    public void collect() {
+        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
+        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        collectionNum.setText(new StringBuilder().append(collectionNums));
+        collectNum2.setText(new StringBuilder().append(collectionNums));
+        article.setCollect(true);
+        ArticleEvent event = new ArticleEvent();
+        event.setType("collect");
+        event.setValue(article.isCollect());
+        event.setPosition(position);
+        EventBus.getDefault().postSticky(event);
+    }
 
+    @Override
+    public void loadComment(List<Comment> commentList) {
         this.commentList = commentList;
         commentAdapter = new CommentAdapter(commentList,getApplicationContext());
         rlComment.setLayoutManager(new LinearLayoutManager(this));
@@ -636,7 +689,39 @@ public class ArticleActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
-    public void showSet() {
+    public void showSet(final List<Set> sets) {
+        setAdapter = new SetAdapter(sets,this);
+        setList.setAdapter(setAdapter);
+        btnCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.confirmCollect(UserUtil.USER_ID,article.getId());
+                //Toast.makeText(context,"" + set1.getName(),Toast.LENGTH_SHORT).show();
+                alert.dismiss();
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        setList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                set1 = (Set) setAdapter.getItem(i);
+                view.setBackgroundColor(0x30CFCFCF);
+
+            }
+        });
+
+        alert.show();
+        Window window = alert.getWindow();
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setContentView(setAlterView);
+        window.setLayout(800,1000);
 
     }
 

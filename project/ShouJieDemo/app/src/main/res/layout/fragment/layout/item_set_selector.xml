@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:id="@+id/set_rl"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/set_img"
-        android:src="@drawable/bg"
-        android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        android:background="@drawable/bg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
     <TextView
         android:text="默认文集"
         android:layout_marginLeft="10dp"
@@ -17,4 +20,5 @@
         android:layout_toRightOf="@id/set_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
 </RelativeLayout>

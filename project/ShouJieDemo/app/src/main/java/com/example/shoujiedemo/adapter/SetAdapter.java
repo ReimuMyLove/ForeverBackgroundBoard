@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Set;
 
@@ -34,10 +37,7 @@ public class SetAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        if(setList != null){
-            return setList.get(i);
-        }
-        return null;
+        return setList.get(i);
     }
 
     @Override
@@ -50,17 +50,14 @@ public class SetAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_set_selector,viewGroup,false);
 
-        final View rl = view.findViewById(R.id.set_rl);
         ImageView img = view.findViewById(R.id.set_img);
         TextView title = view.findViewById(R.id.set_title);
 
+        title.setText(setList.get(i).getName());
+        Glide.with(context)
+                .load( setList.get(i).getPic())
+                .into(img);
 
-        rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rl.setBackgroundColor(0x17CFCFCF);
-            }
-        });
         return view;
     }
 }

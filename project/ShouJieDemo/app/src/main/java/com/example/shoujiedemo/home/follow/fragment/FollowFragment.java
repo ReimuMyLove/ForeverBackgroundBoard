@@ -25,6 +25,7 @@ import com.example.shoujiedemo.home.follow.view.FollowView;
 import com.example.shoujiedemo.util.UserUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,19 +68,29 @@ public class FollowFragment extends Fragment implements FollowView {
         smartRefreshLayout = view.findViewById(R.id.follow_smartrefresh);
         contentRlv = view.findViewById(R.id.follow_rlv_view);
         smartRefreshLayout.setHeaderHeight(100);
-        smartRefreshLayout.autoRefresh();
-        presenter.confirmInitContent(2,pageNum);
-
+        smartRefreshLayout.setFooterHeight(150);
+        smartRefreshLayout.setEnableLoadMore(true);
+        if(pageNum == 0) {
+            smartRefreshLayout.autoRefresh();
+        }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 ++pageNum;
                 presenter.confirmInitContent(2,pageNum);
-                refreshLayout.finishRefresh();
-
+                refreshLayout.finishRefresh(400);
             }
+
         });
 
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNum++;
+                presenter.confirmInitContent(2,pageNum);
+                refreshLayout.finishLoadMore(400);
+            }
+        });
         return view;
     }
 
@@ -113,7 +124,7 @@ public class FollowFragment extends Fragment implements FollowView {
         pageNum--;
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
-        Toast.makeText(getContext(),"失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
     }
 
     /**

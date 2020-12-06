@@ -43,7 +43,6 @@ public class MainActivity extends BaseActivity {
         fragments.add(new OwnerFragment());
         //绑定Fragment
 
-        viewPager2.setOffscreenPageLimit(fragments.size());
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(this,fragments);
         viewPager2.setAdapter(myFragmentPagerAdapter);
 

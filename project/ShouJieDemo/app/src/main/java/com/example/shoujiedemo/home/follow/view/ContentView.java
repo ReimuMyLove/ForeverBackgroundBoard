@@ -1,6 +1,7 @@
 package com.example.shoujiedemo.home.follow.view;
 
 import com.example.shoujiedemo.entity.Comment;
+import com.example.shoujiedemo.entity.Set;
 
 import java.util.List;
 
@@ -24,7 +25,9 @@ public interface ContentView {
 
     void comment();//评论
 
+    void collect();//收藏
+
     void loadComment(List<Comment> commentList);//加载评论
 
-    void showSet();//显示文集
+    void showSet(List<Set> sets);//显示文集
 }

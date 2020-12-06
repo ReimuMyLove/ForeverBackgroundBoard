@@ -26,6 +26,7 @@ import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenterImpl;
 import com.example.shoujiedemo.fround.view.HotView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -103,18 +104,31 @@ public class HotFragment extends Fragment implements HotView {
         recyclerView = view.findViewById(R.id.hot_rlv_view);
         smartRefreshLayout = view.findViewById(R.id.hot_smartrefresh);
         smartRefreshLayout.setHeaderHeight(100);
+        smartRefreshLayout.setFooterHeight(150);
+        smartRefreshLayout.setEnableLoadMore(true);
         if (pageNum == 0){
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                ++pageNum;
+                    ++pageNum;
+                    presenter.confirmInitContent(pageNum);
+                    refreshLayout.finishRefresh(400);
+
+            }
+
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNum++;
                 presenter.confirmInitContent(pageNum);
-                refreshLayout.finishRefresh();
-                Log.i("page",pageNum + "");
+                refreshLayout.finishLoadMore(400);
             }
         });
+
         Log.e("Hot","onCreateView");
         return view;
     }
@@ -178,7 +192,6 @@ public class HotFragment extends Fragment implements HotView {
             hotAdapter = new HotAdapter(getContext(),contentList);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(hotAdapter);
-            Log.e("contents","true");
         }else{
             contentList.addAll(contents);
             hotAdapter.notifyDataSetChanged();
@@ -190,6 +203,6 @@ public class HotFragment extends Fragment implements HotView {
         pageNum--;
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
-        Toast.makeText(getContext(),"失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
     }
 }

@@ -4,25 +4,36 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.activity.HeartActivity;
 import com.example.shoujiedemo.activity.PoemActivity;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.util.ConfigUtil;
+import com.example.shoujiedemo.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +58,20 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     TextView heartContent;
     ImageView followAnim;
     private Context context;
+    ListView setList;
+    Button btnCollect;
+    Button dismiss;
+    ImageView cover;
 
     private MyOnClikeListener myOnClikeListener;
     private List<Content> contents = new ArrayList<>();
     private MyFollowOperatePresenter presenter;
     private User user;
+    private View setAlterView;
+    private AlertDialog alert = null;
+    private AlertDialog.Builder builder = null;
+    private SetAdapter setAdapter;
+    private Set set1;
 
     private AnimationDrawable loadingDrawable;
     private int position;
@@ -64,6 +84,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         this.context = context;
         this.contents = contents;
         presenter = new MyFollowOperatePresenterImpl(this);
+        builder = new AlertDialog.Builder(context);
         initView();
         setMyOnClikeListenser();
     }
@@ -86,6 +107,8 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         popuMenu = itemView.findViewById(R.id.follow_heart_pull_menu);
         heartContent = itemView.findViewById(R.id.follow_heart_tv_cotent);
         followAnim = itemView.findViewById(R.id.follow_heart_iv_follow_anim);
+        cover = itemView.findViewById(R.id.follow_heart_iv_cover);
+
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
         else
@@ -95,6 +118,16 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
+        setAlterView = LayoutInflater.from(context).inflate(R.layout.collect_alterdialog_view,null,false);
+        setList = setAlterView.findViewById(R.id.set_list);
+        btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
+        dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
+        alert = builder.create();
+
+
+        /*Glide.with(context)
+                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getPic())
+                .into(cover);*/
     }
 
     public void setMyOnClikeListenser(){
@@ -130,6 +163,14 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             collected.setBackgroundResource(R.drawable.collectionselected);
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
+
+        Glide.with(context)
+                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
+                .into(head);
+
+        Glide.with(context)
+                .load( ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
+                .into(cover);
     }
 
     class MyOnClikeListener implements View.OnClickListener{
@@ -160,14 +201,9 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                         contents.get(position).setCollectnum(collectionNums);
                         collectionNum.setText(collectionNums + "");
                         contents.get(position).setCollect(false);
-                        presenter.confirmUnCollect();
+                        presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
-                        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-                        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
-                        contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");
-                        contents.get(position).setCollect(true);
-                        presenter.confirmCollect();
+                        presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_heart_btn_comment:
@@ -180,14 +216,14 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                         contents.get(position).setLikes(likeNums);
                         likeNum.setText(likeNums + "");
                         contents.get(position).setLike(true);
-                        presenter.confirmFavourite();
+                        presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
                         int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
                         contents.get(position).setLikes(likeNums);
                         likeNum.setText(likeNums + "");
                         contents.get(position).setLike(false);
-                        presenter.confirmUnFavourite();
+                        presenter.confirmUnFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }
                     break;
                 case R.id.follow_heart_btn_follow:
@@ -197,10 +233,10 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                     loadingDrawable.start();
                     if(isFollow) {  //关注
                         isFollow = false;
-                        presenter.confirmFollow();
+                        presenter.confirmFollow(UserUtil.USER_ID,contents.get(position).getUserid());
                     }else {         //取关
                         isFollow= true;
-                        presenter.confirmUnFolly();
+                        presenter.confirmUnFolly(UserUtil.USER_ID,contents.get(position).getUserid());
                     }
                     break;
                 case R.id.follow_heart_tv_cotent:
@@ -324,7 +360,49 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     }
 
     @Override
-    public void showSet() {
+    public void showSet(final List<Set> sets) {
+        setAdapter = new SetAdapter(sets,context);
+        setList.setAdapter(setAdapter);
+        btnCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.confirmCollect(UserUtil.USER_ID,contents.get(position).getId());
+                //Toast.makeText(context,"" + set1.getName(),Toast.LENGTH_SHORT).show();
+                alert.dismiss();
+            }
+        });
 
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        setList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                set1 = (Set) setAdapter.getItem(i);
+                view.setBackgroundColor(0x30CFCFCF);
+
+            }
+        });
+
+        alert.show();
+        Window window = alert.getWindow();
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setContentView(setAlterView);
+        window.setLayout(800,1000);
+
+    }
+
+    @Override
+    public void collect() {
+        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
+        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        contents.get(position).setCollectnum(collectionNums);
+        collectionNum.setText(collectionNums + "");
+        contents.get(position).setCollect(true);
+        Toast.makeText(context,"收藏成功" + set1.getName(),Toast.LENGTH_SHORT).show();
     }
 }

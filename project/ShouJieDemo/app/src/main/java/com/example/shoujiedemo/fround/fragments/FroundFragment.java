@@ -38,6 +38,15 @@ public class FroundFragment extends Fragment {
     private int currentState = 0;        //记录当前手指按下状态
     private List<Integer> scrolledPixeledList = new ArrayList<>(); //记录手指滑动时的像素坐标记录
     private Context context;
+    private HotFragment hotFragment;
+    private ArticleFragment articleFragment;
+    private MindFragment mindFragment;
+    private PoemFragment poemFragment;
+    private MusicFragment musicFragment;
+
+    public FroundFragment(){
+
+    }
 
     public FroundFragment(ViewPager2 viewPager2,Context context) {
         // Required empty public constructor
@@ -59,14 +68,21 @@ public class FroundFragment extends Fragment {
         froundViewPager2 = view.findViewById(R.id.fround_view);
         froudnTab = view.findViewById(R.id.fround_topTab);
 
-        fragments.add(new HotFragment());
-        fragments.add(new ArticleFragment());
-        fragments.add(new MindFragment());
-        fragments.add(new PoemFragment());
-        fragments.add(new MusicFragment());
+        if(hotFragment == null) {
+            hotFragment = new HotFragment();
+            articleFragment = new ArticleFragment();
+            mindFragment = new MindFragment();
+            poemFragment = new PoemFragment();
+            musicFragment = new MusicFragment();
+
+            fragments.add(hotFragment);
+            fragments.add(articleFragment);
+            fragments.add(mindFragment);
+            fragments.add(poemFragment);
+            fragments.add(musicFragment);
+        }
         froundViewPager2.setOffscreenPageLimit(1);
 
-        Log.e("context",context.getPackageName());
         fragmentPagerAdapter = new MyFragmentPagerAdapter((FragmentActivity) context,fragments);
         froundViewPager2.setAdapter(fragmentPagerAdapter);
 
