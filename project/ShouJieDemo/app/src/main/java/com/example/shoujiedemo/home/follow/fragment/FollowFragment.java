@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Content;
@@ -37,7 +38,6 @@ import java.util.List;
  * 我的关注
  */
 public class FollowFragment extends Fragment implements FollowView {
-
     //private List<Content> contents = new ArrayList<>();//关注内容列表
     private RecyclerView contentRlv;
     private FollowContentAdapter contentAdapter;

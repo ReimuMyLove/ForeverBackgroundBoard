@@ -1,6 +1,7 @@
 package com.example.shoujiedemo.adapter;
 
 import android.animation.ObjectAnimator;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -174,7 +175,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         articleCover.setScaleType(ImageView.ScaleType.FIT_XY);
 
         Glide.with(context)
-                .load( contents.get(position).getUser().getPicname())
+                .load(ConfigUtil.BASE_HEAD_URL +contents.get(position).getUser().getPicname())
                 .into(head);
 
     }
