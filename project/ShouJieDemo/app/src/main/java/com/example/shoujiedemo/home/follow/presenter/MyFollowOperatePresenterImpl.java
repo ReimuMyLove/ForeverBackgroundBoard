@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.model.MyFollowOperateModel;
 import com.example.shoujiedemo.home.follow.model.MyFollowOperateModelImpl;
@@ -15,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +40,7 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
     */
    @Override
    public void onCollectSuccess() {
-
+      contentView.collect();
    }
 
    /**
@@ -197,90 +199,105 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    }
 
    @Override
-   public void onLoadSetSuccess() {
-
+   public void onLoadSetSuccess(String jsons) {
+      Gson gson = new Gson();
+      Object json = null;
+      try {
+         json = new JSONTokener(jsons).nextValue();
+      } catch (JSONException e) {
+         e.printStackTrace();
+      }
+      if(json instanceof JSONObject) {
+         Set set = gson.fromJson(jsons, Set.class);
+         List<Set> setList = new ArrayList<>();
+         setList.add(set);
+         contentView.showSet(setList);
+      }else if(json instanceof JSONArray){
+         List<Set> setList = gson.fromJson(jsons, new TypeToken<List<Set>>() {}.getType());
+         contentView.showSet(setList);
+      }
    }
 
    /**
     * 验证点赞
     */
    @Override
-   public void confirmFavourite() {
+   public void confirmFavourite(int userId,int contentId) {
 
-      model.favourite(this);
+      model.favourite(this,userId,contentId);
    }
 
    /**
     * 验证取消点赞
     */
    @Override
-   public void confirmUnFavourite() {
-      model.unFavourite(this);
+   public void confirmUnFavourite(int userId,int contentId) {
+      model.unFavourite(this,userId,contentId);
    }
 
    /**
     * 验证分享
     */
    @Override
-   public void confirmShare() {
-      model.share(this);
+   public void confirmShare(int userId,int contentId) {
+      model.share(this,userId,contentId);
    }
 
    /**
     * 验证收藏
     */
    @Override
-   public void confirmCollect() {
+   public void confirmCollect(int userId,int contentId) {
 
-      model.collect(this);
+      model.collect(this,userId,contentId);
    }
 
    /**
     * 验证取消收藏
     */
    @Override
-   public void confirmUnCollect() {
-      model.unCollect(this);
+   public void confirmUnCollect(int userId,int contentId) {
+      model.unCollect(this,userId,contentId);
    }
 
    /**
     * 验证取关
     */
    @Override
-   public void confirmUnFolly() {
+   public void confirmUnFolly(int userId,int contentId) {
 
-      model.unFolly(this);
+      model.unFolly(this,userId,contentId);
    }
 
    @Override
-   public void confirmFollow() {
-      model.follow(this);
+   public void confirmFollow(int userId,int contentId) {
+      model.follow(this,userId,contentId);
    }
 
    /**
     * 验证举报
     */
    @Override
-   public void confirmReport() {
-      model.report(this);
+   public void confirmReport(int userId,int contentId) {
+      model.report(this,userId,contentId);
    }
 
    /**
     * 验证评论
     */
    @Override
-   public void confirmComment() {
-      model.comment(this);
+   public void confirmComment(int userId,int contentId) {
+      model.comment(this,userId,contentId);
    }
 
    @Override
-   public void loadComment() {
-      model.loadComment(this);
+   public void loadComment(int contentId) {
+      model.loadComment(this,contentId);
    }
 
    @Override
-   public void loadSet() {
-      model.loadSet(this);
+   public void loadSet(int userId) {
+      model.loadSet(this,userId);
    }
 
 

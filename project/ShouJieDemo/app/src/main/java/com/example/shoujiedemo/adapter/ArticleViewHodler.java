@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,15 +21,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.activity.ArticleActivity;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.util.ConfigUtil;
+import com.example.shoujiedemo.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +67,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     ImageView followAnim;
     ListView setList;
     Button btnCollect;
+    Button dismiss;
 
     private User user;
 
@@ -71,6 +77,8 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     private View setAlterView;
     private AlertDialog alert = null;
     private AlertDialog.Builder builder = null;
+    private SetAdapter setAdapter;
+    private Set set1;
 
 
     private List<Content> contents = new ArrayList<>();
@@ -136,14 +144,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         setAlterView = LayoutInflater.from(context).inflate(R.layout.collect_alterdialog_view,null,false);
         setList = setAlterView.findViewById(R.id.set_list);
         btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
+        dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         alert = builder.create();
 
-        /*builder.setView(setAlterView);
-        builder.setCancelable(false);*/
-
-
-
         setMyOnClikListenser();
+
     }
 
     public void initData(int position){
@@ -168,13 +173,16 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
         Glide.with(context)
                 .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
+                .apply(requestOptions)
                 .into(articleCover);
-        articleCover.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        //articleCover.setScaleType(ImageView.ScaleType.FIT_XY);
 
         Glide.with(context)
-                .load( contents.get(position).getUser().getPicname())
+                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
                 .into(head);
 
     }
@@ -221,26 +229,16 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                 case R.id.follow_article_btn_share:
 
                     break;
-                case R.id.follow_article_btn_collection://收藏
+                case R.id.follow_article_btn_collection:
                     if(contents.get(position).isCollect()) {
                         collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
                         int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
                         contents.get(position).setCollectnum(collectionNums);
                         collectionNum.setText(collectionNums + "");
                         contents.get(position).setCollect(false);
-                        presenter.confirmUnCollect();
+                        presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
-                        alert.show();
-                        Window window = alert.getWindow();
-                        window.setBackgroundDrawable(new BitmapDrawable());
-                        window.setContentView(setAlterView);
-                        window.setLayout(1000,1000);
-                        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-                        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
-                        contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");
-                        contents.get(position).setCollect(true);
-                        presenter.confirmCollect();
+                        presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_article_btn_comment://评论按钮跳转到详情界面
@@ -253,14 +251,14 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                         contents.get(position).setLikes(likeNums);
                         likeNum.setText(likeNums + "");
                         contents.get(position).setLike(true);
-                        presenter.confirmFavourite();
+                        presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
                         int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
                         contents.get(position).setLikes(likeNums);
                         likeNum.setText(likeNums + "");
                         contents.get(position).setLike(false);
-                        presenter.confirmUnFavourite();
+                        presenter.confirmUnFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }
                     break;
                 case R.id.follow_article_btn_follow:
@@ -270,10 +268,10 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                     loadingDrawable.start();
                     if(isFollow) {  //关注
                         isFollow = false;
-                        presenter.confirmFollow();
+                        presenter.confirmFollow(UserUtil.USER_ID,contents.get(position).getUserid());
                     }else {         //取关
                         isFollow= true;
-                        presenter.confirmUnFolly();
+                        presenter.confirmUnFolly(UserUtil.USER_ID,contents.get(position).getUserid());
                     }
                     break;
                 case R.id.follow_article_rn_content:
@@ -400,14 +398,58 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     }
 
     @Override
+    public void collect() {
+        collected.setBackgroundResource(R.drawable.collectionselected);//收藏
+        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        contents.get(position).setCollectnum(collectionNums);
+        collectionNum.setText(collectionNums + "");
+        contents.get(position).setCollect(true);
+        Toast.makeText(context,"收藏成功" + set1.getName(),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void loadComment(List<Comment> commentList) {
 
     }
 
     @Override
-    public void showSet() {
+    public void showSet(final List<Set> sets) {
+        setAdapter = new SetAdapter(sets,context);
+        setList.setAdapter(setAdapter);
+        btnCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.confirmCollect(UserUtil.USER_ID,contents.get(position).getId());
+                //Toast.makeText(context,"" + set1.getName(),Toast.LENGTH_SHORT).show();
+                alert.dismiss();
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        setList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                set1 = (Set) setAdapter.getItem(i);
+                view.setBackgroundColor(0x30CFCFCF);
+
+            }
+        });
+
         alert.show();
+        Window window = alert.getWindow();
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setContentView(setAlterView);
+        window.setLayout(800,1000);
+
     }
+
+
 
 
 }

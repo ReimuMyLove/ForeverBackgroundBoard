@@ -10,25 +10,25 @@ import java.util.List;
  */
 public interface MyFollowOperateModel {
 
-    void collect(MyFollowOperationPresenterListener listener);//收藏
+    void collect(MyFollowOperationPresenterListener listener,int userId,int contentId);//收藏
 
-    void unCollect(MyFollowOperationPresenterListener listener);//取消收藏
+    void unCollect(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消收藏
 
-    void comment(MyFollowOperationPresenterListener listener);//评论
+    void comment(MyFollowOperationPresenterListener listener,int userId,int contentId);//评论
 
-    void share(MyFollowOperationPresenterListener listener);//分享
+    void share(MyFollowOperationPresenterListener listener,int userId,int contentId);//分享
 
-    void favourite(MyFollowOperationPresenterListener listener);//点赞
+    void favourite(MyFollowOperationPresenterListener listener,int userId,int contentId);//点赞
 
-    void unFavourite(MyFollowOperationPresenterListener listener);//取消点赞
+    void unFavourite(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消点赞
 
-    void unFolly(MyFollowOperationPresenterListener listener);//取消关注
+    void unFolly(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消关注
 
-    void report(MyFollowOperationPresenterListener listener);//举报
+    void report(MyFollowOperationPresenterListener listener,int userId,int contentId);//举报
 
-    void follow(MyFollowOperationPresenterListener listener);//关注
+    void follow(MyFollowOperationPresenterListener listener,int userId,int followerId);//关注
 
-    void loadComment(MyFollowOperationPresenterListener listener);//加载评论
+    void loadComment(MyFollowOperationPresenterListener listener,int contentId);//加载评论
 
-    void loadSet(MyFollowOperationPresenterListener listener);//加载文集
+    void loadSet(MyFollowOperationPresenterListener listener,int userId);//加载文集
 }

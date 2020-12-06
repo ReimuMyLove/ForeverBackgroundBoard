@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#25D3D3D3"
+    android:background="#fff"
     android:orientation="vertical"
     android:id="@+id/fragment_follow"
     tools:context=".home.follow.fragment.FollowFragment">
@@ -15,27 +15,25 @@
     app:srlAccentColor="#00000000"
     app:srlPrimaryColor="#00000000"
     app:srlEnablePreviewInEditMode="true">
-    <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/refresh02"/>
+
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/follow_rlv_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="@android:color/transparent"
-        android:clipToPadding="false"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="15dp"
-        android:fadeScrollbars="true"
-        android:listSelector="@android:color/transparent"
         android:padding="12dp"
         android:layout_marginBottom="20dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollingCache="false"/>
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+       />
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loadmore"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

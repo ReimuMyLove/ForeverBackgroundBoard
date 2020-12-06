@@ -11,6 +11,7 @@
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/follow_heart_scrollview"
         android:layout_marginBottom="40dp"
@@ -18,8 +19,7 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/tv_userName_details_heart"
                 android:text="--"
@@ -108,15 +108,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+            <com.example.shoujiedemo.util.CircleImageView
+                android:layout_below="@id/iv_head_details_heart"
+                android:id="@+id/heart_details_iv_cover"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/bg04"
+                android:layout_width="180dp"
+                android:layout_height="180dp"/>
+
             <TextView
                 android:gravity="left"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="25dp"
-                android:layout_below="@id/iv_head_details_heart"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/heart_details_iv_cover"
                 android:id="@+id/tv_content_details_heart"
-                android:textColor="@color/articleLightBlack"
-                android:textSize="16sp"
+                android:textColor="#000"
+                android:textSize="17sp"
                 android:lineHeight="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

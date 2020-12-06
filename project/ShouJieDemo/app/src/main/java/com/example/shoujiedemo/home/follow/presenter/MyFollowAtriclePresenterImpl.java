@@ -1,9 +1,11 @@
 package com.example.shoujiedemo.home.follow.presenter;
 
+import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.home.follow.model.MyFollowAtricleModel;
 import com.example.shoujiedemo.home.follow.model.MyFollowAtricleModelImpl;
 import com.example.shoujiedemo.home.follow.view.ArticleView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
+import com.google.gson.Gson;
 
 public class MyFollowAtriclePresenterImpl implements MyFollowAtriclePresenter,MyFollowAtriclePresenterListener{
 
@@ -16,21 +18,21 @@ public class MyFollowAtriclePresenterImpl implements MyFollowAtriclePresenter,My
     }
 
 
-    /**
-     * 加载文章封面成功
-     */
     @Override
-    public void onLoadAtricleCoverSuccess() {
-        articleView.showImgCover();//显示文章封面
+    public void confirmLoadAtricleContent(int id) {
+        model.loadAtricleContent(this,id);
     }
 
-
-
-    /**
-     * 加载文章封面
-     */
     @Override
-    public void confirmLoadAtricleCover() {
-        model.loadAtricleCover(this);
+    public void onLoadAtricleContentSuccess(String text) {
+        Gson gson = new Gson();
+        Content article = gson.fromJson(text,Content.class);
+        String content = article.getText();
+        articleView.loadContent(content);
+    }
+
+    @Override
+    public void onLoadArticleContentError() {
+
     }
 }

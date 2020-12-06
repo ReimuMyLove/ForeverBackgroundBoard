@@ -36,6 +36,6 @@ public interface MyFollowOperationPresenterListener {
 
     void onLoadCommentSuccess(String jsons);
 
-    void onLoadSetSuccess();
+    void onLoadSetSuccess(String jsons);
 
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Comment;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
 
@@ -90,7 +91,17 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
     }
 
     @Override
-    public void showSet() {
+    public void showSet(List<Set> sets) {
 
+    }
+
+    @Override
+    public void collect() {
+        /*collected.setBackgroundResource(R.drawable.collectionselected);//收藏
+        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        contents.get(position).setCollectnum(collectionNums);
+        collectionNum.setText(collectionNums + "");
+        contents.get(position).setCollect(true);
+        Toast.makeText(context,"收藏成功" + set1.getName(),Toast.LENGTH_SHORT).show();*/
     }
 }

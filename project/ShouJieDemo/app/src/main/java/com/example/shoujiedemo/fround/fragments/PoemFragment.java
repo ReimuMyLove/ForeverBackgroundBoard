@@ -27,6 +27,7 @@ import com.example.shoujiedemo.fround.presenter.PoemLoadPresenterImpl;
 import com.example.shoujiedemo.fround.view.PoemView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,20 +73,28 @@ public class PoemFragment extends Fragment implements PoemView {
 
         smartRefreshLayout = view.findViewById(R.id.poem_smartrefresh);
         smartRefreshLayout.setHeaderHeight(100);
-        smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.setFooterHeight(150);
+        smartRefreshLayout.setEnableLoadMore(true);
+        if(pageNum == 0) {
+            smartRefreshLayout.autoRefresh();
+        }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 ++pageNum;
-                if(pageNum == 1){
-                    presenter.confirmInitContent(3,pageNum);
-                    refreshLayout.finishRefresh();
-                    Log.i("page",pageNum + "");
-                }else{
-                    presenter.confirmInitContent(3,pageNum);
-                    refreshLayout.finishRefresh();
-                    Log.i("page",pageNum + "");
-                }
+                presenter.confirmInitContent(3,pageNum);
+                refreshLayout.finishRefresh(400);
+
+            }
+
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNum++;
+                presenter.confirmInitContent(3,pageNum);
+                refreshLayout.finishLoadMore(400);
             }
         });
         return view;
@@ -115,7 +124,7 @@ public class PoemFragment extends Fragment implements PoemView {
         pageNum--;
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
-        Toast.makeText(getContext(),"失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
     }
 
     /**

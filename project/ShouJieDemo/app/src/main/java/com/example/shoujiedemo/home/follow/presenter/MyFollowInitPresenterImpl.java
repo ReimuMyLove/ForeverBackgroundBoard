@@ -65,7 +65,8 @@ public class MyFollowInitPresenterImpl implements MyFollowInitPresenter, MyFollo
             for(User user1 :users){
                 if(content1.getUserid() == user1.getId()){
                     content1.setUser(user1);
-                    continue;
+                    Log.e("content" + content1.getId(),content1.getUserid() + "");
+                    Log.e("user" + user1.getId(),user1.toString());
                 }
             }
         }
