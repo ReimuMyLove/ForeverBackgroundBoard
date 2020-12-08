@@ -9,6 +9,15 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BaseTopicDetial<M extends BaseTopicDetial<M>> extends Model<M> implements IBean {
 
+	public M setId(java.lang.Integer id) {
+		set("id", id);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getId() {
+		return getInt("id");
+	}
+
 	public M setTopicid(java.lang.Integer topicid) {
 		set("topicid", topicid);
 		return (M)this;
@@ -54,13 +63,13 @@ public abstract class BaseTopicDetial<M extends BaseTopicDetial<M>> extends Mode
 		return get("time");
 	}
 
-	public M setId(java.lang.Integer id) {
-		set("id", id);
+	public M setCollectnum(java.lang.Integer collectnum) {
+		set("collectnum", collectnum);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getId() {
-		return getInt("id");
+	public java.lang.Integer getCollectnum() {
+		return getInt("collectnum");
 	}
 
 }

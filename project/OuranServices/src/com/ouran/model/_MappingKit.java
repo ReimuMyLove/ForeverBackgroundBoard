@@ -17,19 +17,19 @@ public class _MappingKit {
 	
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("cheat", "id", Cheat.class);
-		// Composite Primary Key order: fenid,userid
-		arp.addMapping("fen", "fenid,userid", Fen.class);
+		arp.addMapping("collect", "id", Collect.class);
 		// Composite Primary Key order: followerid,userid
 		arp.addMapping("follow", "followerid,userid", Follow.class);
+		arp.addMapping("forward", "id", Forward.class);
 		arp.addMapping("likes", "id", Likes.class);
+		arp.addMapping("music", "id", Music.class);
 		arp.addMapping("topic", "id", Topic.class);
-		// Composite Primary Key order: topicid,userid
-		arp.addMapping("topic_detial", "topicid,userid", TopicDetial.class);
+		arp.addMapping("topic_detial", "id", TopicDetial.class);
 		arp.addMapping("tuwen", "id", Tuwen.class);
 		arp.addMapping("types", "type", Types.class);
 		arp.addMapping("user", "id", User.class);
 		arp.addMapping("wenji", "id", Wenji.class);
-		arp.addMapping("wenji_detail", "wenjiid", WenjiDetail.class);
+		arp.addMapping("wenji_detail", "id", WenjiDetail.class);
 	}
 }
 

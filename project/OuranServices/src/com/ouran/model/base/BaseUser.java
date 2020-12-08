@@ -72,4 +72,40 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return getStr("sign");
 	}
 
+	public M setFennum(java.lang.Integer fennum) {
+		set("fennum", fennum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getFennum() {
+		return getInt("fennum");
+	}
+
+	public M setFollownum(java.lang.Integer follownum) {
+		set("follownum", follownum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getFollownum() {
+		return getInt("follownum");
+	}
+
+	public M setBackgroundpic1(java.lang.String backgroundpic1) {
+		set("backgroundpic1", backgroundpic1);
+		return (M)this;
+	}
+	
+	public java.lang.String getBackgroundpic1() {
+		return getStr("backgroundpic1");
+	}
+
+	public M setBackgroundpic2(java.lang.String backgroundpic2) {
+		set("backgroundpic2", backgroundpic2);
+		return (M)this;
+	}
+	
+	public java.lang.String getBackgroundpic2() {
+		return getStr("backgroundpic2");
+	}
+
 }

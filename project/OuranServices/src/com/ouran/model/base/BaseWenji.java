@@ -27,13 +27,31 @@ public abstract class BaseWenji<M extends BaseWenji<M>> extends Model<M> impleme
 		return getStr("name");
 	}
 
-	public M setUser(java.lang.String user) {
-		set("user", user);
+	public M setUserid(java.lang.Integer userid) {
+		set("userid", userid);
 		return (M)this;
 	}
 	
-	public java.lang.String getUser() {
-		return getStr("user");
+	public java.lang.Integer getUserid() {
+		return getInt("userid");
+	}
+
+	public M setPic(java.lang.String pic) {
+		set("pic", pic);
+		return (M)this;
+	}
+	
+	public java.lang.String getPic() {
+		return getStr("pic");
+	}
+
+	public M setTuwenNum(java.lang.Integer tuwenNum) {
+		set("tuwen_num", tuwenNum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getTuwenNum() {
+		return getInt("tuwen_num");
 	}
 
 }

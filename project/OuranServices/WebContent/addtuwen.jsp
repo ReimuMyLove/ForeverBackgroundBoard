@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<form action="tuwen/add" method ="post">
+		<form action="tuwen/add" method ="post" enctype="multipart/form-data">
 		title：
 		<input type="text" name="title"/>
 		<br/>
@@ -26,9 +26,14 @@
 		isoriginal：
 		<input type="text" name="isoriginal"/>
 		<br/>
-		text：
-		<input type="text" name="text"/>
+		wenjiid：
+		<input type="text" name="wenjiid"/>
 		<br/>
+		text：
+		<textarea name="text">
+		</textarea>
+		<br/>
+		<input type="file" name="upFile" /><br>
 		<input type="submit" value="提交">
 	</form>
 </body>

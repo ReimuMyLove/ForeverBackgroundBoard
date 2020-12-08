@@ -18,6 +18,15 @@ public abstract class BaseCheat<M extends BaseCheat<M>> extends Model<M> impleme
 		return getInt("id");
 	}
 
+	public M setReplyid(java.lang.Integer replyid) {
+		set("replyid", replyid);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getReplyid() {
+		return getInt("replyid");
+	}
+
 	public M setTopicDetialId(java.lang.Integer topicDetialId) {
 		set("topic_detial_id", topicDetialId);
 		return (M)this;
@@ -61,6 +70,33 @@ public abstract class BaseCheat<M extends BaseCheat<M>> extends Model<M> impleme
 	
 	public java.lang.String getText() {
 		return getStr("text");
+	}
+
+	public M setTime(java.util.Date time) {
+		set("time", time);
+		return (M)this;
+	}
+	
+	public java.util.Date getTime() {
+		return get("time");
+	}
+
+	public M setMusicid(java.lang.Integer musicid) {
+		set("musicid", musicid);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getMusicid() {
+		return getInt("musicid");
+	}
+
+	public M setLikes(java.lang.Integer likes) {
+		set("likes", likes);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getLikes() {
+		return getInt("likes");
 	}
 
 }

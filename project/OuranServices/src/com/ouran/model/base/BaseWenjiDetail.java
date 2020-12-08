@@ -9,6 +9,15 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BaseWenjiDetail<M extends BaseWenjiDetail<M>> extends Model<M> implements IBean {
 
+	public M setId(java.lang.Integer id) {
+		set("id", id);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getId() {
+		return getInt("id");
+	}
+
 	public M setWenjiid(java.lang.Integer wenjiid) {
 		set("wenjiid", wenjiid);
 		return (M)this;
@@ -34,6 +43,15 @@ public abstract class BaseWenjiDetail<M extends BaseWenjiDetail<M>> extends Mode
 	
 	public java.lang.Integer getTuwenId() {
 		return getInt("tuwen_id");
+	}
+
+	public M setMusicId(java.lang.Integer musicId) {
+		set("music_id", musicId);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getMusicId() {
+		return getInt("music_id");
 	}
 
 }

@@ -63,15 +63,6 @@ public abstract class BaseTuwen<M extends BaseTuwen<M>> extends Model<M> impleme
 		return getInt("userid");
 	}
 
-	public M setLikes(java.lang.Integer likes) {
-		set("likes", likes);
-		return (M)this;
-	}
-	
-	public java.lang.Integer getLikes() {
-		return getInt("likes");
-	}
-
 	public M setTime(java.util.Date time) {
 		set("time", time);
 		return (M)this;
@@ -97,6 +88,60 @@ public abstract class BaseTuwen<M extends BaseTuwen<M>> extends Model<M> impleme
 	
 	public java.lang.String getText() {
 		return getStr("text");
+	}
+
+	public M setTag(java.lang.String tag) {
+		set("tag", tag);
+		return (M)this;
+	}
+	
+	public java.lang.String getTag() {
+		return getStr("tag");
+	}
+
+	public M setLikes(java.lang.Integer likes) {
+		set("likes", likes);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getLikes() {
+		return getInt("likes");
+	}
+
+	public M setCollectnum(java.lang.Integer collectnum) {
+		set("collectnum", collectnum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getCollectnum() {
+		return getInt("collectnum");
+	}
+
+	public M setCheatnum(java.lang.Integer cheatnum) {
+		set("cheatnum", cheatnum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getCheatnum() {
+		return getInt("cheatnum");
+	}
+
+	public M setForwardnum(java.lang.Integer forwardnum) {
+		set("forwardnum", forwardnum);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getForwardnum() {
+		return getInt("forwardnum");
+	}
+
+	public M setWenji(java.lang.String wenji) {
+		set("wenji", wenji);
+		return (M)this;
+	}
+	
+	public java.lang.String getWenji() {
+		return getStr("wenji");
 	}
 
 }

@@ -27,13 +27,13 @@ public abstract class BaseLikes<M extends BaseLikes<M>> extends Model<M> impleme
 		return getInt("tuwenid");
 	}
 
-	public M setTopicid(java.lang.Integer topicid) {
-		set("topicid", topicid);
+	public M setTopicdetialid(java.lang.Integer topicdetialid) {
+		set("topicdetialid", topicdetialid);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getTopicid() {
-		return getInt("topicid");
+	public java.lang.Integer getTopicdetialid() {
+		return getInt("topicdetialid");
 	}
 
 	public M setUserid(java.lang.Integer userid) {
@@ -43,6 +43,24 @@ public abstract class BaseLikes<M extends BaseLikes<M>> extends Model<M> impleme
 	
 	public java.lang.Integer getUserid() {
 		return getInt("userid");
+	}
+
+	public M setCheatid(java.lang.Integer cheatid) {
+		set("cheatid", cheatid);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getCheatid() {
+		return getInt("cheatid");
+	}
+
+	public M setMusicid(java.lang.Integer musicid) {
+		set("musicid", musicid);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getMusicid() {
+		return getInt("musicid");
 	}
 
 }
