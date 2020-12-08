@@ -178,19 +178,19 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
         RequestOptions requestOptions = new RequestOptions().centerCrop();
-        if( contents.get(position).getPic() != null) {
+        //if(contents.get(position).getPic() != null && contents.get(position).getPic().equals("null")) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
                     .apply(requestOptions)
                     .into(articleCover);
-        }
+        //}
 
         //articleCover.setScaleType(ImageView.ScaleType.FIT_XY);
-        if(contents.get(position).getUser().getPicname() != null) {
+        //if(contents.get(position).getUser().getPicname() != null && contents.get(position).getUser().getPicname().equals("null")) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
                     .into(head);
-        }
+        //}
 
     }
 
