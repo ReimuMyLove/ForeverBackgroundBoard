@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.activity.HeartActivity;
 import com.example.shoujiedemo.activity.PoemActivity;
+import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Set;
@@ -34,6 +35,8 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImp
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,14 +166,16 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             collected.setBackgroundResource(R.drawable.collectionselected);
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
-
-        Glide.with(context)
-                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
-                .into(head);
-
-        Glide.with(context)
-                .load( ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
-                .into(cover);
+        if( contents.get(position).getPic() != null) {
+            Glide.with(context)
+                    .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
+                    .into(head);
+        }
+        if(contents.get(position).getUser().getPicname() != null) {
+            Glide.with(context)
+                    .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
+                    .into(cover);
+        }
     }
 
     class MyOnClikeListener implements View.OnClickListener{
@@ -197,32 +202,47 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                 case R.id.follow_heart_btn_collection:
                     if(contents.get(position).isCollect()) {
                         collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
-                        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
+                        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
                         contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");
+                        collectionNum.setText(collectionNums + "");*/
                         contents.get(position).setCollect(false);
+                        MsgEvent event = new MsgEvent();
+                        event.setId(contents.get(position).getId());
+                        event.setType("collect");
+                        event.setValue(contents.get(position).isCollect());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_heart_btn_comment:
-
+                        comment(new Comment());
                     break;
                 case R.id.follow_heart_btn_like:
                     if(!contents.get(position).isLike()) {
                         like.setBackgroundResource(R.drawable.likeselected);
-                        int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
+                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
                         contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");
+                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(true);
+                        MsgEvent event = new MsgEvent();
+                        event.setType("like");
+                        event.setId(contents.get(position).getId());
+                        event.setValue(contents.get(position).isLike());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
-                        int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
+                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
                         contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");
+                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(false);
+                        MsgEvent event = new MsgEvent();
+                        event.setType("like");
+                        event.setId(contents.get(position).getId());
+                        event.setValue(contents.get(position).isLike());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmUnFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }
                     break;
@@ -350,14 +370,27 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     }
 
     @Override
-    public void comment() {
-
+    public void comment(Comment comment) {
+        Intent intent2 = new Intent(context,HeartActivity.class);
+        Bundle bundle2 = new Bundle();
+        bundle2.putSerializable("heart",contents.get(position));
+        bundle2.putBoolean("isFollow",isFollow);
+        bundle2.putSerializable("user",contents.get(position).getUser());
+        bundle2.putInt("position",position);
+        intent2.putExtra("bundle",bundle2);
+        context.startActivity(intent2);
     }
 
     @Override
     public void loadComment(List<Comment> commentList) {
 
     }
+
+    @Override
+    public void deleteComment() {
+
+    }
+
 
     @Override
     public void showSet(final List<Set> sets) {
@@ -399,10 +432,15 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     @Override
     public void collect() {
         collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
         contents.get(position).setCollectnum(collectionNums);
-        collectionNum.setText(collectionNums + "");
+        collectionNum.setText(collectionNums + "");*/
         contents.get(position).setCollect(true);
+        MsgEvent event = new MsgEvent();
+        event.setId(contents.get(position).getId());
+        event.setType("collect");
+        event.setValue(contents.get(position).isCollect());
+        EventBus.getDefault().postSticky(event);
         Toast.makeText(context,"收藏成功" + set1.getName(),Toast.LENGTH_SHORT).show();
     }
 }

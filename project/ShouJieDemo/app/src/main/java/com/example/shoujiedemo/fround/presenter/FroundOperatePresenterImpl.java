@@ -191,6 +191,7 @@ public class FroundOperatePresenterImpl implements FroundOperatePresenter, Froun
       contentView.loadComment(comments);
    }
 
+
    /**
     * 验证点赞
     */
@@ -267,6 +268,8 @@ public class FroundOperatePresenterImpl implements FroundOperatePresenter, Froun
    public void loadComment() {
       model.loadComment(this);
    }
+
+
 
 
 }

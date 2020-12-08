@@ -45,9 +45,10 @@ public class ArticleFragment extends Fragment implements ArticleView {
     private ArticleAdapter articleAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
-    private ArticleEvent msgEvent;
+    private MsgEvent msgEvent;
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
+    private int refreshTag = 0;
 
 
     public ArticleFragment() {
@@ -57,7 +58,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNum = 0;
+        pageNum = 1;
         presenter = new ArticleLoadDataPresenterImpl(this);
         EventBus.getDefault().register(this);
         Log.e("Article","onCreate");
@@ -86,15 +87,15 @@ public class ArticleFragment extends Fragment implements ArticleView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 0) {
+        if(pageNum == 1) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                ++pageNum;
+
                 presenter.confirmInitContent(0,pageNum);
-                refreshLayout.finishRefresh(400);
+                refreshLayout.finishRefresh(600);
 
             }
 
@@ -103,9 +104,9 @@ public class ArticleFragment extends Fragment implements ArticleView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNum++;
+
                 presenter.confirmInitContent(0,pageNum);
-                refreshLayout.finishLoadMore(400);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
@@ -118,13 +119,39 @@ public class ArticleFragment extends Fragment implements ArticleView {
 
     @Override
     public void showContentListData(List<Content> articles) {
-        if(articleList.size() == 0 || articleList == null) {
-            this.articleList = articles;
-            articleAdapter = new ArticleAdapter(articleList, getContext());
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(articleAdapter);
+        if(articleList.size() < 10 || articleList == null) {
+            if(refreshTag == 0) {
+                this.articleList = articles;
+                articleAdapter = new ArticleAdapter(articleList, getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(articleAdapter);
+                refreshTag = 1;
+            }else{
+                List<Content> newContents = new ArrayList<>();
+                for(Content content :articleList){
+                    for(Content content1:articles){
+                        if(content.getId() == content1.getId())
+                            newContents.add(content1);
+                    }
+                }
+                articleList.addAll(articles);
+                articleList.removeAll(newContents);
+                articleAdapter.notifyDataSetChanged();
+            }
+            if(articleList.size() == 10)
+                pageNum++;
         }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :articleList){
+                for(Content content1:articles){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
             articleList.addAll(articles);
+            articleList.removeAll(newList);
+            if(articleList.size() % 10 == 0)
+                ++pageNum;
             articleAdapter.notifyDataSetChanged();
         }
     }
@@ -142,40 +169,74 @@ public class ArticleFragment extends Fragment implements ArticleView {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onArticleEventThread(ArticleEvent event){
-        Log.d("event",event.getType() + "");
+    public void onMainEventThread(MsgEvent event){
         msgEvent = event;
         if(msgEvent != null){
             switch(msgEvent.getType()){
                 case "like":
                     if(msgEvent.isValue()){
-                        articleList.get(msgEvent.getPosition()).setLike(true);
-                        articleList.get(msgEvent.getPosition()).setLikes(articleList.get(msgEvent.getPosition()).getLikes() + 1);
+                        for(Content content:articleList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(true);
+                                content.setLikes(content.getLikes() + 1);
+                                break;
+                            }
+                        }
                         articleAdapter.notifyDataSetChanged();
-                        Log.e("fragment","true");
                     }else{
-                        articleList.get(msgEvent.getPosition()).setLike(false);
-                        articleList.get(msgEvent.getPosition()).setLikes(articleList.get(msgEvent.getPosition()).getLikes() - 1);
+                        for(Content content:articleList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(false);
+                                content.setLikes(content.getLikes() - 1);
+                                break;
+                            }
+                        }
                         articleAdapter.notifyDataSetChanged();
-                        Log.e("fragment","false");
+
                     }
                     msgEvent = null;
                     break;
                 case "collect":
                     if(msgEvent.isValue()){
-                        articleList.get(msgEvent.getPosition()).setCollect(true);
-                        articleList.get(msgEvent.getPosition()).setCollectnum(articleList.get(msgEvent.getPosition()).getCollectnum() + 1);
+                        for(Content content:articleList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(true);
+                                content.setCollectnum(content.getCollectnum() + 1);
+                                break;
+                            }
+                        }
                         articleAdapter.notifyDataSetChanged();
                     }else{
-                        articleList.get(msgEvent.getPosition()).setCollect(false);
-                        articleList.get(msgEvent.getPosition()).setCollectnum(articleList.get(msgEvent.getPosition()).getCollectnum() - 1);
+                        for(Content content:articleList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(false);
+                                content.setCollectnum(content.getCollectnum() - 1);
+                                break;
+                            }
+                        }
                         articleAdapter.notifyDataSetChanged();
+
                     }
                     msgEvent = null;
                     break;
                 case "comment":
-                    articleList.get(msgEvent.getPosition()).setCheatnum(msgEvent.getIntValue());
+                    if(event.isValue()) {
+                        for (Content content : articleList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() + 1);
+                                break;
+                            }
+                        }
+                    }else{
+                        for (Content content : articleList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() - 1);
+                                break;
+                            }
+                        }
+                    }
                     articleAdapter.notifyDataSetChanged();
+
                     break;
             }
         }

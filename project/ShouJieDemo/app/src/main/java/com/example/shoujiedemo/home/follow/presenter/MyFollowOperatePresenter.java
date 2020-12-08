@@ -18,9 +18,11 @@ public interface MyFollowOperatePresenter {
 
     void confirmReport(int userId,int contentId);//举报
 
-    void confirmComment(int userId,int contentId);//评论
+    void confirmComment(int userId,int contentId,String text);//评论
 
-    void loadComment(int contentId);//加载评论
+    void loadComment(int contentId,int pageNum);//加载评论
 
     void loadSet(int userId);//加载文集
+
+    void deleteComment(int commentId);//删除评论
 }

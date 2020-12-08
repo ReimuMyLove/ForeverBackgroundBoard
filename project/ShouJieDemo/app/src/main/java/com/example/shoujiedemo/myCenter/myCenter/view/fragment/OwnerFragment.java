@@ -184,25 +184,25 @@ public class OwnerFragment extends Fragment {
                 mC_card;        //卡片
         //获取背景控件
         mC_bg = myCenter_userBackground.getLayoutParams();
-        mC_bg.height = (width*5/7); //设置背景图为13:10的长宽比
+        mC_bg.height = (width*5/6); //设置背景图为13:10的长宽比
         //获取三角控件
         mC_uI_bg = myCenter_userImg_background.getLayoutParams();
-        mC_uI_bg.height = width*4/5; //设置三角高度为3/5屏幕宽度
+        mC_uI_bg.height = width*5/6; //设置三角高度为3/5屏幕宽度
         //获取头像定位辅助框
         mC_uI_top = myCenter_userImg_top.getLayoutParams();
         mC_uI_top.height = (width*4/5);
-        myCenter_userImg_top.setPadding(0,width*3/7,width/60,0);
+        myCenter_userImg_top.setPadding(0,width*5/10,width/15,0);
         //获取头像控件
         mC_uI = myCenter_userImg.getLayoutParams();
-        mC_uI.height = (width/5);
-        mC_uI.width = (width/5); //设置头像宽高均为1/5屏幕宽
+        mC_uI.height = (width*3/14);
+        mC_uI.width = (width*3/14); //设置头像宽高均为1/5屏幕宽
         //获取卡片定位辅助框
-        myCenter_card_top.setPadding(0,width*6/9,0,10);
+        //myCenter_card_top.setPadding(0,width*1/3000,0,0);
         //获取卡片控件
         mC_card = myCenter_card.getLayoutParams();
         mC_card.width = (width*17/20); //设置卡片宽度为9/10屏幕宽度
         //获取用户名控件
-        myCenter_userInformation.setPadding(0,width*4/9,0,0);
+        myCenter_userInformation.setPadding(0,width*6/11,width*2/8,0);
     }
 
     /**

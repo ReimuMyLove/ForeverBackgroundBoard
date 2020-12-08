@@ -44,13 +44,14 @@ import java.util.List;
  */
 public class MindFragment extends Fragment implements HeartView {
 
-    private HeartEvent msgEvent;
+    private MsgEvent msgEvent;
     private List<Content> heartList = new ArrayList<>();
     private HeartAdapter heartAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
+    private int refreshTag = 0;
 
     public MindFragment() {
         // Required empty public constructor
@@ -59,7 +60,7 @@ public class MindFragment extends Fragment implements HeartView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNum = 0;
+        pageNum = 1;
         presenter = new HeartLoadDataPresenterImpl(this);
         EventBus.getDefault().register(this);
     }
@@ -75,15 +76,15 @@ public class MindFragment extends Fragment implements HeartView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 0) {
+        if(pageNum == 1) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                ++pageNum;
+
                 presenter.confirmInitContent(2,pageNum);
-                refreshLayout.finishRefresh(400);
+                refreshLayout.finishRefresh(600);
 
             }
 
@@ -92,9 +93,9 @@ public class MindFragment extends Fragment implements HeartView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNum++;
+
                 presenter.confirmInitContent(2,pageNum);
-                refreshLayout.finishLoadMore(400);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
@@ -108,13 +109,41 @@ public class MindFragment extends Fragment implements HeartView {
 
     @Override
     public void showContentListData(List<Content> hearts) {
-        if(heartList.size() == 0 || heartList == null) {
-            this.heartList = hearts;
-            heartAdapter = new HeartAdapter(heartList, getContext());
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(heartAdapter);
+        if(heartList.size() < 10 || heartList == null) {
+            if(refreshTag == 0) {
+                this.heartList = hearts;
+                heartAdapter = new HeartAdapter(heartList, getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(heartAdapter);
+                refreshTag = 1;
+            }else{
+                List<Content> newHearts = new ArrayList<>();
+                for(Content content:heartList){
+                    for(Content content1:hearts){
+                        if(content.getId() == content1.getId())
+                            newHearts.add(content1);
+                    }
+                }
+                heartList.addAll(hearts);
+                heartList.removeAll(newHearts);
+                heartAdapter.notifyDataSetChanged();
+            }
+            if(heartList.size() == 10)
+                pageNum++;
         }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :heartList){
+                for(Content content1:hearts){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
             heartList.addAll(hearts);
+            heartList.removeAll(newList);
+
+            if(heartList.size() % 10 == 0)
+                pageNum++;
+
             heartAdapter.notifyDataSetChanged();
         }
     }
@@ -132,40 +161,75 @@ public class MindFragment extends Fragment implements HeartView {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onHeartEventThread(HeartEvent event){
+    public void onMainEventThread(MsgEvent event){
         Log.d("event",event.getType() + "");
         msgEvent = event;
         if(msgEvent != null){
             switch(msgEvent.getType()){
                 case "like":
                     if(msgEvent.isValue()){
-                        heartList.get(msgEvent.getPosition()).setLike(true);
-                        heartList.get(msgEvent.getPosition()).setLikes(heartList.get(msgEvent.getPosition()).getLikes() + 1);
+                        for(Content content:heartList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(true);
+                                content.setLikes(content.getLikes() + 1);
+                                break;
+                            }
+                        }
                         heartAdapter.notifyDataSetChanged();
-                        Log.e("fragment","true");
                     }else{
-                        heartList.get(msgEvent.getPosition()).setLike(false);
-                        heartList.get(msgEvent.getPosition()).setLikes(heartList.get(msgEvent.getPosition()).getLikes() - 1);
+                        for(Content content:heartList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(false);
+                                content.setLikes(content.getLikes() - 1);
+                                break;
+                            }
+                        }
                         heartAdapter.notifyDataSetChanged();
-                        Log.e("fragment","false");
+
                     }
                     msgEvent = null;
                     break;
                 case "collect":
                     if(msgEvent.isValue()){
-                        heartList.get(msgEvent.getPosition()).setCollect(true);
-                        heartList.get(msgEvent.getPosition()).setCollectnum(heartList.get(msgEvent.getPosition()).getCollectnum() + 1);
+                        for(Content content:heartList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(true);
+                                content.setCollectnum(content.getCollectnum() + 1);
+                                break;
+                            }
+                        }
                         heartAdapter.notifyDataSetChanged();
                     }else{
-                        heartList.get(msgEvent.getPosition()).setCollect(false);
-                        heartList.get(msgEvent.getPosition()).setCollectnum(heartList.get(msgEvent.getPosition()).getCollectnum() - 1);
+                        for(Content content:heartList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(false);
+                                content.setCollectnum(content.getCollectnum() - 1);
+                                break;
+                            }
+                        }
                         heartAdapter.notifyDataSetChanged();
                     }
                     msgEvent = null;
                     break;
                 case "comment":
-                    heartList.get(msgEvent.getPosition()).setCheatnum(msgEvent.getIntValue());
+                    if(msgEvent.isValue()) {
+                        for (Content content : heartList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() + 1);
+                                break;
+                            }
+                        }
+                    }else{
+                        for (Content content : heartList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() - 1);
+                                break;
+                            }
+                        }
+                    }
+                    msgEvent = null;
                     heartAdapter.notifyDataSetChanged();
+
                     break;
             }
         }

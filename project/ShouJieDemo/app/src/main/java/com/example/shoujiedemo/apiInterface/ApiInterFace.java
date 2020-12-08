@@ -64,13 +64,6 @@ public interface ApiInterFace {
     Observable<ResponseBody> disCollect(@Query("wenjiid") int setId,@Query("tuwen_id") int contentId);
 
     /**
-     * 评论
-     * @return
-     */
-    @GET("findFollows")
-    Observable<ResponseBody> comment(@Query("userid") int userId,@Query("pagenum") int pageNum);
-
-    /**
      * 关注
      * @return
      */
@@ -92,5 +85,25 @@ public interface ApiInterFace {
     Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal);
 
 
+    /**
+     * 加载评论
+     * @return
+     */
+    @GET("find")
+    Observable<ResponseBody> loadComments(@Query("tu_id") int tuId,@Query("pagenum") int pageNum);
+
+    /**
+     * 添加评论
+     * @return
+     */
+    @GET("addcheat")
+    Observable<ResponseBody> addComment(@Query("user1id") int userId,@Query("tu_id") int contentId,@Query("text") String content);
+
+    /**
+     * 添加评论
+     * @return
+     */
+    @GET("deletecheat")
+    Observable<ResponseBody> deleteComment(@Query("id") int id);
 
 }

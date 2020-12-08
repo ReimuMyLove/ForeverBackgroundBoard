@@ -20,7 +20,6 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_marginLeft="3dp"
-            android:layout_marginTop="20dp"
             android:src="@drawable/wangzuxian" />
 
         <TextView
@@ -176,12 +175,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/follow_heart_tv_tag0"
+            android:layout_below="@id/follow_heart_tv_cotent"
+            android:textColor="#80008B8B"
+
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/follow_heart_tv_tag01"
+            android:text="#感悟"
+            android:layout_below="@id/follow_heart_tv_cotent"
+            android:textColor="#80008B8B"
+            android:layout_toRightOf="@id/follow_heart_tv_tag0"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/follow_heart_tv_tag02"
+            android:layout_below="@id/follow_heart_tv_cotent"
+            android:layout_toRightOf="@id/follow_heart_tv_tag01"
+            android:textColor="#80008B8B"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="15dp"
-
-            android:layout_below="@id/follow_heart_tv_cotent"
+            android:layout_marginTop="18dp"
+            android:layout_below="@id/follow_heart_tv_tag01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

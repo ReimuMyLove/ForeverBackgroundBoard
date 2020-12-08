@@ -19,8 +19,8 @@
 
         <com.example.shoujiedemo.util.CircleImageView
             android:id="@+id/follow_article_iv_head"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="3dp"
             android:src="@drawable/wangzuxian" />
@@ -100,62 +100,6 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/pull" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/follow_article_pull_menu"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/follow_article_btn_follow"
-            android:layout_marginRight="20dp"
-            android:elevation="10dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:cardCornerRadius="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/follow_article_ln_report"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="举报" />
-
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:background="@drawable/report" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/follow_article_tv_unLike"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="不感兴趣" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:elevation="4dp"
@@ -228,13 +172,87 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/follow_article_pull_menu"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/follow_article_btn_follow"
+            android:layout_marginRight="20dp"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/follow_article_ln_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="举报" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:background="@drawable/report" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/follow_article_tv_unLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不感兴趣" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
-            android:id="@+id/follow_article_tv_tag"
+            android:id="@+id/follow_artivle_tv_tag0"
             android:layout_below="@id/follow_article_rn_content"
-            android:text="#原创#文章"
             android:textColor="#80008B8B"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/follow_article_tv_tag01"
+            android:layout_below="@id/follow_article_rn_content"
+            android:text="#文章"
+            android:textColor="#80008B8B"
+            android:layout_toRightOf="@id/follow_artivle_tv_tag0"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/follow_article_tv_tag02"
+            android:layout_below="@id/follow_article_rn_content"
+            android:layout_toRightOf="@id/follow_article_tv_tag01"
+            android:textColor="#80008B8B"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -243,7 +261,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="15dp"
-            android:layout_below="@id/follow_article_tv_tag"
+            android:layout_below="@id/follow_article_tv_tag02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

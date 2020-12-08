@@ -21,4 +21,6 @@ public interface FroundOperatePresenter {
     void confirmComment();//评论
 
     void loadComment();//加载评论
+
+
 }

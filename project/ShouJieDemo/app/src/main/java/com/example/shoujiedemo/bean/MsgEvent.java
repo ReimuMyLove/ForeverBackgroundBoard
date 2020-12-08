@@ -5,9 +5,18 @@ public class MsgEvent {
     private boolean value;
     private int position;
     private int intValue;
+    private int id;
 
     public MsgEvent(){
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIntValue() {

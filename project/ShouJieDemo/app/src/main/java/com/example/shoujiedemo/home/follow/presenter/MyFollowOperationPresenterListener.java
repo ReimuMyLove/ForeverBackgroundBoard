@@ -6,7 +6,7 @@ public interface MyFollowOperationPresenterListener {
 
     void onCollectError();
 
-    void onCommentSuccess();
+    void onCommentSuccess(String jsons);
 
     void onCommentError();
 
@@ -36,6 +36,12 @@ public interface MyFollowOperationPresenterListener {
 
     void onLoadCommentSuccess(String jsons);
 
+    void onLoadCommentError();
+
     void onLoadSetSuccess(String jsons);
+
+    void onDeleteCommentSuccess();
+
+    void onDeleteCommentError();
 
 }

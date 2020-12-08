@@ -81,7 +81,7 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
     }
 
     @Override
-    public void comment() {
+    public void comment(Comment comment) {
 
     }
 
@@ -89,6 +89,12 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
     public void loadComment(List<Comment> commentList) {
 
     }
+
+    @Override
+    public void deleteComment() {
+
+    }
+
 
     @Override
     public void showSet(List<Set> sets) {

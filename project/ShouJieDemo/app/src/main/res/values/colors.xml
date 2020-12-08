@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#708090</color>
     <color name="itemChecked">#000000</color>
-    <color name="itemCheckedFalse">	#DCDCDC</color>
+    <color name="itemCheckedFalse">#DCDCDC</color>
 
     <!---->
     <color name="TabandBottomWhite">#fff</color>

@@ -7,20 +7,15 @@
     android:scrollbars="none"
     android:background="@color/dayLightBackground"
     android:overScrollMode="never">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp">
+                >
                 <ImageView
-
                     android:id="@+id/myCenter_userBackGround"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:background="@drawable/bg05" />
-
                 <com.example.shoujiedemo.util.TrancircleImageView
                     android:id="@+id/myCenter_userImg_background"
                     android:layout_width="match_parent"
@@ -39,52 +34,64 @@
                     android:id="@+id/myCenter_userImg_top"
                     android:layout_width="match_parent"
                     android:paddingTop="170dp"
-                    android:layout_height="350dp"
+                    android:layout_height="wrap_content"
                     android:gravity="end">
                     <com.example.shoujiedemo.util.CircleImageView
                         android:id="@+id/myCenter_userImg"
                         android:gravity="end"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/bg06" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/bg02" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_below="@id/myCenter_userImg_top"
                     android:id="@+id/myCenter_card_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="20dp"
-                    android:paddingTop="260dp"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="80dp"
-                    android:gravity="center">
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    >
                     <androidx.cardview.widget.CardView
                         android:id="@+id/myCenter_card"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dip">
-                        <LinearLayout
+                        android:elevation="15dp"
+                        app:cardCornerRadius="10dp">
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="#add8e6">
-                        </LinearLayout>
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:id="@+id/top_card"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="#80add8e6">
+                            </LinearLayout>
                         <RelativeLayout
                             android:id="@+id/myCenter_mySpace"
+                            android:layout_below="@id/top_card"
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="40dp"
-                            android:gravity="right"
-                            android:background="@drawable/mycenter_card"
-                            android:orientation="horizontal">
+                            android:layout_height="60dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:layout_marginTop="10dp">
+                            <ImageView
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/iv_space_center"
+                                android:src="@drawable/space_center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@id/iv_space_center"
                                 android:layout_centerVertical="true"
-                                android:layout_weight="1"
                                 android:text="我的空间"
                                 android:textColor="@color/dayLightText"
                                 android:textSize="16sp" />
@@ -100,19 +107,30 @@
                             android:id="@+id/myCenter_userInfo"
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
+                            android:layout_below="@id/myCenter_mySpace"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="90dp"
-                            android:background="@drawable/mycenter_card">
+                            android:layout_height="60dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:layout_marginTop="60dp">
+
+                            <ImageView
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/iv_owner_center"
+                                android:src="@drawable/owner_center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@id/iv_owner_center"
                                 android:text="个人中心"
+                                android:layout_marginLeft="5dp"
                                 android:textColor="@color/dayLightText"
-                                android:textSize="16sp"
-                                android:layout_weight= "1"/>
+                                android:textSize="16sp" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -127,15 +145,27 @@
                             android:id="@+id/myCenter_Storing"
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="140dp"
-                            android:background="@drawable/mycenter_card">
+                            android:layout_height="60dp"
+                            android:layout_below="@id/myCenter_mySpace"
+                            >
+
+                            <ImageView
+                                android:id="@+id/iv_collect_center"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/collect_center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@id/iv_collect_center"
                                 android:text="收藏"
                                 android:textColor="@color/dayLightText"
                                 android:textSize="16sp" />
@@ -152,18 +182,29 @@
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="190dp"
-                            android:background="@drawable/mycenter_card">
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:layout_marginTop="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@id/myCenter_Storing">
+
+                            <ImageView
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/iv_help_center"
+                                android:src="@drawable/space_center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
                             <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@id/iv_help_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:text="帮助中心"
                                 android:textColor="@color/dayLightText"
-                                android:textSize="16sp"
-                                android:layout_weight= "1"/>
+                                android:textSize="16sp" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -177,18 +218,28 @@
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="240dp"
-                            android:background="@drawable/mycenter_card">
+                            android:layout_height="60dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:layout_below="@id/myCenter_helpCenter">
+
+                            <ImageView
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/iv_follow_center"
+                                android:src="@drawable/help_center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
                             <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@id/iv_follow_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:text="我的关注"
                                 android:textColor="@color/dayLightText"
-                                android:textSize="16sp"
-                                android:layout_weight= "1"/>
+                                android:textSize="16sp" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -202,13 +253,24 @@
                             android:layout_width="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="290dp"
-                            android:background="@drawable/mycenter_card">
+                            android:layout_height="60dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:layout_below="@id/myCenter_myFollow">
+
+                            <ImageView
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/iv_like_center"
+                                android:src="@drawable/center_like"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"/>
+
                             <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@id/iv_like_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:text="我的点赞"
                                 android:textColor="@color/dayLightText"
@@ -221,6 +283,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
+                        </RelativeLayout>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

@@ -66,4 +66,9 @@ public class HotLoadDataModelImpl implements FroundHotDataModel{
                     }
                 });
     }
+
+    @Override
+    public void loadContentBySearch(FroundLoadDataPresenterLisenter listener, String flag, int page) {
+
+    }
 }

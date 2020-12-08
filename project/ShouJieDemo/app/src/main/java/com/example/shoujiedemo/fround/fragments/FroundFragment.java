@@ -13,12 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
-import com.example.shoujiedemo.home.recommen.activity.MainActivity;
+import com.example.shoujiedemo.bean.SearchEvent;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ import java.util.List;
 /**
  * 发现页面
  */
-public class FroundFragment extends Fragment {
+public class FroundFragment extends Fragment{
 
     private List<Fragment> fragments = new ArrayList<>();
     private ViewPager2 froundViewPager2;
@@ -43,6 +47,9 @@ public class FroundFragment extends Fragment {
     private MindFragment mindFragment;
     private PoemFragment poemFragment;
     private MusicFragment musicFragment;
+    private Button btnSearch;
+    private EditText edSearch;
+
 
     public FroundFragment(){
 
@@ -52,6 +59,7 @@ public class FroundFragment extends Fragment {
         // Required empty public constructor
         this.viewPager2 = viewPager2;
         this.context = context;
+
     }
 
 
@@ -67,6 +75,8 @@ public class FroundFragment extends Fragment {
     public void initView(View view){
         froundViewPager2 = view.findViewById(R.id.fround_view);
         froudnTab = view.findViewById(R.id.fround_topTab);
+        btnSearch = view.findViewById(R.id.btn_search);
+        edSearch = view.findViewById(R.id.ed_search);
 
         if(hotFragment == null) {
             hotFragment = new HotFragment();
@@ -146,8 +156,44 @@ public class FroundFragment extends Fragment {
             }
         });
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(currentPosition){
+                    case 0:
+                        SearchEvent hot = new SearchEvent();
+                        hot.setPosition(currentPosition);
+                        hot.setTag(edSearch.getText().toString());
+                        EventBus.getDefault().postSticky(hot);
+                        break;
+                    case 1:
+                        SearchEvent article = new SearchEvent();
+                        article.setPosition(currentPosition);
+                        article.setTag(edSearch.getText().toString());
+                        EventBus.getDefault().postSticky(article);
+                        break;
+                    case 2:
+                        SearchEvent heart = new SearchEvent();
+                        heart.setPosition(currentPosition);
+                        heart.setTag(edSearch.getText().toString());
+                        EventBus.getDefault().postSticky(heart);
+                        break;
+                    case 3:
+                        SearchEvent poem = new SearchEvent();
+                        poem.setPosition(currentPosition);
+                        poem.setTag(edSearch.getText().toString());
+                        EventBus.getDefault().postSticky(poem);
+                        break;
+                    case 4:
+                        SearchEvent music = new SearchEvent();
+                        music.setPosition(currentPosition);
+                        music.setTag(edSearch.getText().toString());
+                        EventBus.getDefault().postSticky(music);
+                        break;
+                }
+            }
+        });
+
     }
-
-
 
 }

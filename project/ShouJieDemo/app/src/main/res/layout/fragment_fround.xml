@@ -12,6 +12,30 @@
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_marginTop="6dp"
+        android:background="@drawable/search_ra_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/search01"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <EditText
+            android:id="@+id/ed_search"
+            android:paddingLeft="10dp"
+            android:hint="搜索"
+            android:layout_toRightOf="@id/btn_search"
+            android:background="#f7f7f7"
+            android:layout_centerInParent="true"
+            android:gravity="left"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
     <com.google.android.material.tabs.TabLayout
         android:background="@color/TabandBottomWhite"
         android:layout_gravity="center_horizontal"
@@ -28,6 +52,7 @@
         app:tabPaddingBottom="-20dp"
         app:tabMode="scrollable"
         >
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabItem_hot"
             android:text="热门"
@@ -59,6 +84,7 @@
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/fround_view"
         android:layout_width="match_parent"

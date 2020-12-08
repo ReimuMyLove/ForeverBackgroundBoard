@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="30dp"
+    android:paddingTop="60dp"
     android:background="#fff"
     tools:context=".activity.ArticleActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
@@ -12,6 +12,10 @@
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/poem_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.core.widget.NestedScrollView
         android:id="@+id/follow_poem_scrollview"
         android:layout_marginBottom="40dp"
@@ -84,6 +88,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
                 android:layout_alignTop="@id/tv_userName_details_poem"
                 android:background="@drawable/btn_circle_shape"
                 android:src="@drawable/loading_anim"
@@ -290,9 +295,17 @@
                 android:scrollbarStyle="outsideOverlay"
                 android:nestedScrollingEnabled="true"
                 android:scrollingCache="false"/>
+
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlClassicsSpinnerStyle="Translate"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
         android:background="#BEBEBE"

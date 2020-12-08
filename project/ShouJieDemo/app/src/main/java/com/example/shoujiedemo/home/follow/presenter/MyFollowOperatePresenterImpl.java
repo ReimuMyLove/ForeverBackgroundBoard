@@ -55,8 +55,12 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
     * 评论成功回调
     */
    @Override
-   public void onCommentSuccess() {
-      contentView.comment();
+   public void onCommentSuccess(String jsons) {
+      Gson gson = new Gson();
+      Comment comment = gson.fromJson(jsons, Comment.class);
+      String time = comment.getTime().substring(5,16);
+      comment.setTime(time);
+      contentView.comment(comment);
    }
 
    @Override
@@ -199,6 +203,11 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    }
 
    @Override
+   public void onLoadCommentError() {
+
+   }
+
+   @Override
    public void onLoadSetSuccess(String jsons) {
       Gson gson = new Gson();
       Object json = null;
@@ -216,6 +225,17 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
          List<Set> setList = gson.fromJson(jsons, new TypeToken<List<Set>>() {}.getType());
          contentView.showSet(setList);
       }
+   }
+
+   @Override
+   public void onDeleteCommentSuccess() {
+      Log.e("listener","success");
+      contentView.deleteComment();
+   }
+
+   @Override
+   public void onDeleteCommentError() {
+
    }
 
    /**
@@ -250,6 +270,7 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    public void confirmCollect(int userId,int contentId) {
 
       model.collect(this,userId,contentId);
+
    }
 
    /**
@@ -286,18 +307,23 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
     * 验证评论
     */
    @Override
-   public void confirmComment(int userId,int contentId) {
-      model.comment(this,userId,contentId);
+   public void confirmComment(int userId,int contentId,String text) {
+      model.comment(this,userId,contentId,text);
    }
 
    @Override
-   public void loadComment(int contentId) {
-      model.loadComment(this,contentId);
+   public void loadComment(int contentId,int pageNum) {
+      model.loadComment(this,contentId,pageNum);
    }
 
    @Override
    public void loadSet(int userId) {
       model.loadSet(this,userId);
+   }
+
+   @Override
+   public void deleteComment(int commentId) {
+      model.deleteComment(this,commentId);
    }
 
 

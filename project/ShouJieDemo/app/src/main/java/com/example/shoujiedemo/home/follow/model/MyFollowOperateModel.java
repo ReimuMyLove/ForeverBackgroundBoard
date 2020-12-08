@@ -14,7 +14,7 @@ public interface MyFollowOperateModel {
 
     void unCollect(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消收藏
 
-    void comment(MyFollowOperationPresenterListener listener,int userId,int contentId);//评论
+    void comment(MyFollowOperationPresenterListener listener,int userId,int contentId,String text) ;//评论
 
     void share(MyFollowOperationPresenterListener listener,int userId,int contentId);//分享
 
@@ -28,7 +28,9 @@ public interface MyFollowOperateModel {
 
     void follow(MyFollowOperationPresenterListener listener,int userId,int followerId);//关注
 
-    void loadComment(MyFollowOperationPresenterListener listener,int contentId);//加载评论
+    void loadComment(MyFollowOperationPresenterListener listener,int contentId,int pageNum);//加载评论
 
     void loadSet(MyFollowOperationPresenterListener listener,int userId);//加载文集
+
+    void deleteComment(MyFollowOperationPresenterListener listener,int commentId);//删除评论
 }

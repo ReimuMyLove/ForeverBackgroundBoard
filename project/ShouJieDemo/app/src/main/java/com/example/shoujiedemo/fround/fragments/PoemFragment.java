@@ -46,9 +46,10 @@ public class PoemFragment extends Fragment implements PoemView {
     private PoemAdapter poemAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
-    private PoemEvent msgEvent;
+    private MsgEvent msgEvent;
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
+    private int refreshTag = 0;
 
     public PoemFragment() {
         // Required empty public constructor
@@ -57,7 +58,7 @@ public class PoemFragment extends Fragment implements PoemView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNum = 0;
+        pageNum = 1;
         presenter = new PoemLoadPresenterImpl(this);
         EventBus.getDefault().register(this);
     }
@@ -75,15 +76,15 @@ public class PoemFragment extends Fragment implements PoemView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 0) {
+        if(pageNum == 1) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                ++pageNum;
+
                 presenter.confirmInitContent(3,pageNum);
-                refreshLayout.finishRefresh(400);
+                refreshLayout.finishRefresh(600);
 
             }
 
@@ -92,9 +93,9 @@ public class PoemFragment extends Fragment implements PoemView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNum++;
+
                 presenter.confirmInitContent(3,pageNum);
-                refreshLayout.finishLoadMore(400);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
@@ -108,13 +109,39 @@ public class PoemFragment extends Fragment implements PoemView {
 
     @Override
     public void showContentListData(List<Content> poems) {
-        if(poemList.size() == 0 || poemList == null) {
-            this.poemList = poems;
-            poemAdapter = new PoemAdapter(poemList, getContext());
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(poemAdapter);
+        if(poemList.size() < 10 || poemList == null) {
+            if(refreshTag == 0) {
+                this.poemList = poems;
+                poemAdapter = new PoemAdapter(poemList, getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(poemAdapter);
+                refreshTag = 1;
+            }else{
+                List<Content> newContents = new ArrayList<>();
+                for(Content content :poemList){
+                    for(Content content1:poems){
+                        if(content.getId() == content1.getId())
+                            newContents.add(content1);
+                    }
+                }
+                poemList.addAll(poems);
+                poemList.removeAll(newContents);
+                poemAdapter.notifyDataSetChanged();
+            }
+            if(poemList.size() == 10)
+                pageNum++;
         }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :poemList){
+                for(Content content1:poems){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
             poemList.addAll(poems);
+            poemList.removeAll(newList);
+            if(poemList.size() %10 == 0)
+                pageNum++;
             poemAdapter.notifyDataSetChanged();
         }
     }
@@ -132,40 +159,75 @@ public class PoemFragment extends Fragment implements PoemView {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onPoemEventThread(PoemEvent event){
+    public void onMainEventThread(MsgEvent event){
         Log.d("event",event.getType() + "");
         msgEvent = event;
         if(msgEvent != null){
             switch(msgEvent.getType()){
                 case "like":
                     if(msgEvent.isValue()){
-                        poemList.get(msgEvent.getPosition()).setLike(true);
-                        poemList.get(msgEvent.getPosition()).setLikes(poemList.get(msgEvent.getPosition()).getLikes() + 1);
+                        for(Content content:poemList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(true);
+                                content.setLikes(content.getLikes() + 1);
+                                break;
+                            }
+                        }
                         poemAdapter.notifyDataSetChanged();
-                        Log.e("fragment","true");
                     }else{
-                        poemList.get(msgEvent.getPosition()).setLike(false);
-                        poemList.get(msgEvent.getPosition()).setLikes(poemList.get(msgEvent.getPosition()).getLikes() - 1);
+                        for(Content content:poemList){
+                            if(event.getId() == content.getId()){
+                                content.setLike(false);
+                                content.setLikes(content.getLikes() - 1);
+                                break;
+                            }
+                        }
                         poemAdapter.notifyDataSetChanged();
-                        Log.e("fragment","false");
+
                     }
                     msgEvent = null;
                     break;
                 case "collect":
                     if(msgEvent.isValue()){
-                        poemList.get(msgEvent.getPosition()).setCollect(true);
-                        poemList.get(msgEvent.getPosition()).setCollectnum(poemList.get(msgEvent.getPosition()).getCollectnum() + 1);
+                        for(Content content:poemList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(true);
+                                content.setCollectnum(content.getCollectnum() + 1);
+                                break;
+                            }
+                        }
                         poemAdapter.notifyDataSetChanged();
                     }else{
-                        poemList.get(msgEvent.getPosition()).setCollect(false);
-                        poemList.get(msgEvent.getPosition()).setCollectnum(poemList.get(msgEvent.getPosition()).getCollectnum() - 1);
+                        for(Content content:poemList){
+                            if(event.getId() == content.getId()){
+                                content.setCollect(false);
+                                content.setCollectnum(content.getCollectnum() - 1);
+                                break;
+                            }
+                        }
                         poemAdapter.notifyDataSetChanged();
+
                     }
                     msgEvent = null;
                     break;
                 case "comment":
-                    poemList.get(msgEvent.getPosition()).setCheatnum(msgEvent.getIntValue());
+                    if(event.isValue()) {
+                        for (Content content : poemList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() + 1);
+                                break;
+                            }
+                        }
+                    }else{
+                        for (Content content : poemList) {
+                            if (event.getId() == content.getId()) {
+                                content.setCheatnum(content.getCheatnum() - 1);
+                                break;
+                            }
+                        }
+                    }
                     poemAdapter.notifyDataSetChanged();
+
                     break;
             }
         }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -130,6 +131,8 @@ public class SettingActivity extends BaseActivity implements SettingView{
                     break;
                 case R.id.myCenter_setting_clearCookie:
                     settingPresenter.ClearCookie(context);
+                    Toast.makeText(context,"清理缓存成功",Toast.LENGTH_SHORT);
+                    GetCookieSize();
                     break;
                 case R.id.myCenter_setting_feedback:
                     Feedback();

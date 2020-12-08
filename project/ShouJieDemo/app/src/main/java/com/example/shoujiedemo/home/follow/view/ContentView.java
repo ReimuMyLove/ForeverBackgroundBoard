@@ -23,11 +23,14 @@ public interface ContentView {
 
     void share();//分享
 
-    void comment();//评论
+    void comment(Comment comment);//评论
 
     void collect();//收藏
 
     void loadComment(List<Comment> commentList);//加载评论
+
+    void deleteComment();//删除评论
+
 
     void showSet(List<Set> sets);//显示文集
 }

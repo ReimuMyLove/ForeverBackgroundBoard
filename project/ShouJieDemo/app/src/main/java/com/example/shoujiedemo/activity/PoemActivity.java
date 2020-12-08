@@ -1,5 +1,6 @@
 package com.example.shoujiedemo.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -46,8 +47,13 @@ import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
 import com.example.shoujiedemo.util.ViewWrapper;
 import com.hyb.library.PreventKeyboardBlockUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,13 +97,17 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     private Button btnCollect;
     private Button dismiss;
     private ImageView cover;
+    private SmartRefreshLayout refreshLayout;
 
     private Content poem;
     private User user;
+    private Comment deleteComment;
 
     private boolean animFinish = false;
     private boolean isFollow = false;
     private int position;
+    private boolean isInitComment = true;
+    private int pageNum = 1;
 
     private List<Comment> commentList = new ArrayList<>();
     private int screenHeight;//屏幕高度
@@ -115,6 +125,18 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         initView();
         getHeightToAnim();
         setOnClikListener();
+        EventBus.getDefault().register(this);
+
+        refreshLayout.setEnableLoadMore(true);
+        refreshLayout.setEnableRefresh(false);
+
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                presenter.loadComment(poem.getId(),pageNum);
+                refreshLayout.finishLoadMore(600);
+            }
+        });
 
 
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -146,7 +168,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 animatorSet.setDuration(250);
                                 animatorSet.start();
                                 edComment.setHint("");
-                                //btnSendComment.setVisibility(View.INVISIBLE);
                                 animator.addListener(new Animator.AnimatorListener() {
                                     @Override
                                     public void onAnimationStart(Animator animation) {
@@ -185,7 +206,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                             if (!animFinish) {
                                 ViewWrapper viewWrapper = new ViewWrapper(edComment);
                                 ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
-                                        0, 600);
+                                        0, 550);
                                 ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
                                         0, 550);
                                 ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
@@ -202,14 +223,14 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 animatorSet1.playTogether(animator, animator1, animator2, animator3);
                                 animatorSet1.setDuration(250);
                                 animatorSet1.start();
-                                //btnSendComment.setVisibility(View.VISIBLE);
+                                btnSendComment.setVisibility(View.VISIBLE);
                                 animFinish = true;
                                 commentNum.setVisibility(View.INVISIBLE);
                                 //comment.setVisibility(View.INVISIBLE);
                                 likeNum.setVisibility(View.INVISIBLE);
                                 shareNum.setVisibility(View.INVISIBLE);
                                 collectionNum.setVisibility(View.INVISIBLE);
-                                btnSendComment.setVisibility(View.INVISIBLE);
+                                btnSendComment.setVisibility(View.VISIBLE);
                                 animatorSet1.addListener(new Animator.AnimatorListener() {
                                     @Override
                                     public void onAnimationStart(Animator animator) {
@@ -272,6 +293,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         commentNum2 = findViewById(R.id.follow_poem_tv_comment_num2);
         writer = findViewById(R.id.tv_writer_details_poem);
         cover = findViewById(R.id.iv_poem_details_cover);
+        refreshLayout = findViewById(R.id.poem_refresh);
 
         if (poem.isLike())
             like.setBackgroundResource(R.drawable.likeselected);
@@ -320,15 +342,19 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         alert = builder.create();
 
-        Glide.with(this)
-                .load( ConfigUtil.BASE_HEAD_URL + poem.getUser().getPicname())
-                .into(head);
+        if(poem.getUser().getPicname() != null) {
+            Glide.with(this)
+                    .load(ConfigUtil.BASE_HEAD_URL + poem.getUser().getPicname())
+                    .into(head);
+        }
 
-        Glide.with(this)
-                .load( ConfigUtil.BASE_IMG_URL + poem.getPic())
-                .into(cover);
+        if(poem.getPic() != null) {
+            Glide.with(this)
+                    .load(ConfigUtil.BASE_IMG_URL + poem.getPic())
+                    .into(cover);
+        }
 
-        presenter.loadComment(poem.getId());
+        presenter.loadComment(poem.getId(),pageNum);
     }
 
     /**
@@ -366,17 +392,18 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                         collectNum2.setText(new StringBuilder().append(collectionNums));
                         poem.setCollect(false);
                         presenter.confirmUnCollect(UserUtil.USER_ID,poem.getId());
-                       PoemEvent event = new PoemEvent();
+                       MsgEvent event = new MsgEvent();
                         event.setType("collect");
                         event.setValue(poem.isCollect());
-                        event.setPosition(position);
+                        //event.setPosition(position);
+                        event.setId(poem.getId());
                         EventBus.getDefault().postSticky(event);
                     }else{
                         presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_poem_details_btn_comment://评论按钮跳转到详情界面
-                    comment();
+                        scrollView.scrollTo(0,rlComment.getTop());
                     break;
                 case R.id.follow_poem_details_btn_like://点赞
                     if(!poem.isLike()) {
@@ -387,10 +414,11 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                         poem.setLike(true);
                         presenter.confirmFavourite(UserUtil.USER_ID,poem.getId());
                         //通知点赞按钮改变
-                        PoemEvent event = new PoemEvent();
+                        MsgEvent event = new MsgEvent();
                         event.setType("like");
                         event.setValue(poem.isLike());
-                        event.setPosition(position);
+                        //event.setPosition(position);
+                        event.setId(poem.getId());
                         EventBus.getDefault().postSticky(event);
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
@@ -399,10 +427,11 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                         likeNum2.setText(new StringBuilder().append(likeNums));
                         poem.setLike(false);
                         presenter.confirmUnFavourite(UserUtil.USER_ID,poem.getId());
-                        PoemEvent event = new PoemEvent();
+                        MsgEvent event = new MsgEvent();
                         event.setType("like");
                         event.setValue(poem.isLike());
-                        event.setPosition(position);
+                        //event.setPosition(position);
+                        event.setId(poem.getId());
                         EventBus.getDefault().postSticky(event);
                     }
                     break;
@@ -420,7 +449,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                     }
                     break;
                 case R.id.follow_poem_btn_send_comment:
-                    presenter.confirmComment(UserUtil.USER_ID,poem.getId());
+                    presenter.confirmComment(UserUtil.USER_ID,poem.getId(),edComment.getText().toString());
                     edComment.setText(null);
                     break;
             }
@@ -461,7 +490,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         if(screenHeight >= txtheight){
             ViewWrapper viewWrapper = new ViewWrapper(edComment);
             ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
-                    0, 600);
+                    0, 550);
             ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
                     0, 550);
             ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
@@ -479,14 +508,13 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
             animatorSet.playTogether(animator, animator1, animator2, animator3);
             animatorSet.setDuration(500);
             animatorSet.start();
-            //btnSendComment.setVisibility(View.VISIBLE);
             animFinish = true;
             commentNum.setVisibility(View.INVISIBLE);
             //comment.setVisibility(View.INVISIBLE);
             likeNum.setVisibility(View.INVISIBLE);
             shareNum.setVisibility(View.INVISIBLE);
             collectionNum.setVisibility(View.INVISIBLE);
-            btnSendComment.setVisibility(View.INVISIBLE);
+            btnSendComment.setVisibility(View.VISIBLE);
             animatorSet.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
@@ -615,23 +643,22 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
-    public void comment() {
-        String text = edComment.getText().toString();
+    public void comment(Comment comment1) {
         String userName = UserUtil.USER_NAME;
         User user = new User();
         user.setId(UserUtil.USER_ID);
         user.setName(userName);
-        Comment comment = new Comment();
-        comment.setText(text);
-        comment.setUser(user);
-        commentList.add(comment);
+        user.setPicname(userName + ".png");
+        comment1.setUser(user);
+        commentList.add(comment1);
         int commentNums = Integer.parseInt(commentNum.getText().toString());
         commentNums++;
         poem.setCheatnum(commentNums);
         MsgEvent event = new MsgEvent();
         event.setType("comment");
+        event.setValue(true);
         event.setIntValue(poem.getCheatnum());
-        event.setPosition(position);
+        event.setId(poem.getId());
         EventBus.getDefault().postSticky(event);
         commentNum.setText(new StringBuilder().append(commentNums));
         commentNum2.setText(new StringBuilder().append(commentNums));
@@ -639,12 +666,50 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
-    public void loadComment(List<Comment> commentList) {
-        this.commentList = commentList;
-        commentAdapter = new CommentAdapter(commentList,getApplicationContext());
-        rlComment.setLayoutManager(new LinearLayoutManager(this));
-        rlComment.setAdapter(commentAdapter);
+    public void loadComment(List<Comment> comments) {
+        if(isInitComment) {
+            this.commentList = comments;
+            commentAdapter = new CommentAdapter(comments, getApplicationContext());
+            rlComment.setLayoutManager(new LinearLayoutManager(this));
+            rlComment.setAdapter(commentAdapter);
+            isInitComment = false;
+            if(commentList.size() == 10)
+                pageNum++;
+        }else{
+            List<Comment> newComments = new ArrayList<>();
+            for(Comment comment:commentList){
+                for(Comment comment1:comments){
+                    if(comment.getId() == comment1.getId())
+                        newComments.add(comment1);
+                }
+            }
+            commentList.addAll(comments);
+            commentList.removeAll(newComments);
+            if(commentList.size() % 10 == 0)
+                pageNum++;
+            commentAdapter.notifyDataSetChanged();
+        }
     }
+
+    @Override
+    public void deleteComment() {
+        for(Comment comment1 :commentList){
+            if(comment1.getId() == deleteComment.getId()){
+                commentList.remove(deleteComment);
+                break;
+            }
+        }
+        MsgEvent event = new MsgEvent();
+        event.setId(poem.getId());
+        event.setType("comment");
+        event.setValue(false);
+        event.setIntValue(poem.getCheatnum());
+        EventBus.getDefault().postSticky(event);
+        commentNum.setText(new StringBuilder().append(commentList.size()));
+        commentNum2.setText(new StringBuilder().append(commentList.size()));
+        commentAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void showSet(final List<Set> sets) {
@@ -702,10 +767,22 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         collectionNum.setText(new StringBuilder().append(collectionNums));
         collectNum2.setText(new StringBuilder().append(collectionNums));
         poem.setCollect(true);
-        ArticleEvent event = new ArticleEvent();
+        MsgEvent event = new MsgEvent();
         event.setType("collect");
         event.setValue(poem.isCollect());
-        event.setPosition(position);
+        //event.setPosition(position);
+        event.setId(poem.getId());
         EventBus.getDefault().postSticky(event);
+    }
+
+    /**
+     * 删除评论后回调
+     * @param comment
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+
+    public void onDeleteMain(Comment comment){
+        deleteComment = comment;
+        presenter.deleteComment(comment.getId());
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.activity.ArticleActivity;
+import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Set;
@@ -33,6 +35,8 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImp
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +112,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         btnPull = itemView.findViewById(R.id.follow_poem_btn_pull);
         lnReport = itemView.findViewById(R.id.follow_poem_ln_report);
         unLike = itemView.findViewById(R.id.follow_poem_tv_unLike);
-        tag = itemView.findViewById(R.id.follow_article_tv_tag);
+        //tag = itemView.findViewById(R.id.follow_article_tv_tag);
         share = itemView.findViewById(R.id.follow_poem_btn_share);
         shareNum = itemView.findViewById(R.id.follow_poem_tv_share_num);
         collected = itemView.findViewById(R.id.follow_poem_btn_collection);
@@ -165,14 +169,17 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
+        if( contents.get(position).getPic() != null) {
+            Glide.with(context)
+                    .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
+                    .into(head);
+        }
 
-        Glide.with(context)
-                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
-                .into(head);
-
-        Glide.with(context)
-                .load( ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
-                .into(cover);
+        if(contents.get(position).getUser().getPicname() != null) {
+            Glide.with(context)
+                    .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
+                    .into(cover);
+        }
     }
 
     public void setMyOnClikeListenser(){
@@ -214,33 +221,50 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     break;
                 case R.id.follow_poem_btn_collection:
                     if(contents.get(position).isCollect()) {
-                        collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
+                        /*collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
                         int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
                         contents.get(position).setCollectnum(collectionNums);
                         collectionNum.setText(collectionNums + "");
-                        contents.get(position).setCollect(false);
+                        contents.get(position).setCollect(false);*/
+                        MsgEvent event = new MsgEvent();
+                        event.setId(contents.get(position).getId());
+                        event.setType("collect");
+                        event.setValue(contents.get(position).isCollect());
+                        //event.setPosition(position);
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         presenter.loadSet(UserUtil.USER_ID);
                     }
                     break;
                 case R.id.follow_poem_btn_comment:
-                        comment();
+                        comment(new Comment());
                     break;
                 case R.id.follow_poem_btn_like:
                     if(!contents.get(position).isLike()) {
                         like.setBackgroundResource(R.drawable.likeselected);
-                        int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
+                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
                         contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");
+                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(true);
+                        Log.e("like","like");
+                        MsgEvent event = new MsgEvent();
+                        event.setType("like");
+                        event.setId(contents.get(position).getId());
+                        event.setValue(contents.get(position).isLike());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
-                        int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
+                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
                         contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");
+                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(false);
+                        MsgEvent event = new MsgEvent();
+                        event.setType("like");
+                        event.setId(contents.get(position).getId());
+                        event.setValue(contents.get(position).isLike());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmUnFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }
                     break;
@@ -367,7 +391,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     }
 
     @Override
-    public void comment() {
+    public void comment(Comment comment) {
         Intent intent2 = new Intent(context, PoemActivity.class);
         Bundle bundle2 = new Bundle();
         bundle2.putSerializable("poem",contents.get(position));
@@ -382,6 +406,12 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     public void loadComment(List<Comment> commentList) {
 
     }
+
+    @Override
+    public void deleteComment() {
+
+    }
+
 
     @Override
     public void showSet(final List<Set> sets) {
@@ -423,10 +453,15 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     @Override
     public void collect() {
         collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
+        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
         contents.get(position).setCollectnum(collectionNums);
-        collectionNum.setText(collectionNums + "");
+        collectionNum.setText(collectionNums + "");*/
         contents.get(position).setCollect(true);
+        MsgEvent event = new MsgEvent();
+        event.setId(contents.get(position).getId());
+        event.setType("collect");
+        event.setValue(contents.get(position).isCollect());
+        EventBus.getDefault().postSticky(event);
         Toast.makeText(context,"收藏成功" + set1.getName(),Toast.LENGTH_SHORT).show();
     }
 }

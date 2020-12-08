@@ -27,4 +27,5 @@ public interface FroundOperateModel {
     void follow(FroundOperationPresenterListener listener);//关注
 
     void loadComment(FroundOperationPresenterListener listener);//加载评论
+
 }

@@ -32,6 +32,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class FollowFragment extends Fragment implements FollowView {
     private MsgEvent msgEvent;
     private SmartRefreshLayout smartRefreshLayout;
     private int pageNum;
+    private int refreshTag = 0;
 
     public FollowFragment() {
         // Required empty public constructor
@@ -56,7 +58,7 @@ public class FollowFragment extends Fragment implements FollowView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        pageNum = 0;
+        pageNum = 1;
         presenter = new MyFollowInitPresenterImpl(this);
     }
 
@@ -70,15 +72,15 @@ public class FollowFragment extends Fragment implements FollowView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 0) {
+        if(pageNum == 1) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                ++pageNum;
                 presenter.confirmInitContent(2,pageNum);
-                refreshLayout.finishRefresh(400);
+
+                refreshLayout.finishRefresh(600);
             }
 
         });
@@ -86,9 +88,9 @@ public class FollowFragment extends Fragment implements FollowView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pageNum++;
+
                 presenter.confirmInitContent(2,pageNum);
-                refreshLayout.finishLoadMore(400);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
@@ -106,16 +108,42 @@ public class FollowFragment extends Fragment implements FollowView {
      */
     @Override
     public void showContentListData(List<Content> contents) {
-        if(contentList == null) {
-            contentList = contents;
-            contentAdapter = new FollowContentAdapter(getContext(), contents);
-            contentRlv.setLayoutManager(new LinearLayoutManager(getContext()));
-            contentRlv.setAdapter(contentAdapter);
 
+        if(pageNum == 0 || contentList == null) {
+            if(refreshTag == 0) {
+                contentList = contents;
+                contentAdapter = new FollowContentAdapter(getContext(), contents);
+                contentRlv.setLayoutManager(new LinearLayoutManager(getContext()));
+                contentRlv.setAdapter(contentAdapter);
+                refreshTag = 1;
+            }else {
+                List<Content> newContents = new ArrayList<>();
+                for(Content content :contentList){
+                    for(Content content1:contents){
+                        if(content.getId() == content1.getId())
+                            newContents.add(content1);
+                    }
+                }
+                contentList.addAll(contents);
+                contentList.removeAll(newContents);
+                contentAdapter.notifyDataSetChanged();
+            }
+            if(contentList.size()  == 10)
+                ++pageNum;
         }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :contentList){
+                for(Content content1:contents){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
             contentList.addAll(contents);
+            contentList.removeAll(newList);
+            if(contentList.size() % 10 == 0)
+                ++pageNum;
+
             contentAdapter.notifyDataSetChanged();
-            Toast.makeText(getContext(),"刷新完成",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -139,33 +167,68 @@ public class FollowFragment extends Fragment implements FollowView {
            switch(msgEvent.getType()){
                case "like":
                    if(msgEvent.isValue()){
-                       contentList.get(msgEvent.getPosition()).setLike(true);
-                       contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() + 1);
+                       for(Content content:contentList){
+                           if(event.getId() == content.getId()){
+                               content.setLike(true);
+                               content.setLikes(content.getLikes() + 1);
+                               break;
+                           }
+                       }
                        contentAdapter.notifyDataSetChanged();
-                       Log.e("fragment","true");
                    }else{
-                       contentList.get(msgEvent.getPosition()).setLike(false);
-                       contentList.get(msgEvent.getPosition()).setLikes(contentList.get(msgEvent.getPosition()).getLikes() - 1);
+                       for(Content content:contentList){
+                           if(event.getId() == content.getId()){
+                               content.setLike(false);
+                               content.setLikes(content.getLikes() - 1);
+                               break;
+                           }
+                       }
                        contentAdapter.notifyDataSetChanged();
-                       Log.e("fragment","false");
+
                    }
                    msgEvent = null;
                    break;
                case "collect":
                    if(msgEvent.isValue()){
-                       contentList.get(msgEvent.getPosition()).setCollect(true);
-                       contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() + 1);
+                       for(Content content:contentList){
+                           if(event.getId() == content.getId()){
+                               content.setCollect(true);
+                               content.setCollectnum(content.getCollectnum() + 1);
+                               break;
+                           }
+                       }
                        contentAdapter.notifyDataSetChanged();
                    }else{
-                       contentList.get(msgEvent.getPosition()).setCollect(false);
-                       contentList.get(msgEvent.getPosition()).setCollectnum(contentList.get(msgEvent.getPosition()).getCollectnum() - 1);
+                       for(Content content:contentList){
+                           if(event.getId() == content.getId()){
+                               content.setCollect(false);
+                               content.setCollectnum(content.getCollectnum() - 1);
+                               break;
+                           }
+                       }
                        contentAdapter.notifyDataSetChanged();
+
                    }
                    msgEvent = null;
                    break;
                case "comment":
-                   contentList.get(msgEvent.getPosition()).setCheatnum(msgEvent.getIntValue());
+                   if(event.isValue()) {
+                       for (Content content : contentList) {
+                           if (event.getId() == content.getId()) {
+                               content.setCheatnum(content.getCheatnum() + 1);
+                               break;
+                           }
+                       }
+                   }else{
+                       for (Content content : contentList) {
+                           if (event.getId() == content.getId()) {
+                               content.setCheatnum(content.getCheatnum() - 1);
+                               break;
+                           }
+                       }
+                   }
                    contentAdapter.notifyDataSetChanged();
+
                    break;
            }
        }

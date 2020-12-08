@@ -5,13 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:paddingTop="30dp"
+    android:paddingTop="60dp"
     tools:context=".activity.ArticleActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/article_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
     <androidx.core.widget.NestedScrollView
         android:clickable="false"
         android:id="@+id/follow_article_text_scrollview"
@@ -119,9 +123,10 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignTop="@id/tv_userName_details_article"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
                     android:background="@drawable/btn_circle_shape"
+                    android:layout_alignTop="@id/tv_userName_details_article"
                     android:src="@drawable/loading_anim"
                     />
 
@@ -297,10 +302,16 @@
                     android:nestedScrollingEnabled="true"
                     android:scrollingCache="false"/>
 
+
         </RelativeLayout>
 
 
     </androidx.core.widget.NestedScrollView>
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlClassicsSpinnerStyle="Translate"/>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
         android:background="#BEBEBE"

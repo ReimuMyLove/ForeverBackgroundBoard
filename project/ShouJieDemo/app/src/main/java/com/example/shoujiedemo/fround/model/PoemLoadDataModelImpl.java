@@ -66,4 +66,9 @@ public class PoemLoadDataModelImpl implements FroundLoadDataModel{
                     }
                 });
     }
+
+    @Override
+    public void loadContentBySearch(FroundLoadDataPresenterLisenter listener, String flag, int type, int page) {
+
+    }
 }

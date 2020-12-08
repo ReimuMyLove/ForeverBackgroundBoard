@@ -48,7 +48,7 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            //Log.e("Song",responseBody.string());
+
                             String jsons = responseBody.string();
                             if(jsons.equals("true"))
                                 listener.onCollectSuccess();
@@ -81,7 +81,7 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
         ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.collect(userId,contentId);
+        Observable<ResponseBody> observable = apiInterface.disCollect(userId,contentId);
         observable.subscribeOn(Schedulers.io())//在io线程中请求
                 .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
                 .subscribe(new Observer<ResponseBody>() {
@@ -119,12 +119,50 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     }
 
     @Override
-    public void comment(MyFollowOperationPresenterListener listener,int userId,int contentId) {
-        int n = 1;
-        if(n > 0)
-            listener.onCommentSuccess();
-        else
-            listener.onCommentError();
+    public void comment(final MyFollowOperationPresenterListener listener, int userId, int contentId, String text) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://49.232.217.140:8080/OuranServices/cheat/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.addComment(userId,contentId,text);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+
+                            String jsons = responseBody.string();
+                            if(jsons != null) {
+                                listener.onCommentSuccess(jsons);
+                                Log.e("comment",jsons);
+                            }else {
+                                listener.onCommentError();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
+
 
     }
 
@@ -317,10 +355,47 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     }
 
     @Override
-    public void loadComment(MyFollowOperationPresenterListener listener,int contentId) {
-        String jsons = "{\"tuwendate\":[{\"tu_id\":18,\"musicid\":null,\"replyid\":null,\"user2id\":null,\"topic_detial_id\":null,\"id\":1,\"user1id\":2,\"text\":\"你好\",\"time\":\"2020-11-25 14:10:31\",\"likes\":0},{\"tu_id\":18,\"musicid\":null,\"replyid\":null,\"user2id\":null,\"topic_detial_id\":null,\"id\":4,\"user1id\":1,\"text\":\"好喜欢三毛\",\"time\":\"2020-11-28 10:05:27\",\"likes\":0}],\"userdate\":[{\"password\":\"wrk\",\"follownum\":3,\"backgroundpic2\":null,\"fennum\":1,\"sex\":\"男\",\"backgroundpic1\":null,\"name\":\"wrk\",\"picname\":\"wrk.jpg\",\"sign\":\"算了\",\"id\":2,\"age\":20},{\"password\":\"ljjy\",\"follownum\":0,\"backgroundpic2\":null,\"fennum\":3,\"sex\":\"男\",\"backgroundpic1\":\"1backpic01.png\",\"name\":\"ljjy\",\"picname\":\"ljjy.jpg\",\"sign\":\"冲冲冲\",\"id\":1,\"age\":22}]}\n";
-        if(jsons != null)
-            listener.onLoadCommentSuccess(jsons);
+    public void loadComment(final MyFollowOperationPresenterListener listener, int contentId, int pageNum) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://49.232.217.140:8080/OuranServices/cheat/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.loadComments(contentId,pageNum);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if(jsons != null) {
+                                listener.onLoadCommentSuccess(jsons);
+                            }else {
+                                listener.onLoadCommentError();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
 
     }
 
@@ -330,5 +405,49 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
         if(jsons != null) {
             listener.onLoadSetSuccess(jsons);
         }
+    }
+
+    @Override
+    public void deleteComment(final MyFollowOperationPresenterListener listener, int commentId) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://49.232.217.140:8080/OuranServices/cheat/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.deleteComment(commentId);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if(jsons.equals("true"))
+                                listener.onDeleteCommentSuccess();
+                            else
+                                listener.onDeleteCommentError();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
     }
 }

@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!--底部导航字体样式-->
