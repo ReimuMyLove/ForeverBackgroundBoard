@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".fround.fragments.FroundFragment">
+    android:orientation="vertical">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
         android:background="#fff"
@@ -79,16 +79,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </com.google.android.material.tabs.TabLayout>
-    <View
-        android:elevation="2dp"
-        android:background="#fff"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
+        android:layout_height="match_parent"
+        android:background="#fff">
+        <View
+            android:elevation="2dp"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/fround_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fround_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-    <!-- TODO: Update blank fragment layout -->
+        <com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton
+            android:id="@+id/multiChoicesCircleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            app:mccb_collapseRadius="40dp"
+            app:mccb_expandRadius="120dp"
+            app:mccb_icon="@drawable/edit"
+            app:mccb_showBackgroundShadow="false"
+            app:mccb_itemBackgroundColor="#000"
+            app:mccb_textColor="#000"
+            app:mccb_textSize="18sp"
+            app:mccb_buttonColor="#60DCDCDC"
+            app:layout_behavior="@string/multi_choices_circle_button_behavior"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

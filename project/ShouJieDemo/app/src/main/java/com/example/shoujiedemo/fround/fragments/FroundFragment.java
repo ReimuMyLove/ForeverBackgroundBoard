@@ -2,6 +2,7 @@ package com.example.shoujiedemo.fround.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.bean.SearchEvent;
+import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
+import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -113,6 +117,37 @@ public class FroundFragment extends Fragment{
             }
         }).attach();
 
+        MultiChoicesCircleButton.Item item1 = new MultiChoicesCircleButton.Item("文章", getResources().getDrawable(R.drawable.article), 30);
+
+        MultiChoicesCircleButton.Item item2 = new MultiChoicesCircleButton.Item("诗", getResources().getDrawable(R.drawable.poem), 90);
+
+        MultiChoicesCircleButton.Item item3 = new MultiChoicesCircleButton.Item("感悟", getResources().getDrawable(R.drawable.heart), 150);
+
+        List<MultiChoicesCircleButton.Item> buttonItems = new ArrayList<>();
+        buttonItems.add(item1);
+        buttonItems.add(item2);
+        buttonItems.add(item3);
+
+        MultiChoicesCircleButton multiChoicesCircleButton = (MultiChoicesCircleButton) view.findViewById(R.id.multiChoicesCircleButton);
+        multiChoicesCircleButton.setButtonItems(buttonItems);
+
+        multiChoicesCircleButton.setOnSelectedItemListener(new MultiChoicesCircleButton.OnSelectedItemListener() {
+            @Override
+            public void onSelected(MultiChoicesCircleButton.Item item, int index) {
+                switch (index){
+                    case 0:
+
+                        break;
+                    case 1:
+                        Intent intent=new Intent();
+                        intent.setClass(getContext(), PoemUploadActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        break;
+                }
+            }
+        });
 
         froundViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback(){
 

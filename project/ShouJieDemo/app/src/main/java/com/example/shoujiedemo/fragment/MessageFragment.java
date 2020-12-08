@@ -28,9 +28,6 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Intent intent=new Intent();
-        intent.setClass(getContext(), PoemUploadActivity.class);
-        startActivity(intent);
         return inflater.inflate(R.layout.fragment_message, container, false);
     }
 
