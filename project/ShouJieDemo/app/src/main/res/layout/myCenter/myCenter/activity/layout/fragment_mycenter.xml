@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
@@ -19,8 +18,7 @@
                 <com.example.shoujiedemo.util.TrancircleImageView
                     android:id="@+id/myCenter_userImg_background"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    />
+                    android:layout_height="400dp" />
                 <Button
                     android:id="@+id/myCenter_setting_intent"
                     android:stateListAnimator="@null"

@@ -3,17 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".myCenter.mySpace.view.activity.fragment.MySpaceIdeaFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mySpace_ideaGroup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="1232351243123"
-            android:textSize="300dp"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        app:spanCount="2">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
