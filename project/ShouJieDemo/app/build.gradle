@@ -41,8 +41,6 @@ android {
 }
 
 dependencies {
-
-    implementation 'com.gjiazhe:MultiChoicesCircleButton:1.0'
     //gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     //软键盘弹出

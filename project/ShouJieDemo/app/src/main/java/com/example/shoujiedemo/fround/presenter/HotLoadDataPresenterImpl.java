@@ -1,7 +1,5 @@
 package com.example.shoujiedemo.fround.presenter;
 
-import android.util.Log;
-
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.fround.model.FroundHotDataModel;
@@ -47,13 +45,11 @@ public class HotLoadDataPresenterImpl implements HotLoadDataPresenter,HotLoadDat
             user = userArray.toString();
             JSONArray contentArray = jsonArray.getJSONArray("hotdate");
             content = contentArray.toString();
-            Log.i("content",content);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         contents = gson.fromJson(content, new TypeToken<List<Content>>() {}.getType());
         users = gson.fromJson(user, new TypeToken<List<User>>() {}.getType());
-        Log.i("user",user);
         for(Content content1:contents){
             for(User user1 :users){
                 if(content1.getUserid() == user1.getId()){

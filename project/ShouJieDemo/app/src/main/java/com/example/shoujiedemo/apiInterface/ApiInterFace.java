@@ -1,12 +1,8 @@
 package com.example.shoujiedemo.apiInterface;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterFace {
@@ -85,11 +81,7 @@ public interface ApiInterFace {
     /**
      * 上传内容
      * */
-    @Multipart
-    @POST("addtuwen")
-    Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal,@Query("haspic")int haspic,@Part MultipartBody.Part imgs);
-
-    @GET("addtuwen")
+    @GET("add")
     Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal);
 
 
