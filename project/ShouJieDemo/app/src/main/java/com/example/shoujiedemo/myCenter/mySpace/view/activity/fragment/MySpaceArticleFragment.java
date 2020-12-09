@@ -19,7 +19,6 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.myCenter.mySpace.presenter.MySpacePresenter;
 import com.example.shoujiedemo.myCenter.mySpace.service.ArticleAdapter;
-import com.example.shoujiedemo.myCenter.mySpace.view.inter.ArticleAdapterView;
 import com.example.shoujiedemo.myCenter.mySpace.view.inter.ArticleFragmentView;
 import com.example.shoujiedemo.util.UserUtil;
 
@@ -41,7 +40,6 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
     private MySpacePresenter
         mySpacePresenter;
     private List<Set> setList = new ArrayList<>();  //
-    private GridLayoutManager gridManager;
     private ArticleAdapter articleAdapter;
     public MySpaceArticleFragment() {
         // Required empty public constructor
@@ -74,7 +72,6 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
      * 获取数据方法
      */
     private void getData(int userID){
-        Log.e("获取文集","开始");
         mySpacePresenter.getGroups(userID);
     }
 
@@ -86,13 +83,13 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void deleteDateSet(Integer groupID){
-        Log.e("删除测试",groupID+"");
-        for(Set set:setList){
-            if(set.getId() == groupID.intValue()) {
-                setList.remove(set);
-            }
-        }
-        articleAdapter.notifyDataSetChanged();
+       for(int i=0;i<setList.size();i++){
+           if(setList.get(i).getId() == groupID) {
+               setList.remove(i);
+               break;
+           }
+           articleAdapter.notifyDataSetChanged();
+       }
     }
 
     @Override
@@ -103,7 +100,7 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
     @Override
     public void getSets(List<Set> setLists) {
         setList = setLists;
-        gridManager = new GridLayoutManager(this.getActivity(),2);
+        GridLayoutManager gridManager = new GridLayoutManager(this.getActivity(), 2);
         mySpace_articleRec.setLayoutManager(gridManager);
         articleAdapter = new ArticleAdapter(this.getContext(),setList);
         mySpace_articleRec.setAdapter(articleAdapter);

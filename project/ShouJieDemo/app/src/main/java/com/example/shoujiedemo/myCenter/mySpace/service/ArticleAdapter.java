@@ -218,9 +218,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
          */
         private void delete(){
             int groupID = Integer.parseInt(article_groupID.getText().toString());
-            Log.e("删除文集",groupID+"");
-            mySpacePresenter.delete(groupID);
             EventBus.getDefault().postSticky(new Integer(groupID));
+            mySpacePresenter.delete(groupID);
             article_delete.setVisibility(View.INVISIBLE);
         }
 

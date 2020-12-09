@@ -14,13 +14,10 @@
     <!-- 设置页面的背景颜色和字体颜色 -->
 
     <!-- 肖帅 2020.11.26 -->
-
     <color name="dayLightBackground">#fff</color>
-
     <color name="dayLightActivity">#DCDCDC</color>
-
     <color name="dayLightText">#101010</color>
-
     <color name="dayLightTitle">#757575</color>
+    <color name="mySpaceRecycler">#DDDDDD</color>
 
 </resources>

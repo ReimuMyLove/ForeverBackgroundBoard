@@ -1,8 +1,10 @@
 package com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.shoujiedemo.Log.activity.LoginActivity;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.home.recommen.activity.MainActivity;
+import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.imgChange.UserImgChangeActivity;
+import com.example.shoujiedemo.myCenter.setting.view.activity.SettingActivity;
 
 public class UserImgPopupWindow extends PopupWindow {
     private TextView
@@ -18,16 +24,17 @@ public class UserImgPopupWindow extends PopupWindow {
             myCenter_UserImg_img,               //获取头像按钮
             myCenter_UserImg_changeUser,        //获取切换用户按钮
             myCenter_UserImg_cancel;            //获取取消按钮
-    private View
-            userImgPopupWindow;                 //当前弹出窗口
     private LinearLayout
             myCenter_UserImg_pop;               //获取当前窗口幕布
-
+    Context context;
+    @SuppressLint("InflateParams")
     public UserImgPopupWindow(Context context){
         super(context);
+        this.context = context;
         //获取当前PopupWindow
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        userImgPopupWindow = inflater.inflate(R.layout.popup_userimgfunction, null);
+        //当前弹出窗口
+        View userImgPopupWindow = inflater.inflate(R.layout.popup_userimgfunction, null);
         //设置PopupWindow
         this.setContentView(userImgPopupWindow);
         //设置PopupWindow长宽
@@ -50,7 +57,7 @@ public class UserImgPopupWindow extends PopupWindow {
 
     /**
      * 获取view
-     * @param view
+     * @param view :获取view控件
      */
     private void FindView(View view){
         myCenter_UserImg_wallpaper = view.findViewById(R.id.myCenter_userImg_wallpaper);
@@ -89,7 +96,7 @@ public class UserImgPopupWindow extends PopupWindow {
                     dismiss();
                     break;
                 case R.id.myCenter_userImg_changeUser:
-                    UserChange();
+                    UserChange(context);
                     dismiss();
                     break;
                 case R.id.myCenter_userImg_cancel:
@@ -100,12 +107,17 @@ public class UserImgPopupWindow extends PopupWindow {
         }
     }
 
-    private void UserChange() {
+    private void UserChange(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 
     private void ImgChange() {
+        Intent intent = new Intent(context, UserImgChangeActivity.class);
+        context.startActivity(intent);
     }
 
     private void WallpaperChange() {
+
     }
 }

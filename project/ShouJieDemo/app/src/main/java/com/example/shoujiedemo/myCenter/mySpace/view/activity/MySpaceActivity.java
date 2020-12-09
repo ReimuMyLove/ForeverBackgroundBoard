@@ -223,8 +223,7 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
     private void addSet(){
         Intent intent = new Intent(this,AddGroupActivity.class);
         startActivityForResult(intent,5);
-        /*
-        final String[] groupName = new String[1];
+        /*final String[] groupName = new String[1];
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = View.inflate(MySpaceActivity.this,R.layout.dialog_addgroup,null);
         final EditText name = view.findViewById(R.id.mySpace_dialog_name);
@@ -234,7 +233,6 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 groupName[0] = name.getText().toString();
-                Log.e("文集名字",groupName[0]);
                 addArticleGroup(UserUtil.RECENT_USER_ID,groupName[0]);
                 dialog.dismiss();
             }
@@ -245,8 +243,7 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
                 dialog.cancel();
             }
         });
-        builder.show();
-         */
+        builder.show();*/
     }
 
     private void addArticleGroup(int userID,String groupName) {

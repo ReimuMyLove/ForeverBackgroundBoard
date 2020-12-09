@@ -131,7 +131,6 @@ public class ArticleModelImpl implements ArticleModel{
                 .build();
         ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
         Observable<ResponseBody> observable = apiInterface.getArticles(userID);
-        Log.e("获取文集","开始交互");
         observable.subscribeOn(Schedulers.io())//在io线程中请求
                 .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
                 .subscribe(new Observer<ResponseBody>() {
@@ -145,10 +144,8 @@ public class ArticleModelImpl implements ArticleModel{
                         try {
                             String jsons = responseBody.string();
                             if (jsons.equals("false")){
-                                Log.e("获取文集","交互失败");
                                 listener.getGroupFailed();
                             }else {
-                                Log.e("获取文集","交互成功");
                                 listener.setGroup(jsons);
                             }
                         } catch (IOException e) {

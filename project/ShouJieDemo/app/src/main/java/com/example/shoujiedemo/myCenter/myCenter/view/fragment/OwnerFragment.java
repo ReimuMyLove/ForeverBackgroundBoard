@@ -1,25 +1,22 @@
 package com.example.shoujiedemo.myCenter.myCenter.view.fragment;
 
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.myCenter.myCenter.presenter.OwnerPresenter;
@@ -32,8 +29,8 @@ import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.UserI
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.myCenter.setting.view.activity.SettingActivity;
 import com.example.shoujiedemo.util.CircleImageView;
-import com.example.shoujiedemo.util.StatusBarUtil;
 import com.example.shoujiedemo.util.TrancircleImageView;
+import com.example.shoujiedemo.util.UserUtil;
 
 /**
  * 个人页面
@@ -45,8 +42,11 @@ public class OwnerFragment extends Fragment {
             myCenter_userImg;               //获取头像
     ImageView
             myCenter_userBackground;        //获取用户背景
+    TextView
+            myCenter_userName,              //获取用户名
+            myCenter_userFans;              //获取用户粉丝数
     View
-            myCenter_title,                 //获取标题
+            myCenter_userInformation,       //获取用户信息栏
             myCenter_userImg_top,           //获取头像辅助定位框
             myCenter_card_top,              //获取卡片辅助定位框
             myCenter_mySpace,               //获取我的空间按钮
@@ -54,8 +54,7 @@ public class OwnerFragment extends Fragment {
             myCenter_Storing,               //获取收藏按钮
             myCenter_myFollow,              //获取我的关注按钮
             myCenter_myAgreement,           //获取我的点赞按钮
-            myCenter_helpCenter,           //获取帮助中心按钮
-            myCenter_userInformation;       //获取用户信息栏
+            myCenter_helpCenter;            //获取帮助中心按钮
     CardView
             myCenter_card       ;           //获取选项卡片
     Button
@@ -64,13 +63,12 @@ public class OwnerFragment extends Fragment {
     UserImgPopupWindow
             userImgPopupWindow;             //获取PopupWindow
     View view;
-
     public OwnerFragment() {
         // Required empty public constructor
-
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,15 +82,11 @@ public class OwnerFragment extends Fragment {
         ownerPresenter = new OwnerPresenter();
         /* 配置控件长宽高 */
         SetViewHW();
+        //设置粉丝数、用户名
+        myCenter_userName.setText(UserUtil.USER_NAME);
+        myCenter_userFans.setText(UserUtil.USER_FANS+"");
         userImgPopupWindow = new UserImgPopupWindow(view.getContext());
-
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //StatusBarUtil.setStatusBarDarkTheme(getActivity(),false);
     }
 
     /**
@@ -113,6 +107,8 @@ public class OwnerFragment extends Fragment {
         myCenter_myFollow = view.findViewById(R.id.myCenter_myFollow);
         myCenter_myAgreement = view.findViewById(R.id.myCenter_myAgreement);
         myCenter_helpCenter = view.findViewById(R.id.myCenter_helpCenter);
+        myCenter_userName = view.findViewById(R.id.myCenter_userName);
+        myCenter_userFans = view.findViewById(R.id.myCenter_userFans);
         myCenter_userInformation = view.findViewById(R.id.myCenter_userInformation);
     }
 
@@ -129,6 +125,7 @@ public class OwnerFragment extends Fragment {
         myCenter_myFollow.setOnClickListener(listener);
         myCenter_myAgreement.setOnClickListener(listener);
         myCenter_helpCenter.setOnClickListener(listener);
+        myCenter_userName.setOnClickListener(listener);
     }
 
     /**
@@ -215,6 +212,7 @@ public class OwnerFragment extends Fragment {
 
     public void MySpaceIntent() {
         Intent intent = new Intent(this.getContext(), MySpaceActivity.class);
+        UserUtil.RECENT_USER_ID = UserUtil.USER_ID;
         startActivity(intent);
     }
 
