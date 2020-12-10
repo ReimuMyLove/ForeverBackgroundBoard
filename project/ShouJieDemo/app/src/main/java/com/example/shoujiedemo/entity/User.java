@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String sign;
     private int fennum;
     private int follownum;
+    private boolean isFollow = false;
 
     public User(){
 
@@ -90,10 +91,18 @@ public class User implements Serializable {
         this.follownum = follownum;
     }
 
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", picname='" + picname + '\'' +
@@ -102,6 +111,7 @@ public class User implements Serializable {
                 ", sign='" + sign + '\'' +
                 ", fennum=" + fennum +
                 ", follownum=" + follownum +
+                ", isFollow=" + isFollow +
                 '}';
     }
 }

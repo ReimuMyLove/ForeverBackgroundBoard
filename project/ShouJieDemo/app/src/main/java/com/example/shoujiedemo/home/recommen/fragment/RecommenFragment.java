@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alexvasilkov.foldablelayout.UnfoldableView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.ScaleInTransformer;
@@ -29,7 +31,10 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowUserPresenter;
 import com.example.shoujiedemo.home.follow.view.FollowView;
 import com.example.shoujiedemo.home.recommen.adapter.ContentAdapter;
 import com.example.shoujiedemo.home.recommen.presenter.OperatePresenter;
+import com.example.shoujiedemo.home.recommen.presenter.OperatePresenterImpl;
+import com.example.shoujiedemo.home.recommen.view.RecommenView;
 import com.example.shoujiedemo.util.BaseFragment;
+import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.HandleBackInterface;
 import com.google.android.material.tabs.TabLayout;
 
@@ -46,7 +51,7 @@ import java.util.List;
 /**
  * 推荐页面,实现RecommenView接口
  */
-public class RecommenFragment extends BaseFragment{
+public class RecommenFragment extends BaseFragment implements RecommenView {
 
     private ViewPager2 viewPager2;
     private ViewPager2 homeView;
@@ -57,12 +62,12 @@ public class RecommenFragment extends BaseFragment{
     private TextView detailsTitle;//详细页面标题
     private TextView detailsText;//详细页面内容
     private UnfoldableView unfoldableView;//折叠式图控件
+    private TextView detailsWriter;//详细页面作者
 
     private List<Content> articleList = new ArrayList<>();//内容列表
 
     private OperatePresenter operatePresenter;
-    private MyFollowAtriclePresenter atriclePresenter;
-    private MyFollowUserPresenter userPresenter;
+
 
     private int currentPosition = 0;    //当前滑动位置
     private int oldPositon = 0;          //上一个滑动位置
@@ -76,6 +81,7 @@ public class RecommenFragment extends BaseFragment{
     public RecommenFragment(ViewPager2 homeView) {
         // Required empty public constructor
         this.homeView = homeView;
+        operatePresenter = new OperatePresenterImpl(this);
 
     }
 
@@ -108,7 +114,7 @@ public class RecommenFragment extends BaseFragment{
      */
     private void initView(View view) {
         articleList = new ArrayList<>();
-        Content a1 = new Content();
+        /*Content a1 = new Content();
 
         //a1.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg02));
         Content a2 = new Content();
@@ -120,7 +126,7 @@ public class RecommenFragment extends BaseFragment{
         articleList.add(a1);
         articleList.add(a2);
         articleList.add(a3);
-        articleList.add(a4);
+        articleList.add(a4);*/
 
         viewPager2= view.findViewById(R.id.viewpager2_view);
         unfoldableView = view.findViewById(R.id.unfoldable_view);
@@ -128,25 +134,15 @@ public class RecommenFragment extends BaseFragment{
         detailsImg = detailsLayout.findViewById(R.id.details_image);
         detailsText = detailsLayout.findViewById(R.id.details_text);
         detailsTitle = detailsLayout.findViewById(R.id.details_title);
+        detailsWriter = detailsLayout.findViewById(R.id.details_writer);
         listTouchInterceptor = view.findViewById(R.id.touch_interceptor_view);
 
-        contentAdapter = new ContentAdapter(getContext(),articleList,unfoldableView,detailsLayout);
-        viewPager2.setAdapter(contentAdapter);
+        operatePresenter.loadContent();
         //设置滚动方向
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
 
-        //实现一屏多页
-        viewPager2.setOffscreenPageLimit(articleList.size());//设置预加载页
-        View recyclerView = viewPager2.getChildAt(0);
-        if(recyclerView != null && recyclerView instanceof RecyclerView){
-            recyclerView.setPadding(100, 0, 100, 0);
-            ((RecyclerView) recyclerView).setClipToPadding(false);
-        }
-        //设置Transformer
-        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new ScaleInTransformer());
-        viewPager2.setPageTransformer(compositePageTransformer);
+
 
         detailsLayout.setVisibility(View.INVISIBLE);
         //页面滑动监听
@@ -177,10 +173,16 @@ public class RecommenFragment extends BaseFragment{
                                     return;
                                }
                             //若还有上一个bottom fragment页面则切换
-                            /*if(homeView.getCurrentItem() > 0){
+                            if(homeView.getCurrentItem() > 0){
 
-                            }*/
+                            }
                             //若还有下一个fragment则切换
+                            /*if(homeView.getCurrentItem() <  contentAdapter.getItemCount() - 1){
+                                homeView.setCurrentItem(1,true);
+                            }*/
+                                if(homeView.getCurrentItem() ==  contentAdapter.getItemCount() - 1){
+                                    homeView.setCurrentItem(1,true);
+                                }
                         }else if(currentPosition == contentAdapter.getItemCount() - 1){
                             if(homeView.getCurrentItem() <  contentAdapter.getItemCount() - 1){
                                 homeView.setCurrentItem(1,true);
@@ -224,17 +226,6 @@ public class RecommenFragment extends BaseFragment{
 
     }
 
-    /**
-     * adapter点击事件回调
-     * @param position item位置
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onMainEventThread(Integer position){
-        Log.d("position",position+ "");
-        /*ImageView imageView = detailsLayout.findViewById(R.id.details_image);
-        Content article = articleList.get(position);
-        imageView.setImageBitmap(article.getBitmap());*/
-    }
 
     /**
      * 自定义返回按钮监听
@@ -249,4 +240,37 @@ public class RecommenFragment extends BaseFragment{
         return super.onBackPressed();
     }
 
+    @Override
+    public void loadContent(List<Content> contents) {
+        articleList = contents;
+        //实现一屏多页
+        //viewPager2.setOffscreenPageLimit(articleList.size());//设置预加载页
+        View recyclerView = viewPager2.getChildAt(0);
+        if(recyclerView != null && recyclerView instanceof RecyclerView){
+            recyclerView.setPadding(70, 0, 70, 0);
+            ((RecyclerView) recyclerView).setClipToPadding(false);
+        }
+        //设置Transformer
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new ScaleInTransformer());
+        viewPager2.setPageTransformer(compositePageTransformer);
+        contentAdapter = new ContentAdapter(getContext(),articleList,unfoldableView,detailsLayout);
+        viewPager2.setAdapter(contentAdapter);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onLoadDetailsMain(Content content){
+        if(content != null) {
+            detailsTitle.setText(content.getTitle());
+            detailsWriter.setText(content.getWriter());
+            detailsText.setText(content.getText());
+            RequestOptions requestOptions = new RequestOptions().centerCrop();
+            Glide.with(getActivity())
+                    .load(ConfigUtil.BASE_IMG_URL + content.getPic())
+                    .apply(requestOptions)
+                    .into(detailsImg);
+        }
+
+    }
 }

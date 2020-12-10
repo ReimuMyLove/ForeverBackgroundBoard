@@ -31,6 +31,7 @@ public interface ContentView {
 
     void deleteComment();//删除评论
 
+    void noSet();//无文集
 
     void showSet(List<Set> sets);//显示文集
 }

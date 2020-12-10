@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.myCenter.setting.presenter.impl.FeedbackPresenter;
 import com.example.shoujiedemo.myCenter.setting.view.inter.FeedbackView;
@@ -54,15 +56,9 @@ public class FeedbackViewActivity extends BaseActivity implements FeedbackView {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.myCenter_setting_feedback_return:
-                    onBackPressed();
+                    feedbackPresenter.Return(context);
                     break;
             }
         }
-    }
-
-    //返回
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

@@ -10,5 +10,7 @@ public interface HeartView {
 
     void showContentListData(List<Content> hearts);//显示内容列表数据
 
+    void showSearchList(List<Content> contents);//显示搜索数据
+
     void onData();//无数据
 }

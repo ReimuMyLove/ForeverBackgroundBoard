@@ -19,11 +19,15 @@ import android.widget.Toast;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.ArticleEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
+import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
+import com.example.shoujiedemo.fround.adapter.HotAdapter;
 import com.example.shoujiedemo.fround.presenter.ArticleLoadDataPresenterImpl;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.view.ArticleView;
+import com.example.shoujiedemo.util.UserUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -49,6 +53,8 @@ public class ArticleFragment extends Fragment implements ArticleView {
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
+    private boolean isRefresh = false;
+    private String flag;
 
 
     public ArticleFragment() {
@@ -87,14 +93,17 @@ public class ArticleFragment extends Fragment implements ArticleView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 1) {
+        if(!isRefresh) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(0,pageNum);
+                if(flag != null){
+                    presenter.searchData(flag,0,pageNum,UserUtil.USER_ID);
+                }
+                articleList.clear();
+                presenter.confirmInitContent(0,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);
 
             }
@@ -105,7 +114,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                presenter.confirmInitContent(0,pageNum);
+                presenter.confirmInitContent(0,pageNum,UserUtil.USER_ID);
                 refreshLayout.finishLoadMore(600);
             }
         });
@@ -154,6 +163,16 @@ public class ArticleFragment extends Fragment implements ArticleView {
                 ++pageNum;
             articleAdapter.notifyDataSetChanged();
         }
+        isRefresh = true;
+    }
+
+    @Override
+    public void showSearchList(List<Content> contents) {
+        if(contents != null) {
+            ArticleAdapter searthAdapter = new ArticleAdapter(contents,getActivity());
+            recyclerView.setAdapter(searthAdapter);
+            pageNum++;
+        }
     }
 
     @Override
@@ -162,6 +181,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
+        isRefresh = true;
     }
 
     /**
@@ -236,9 +256,48 @@ public class ArticleFragment extends Fragment implements ArticleView {
                         }
                     }
                     articleAdapter.notifyDataSetChanged();
-
+                    msgEvent = null;
+                    break;
+                case "follow":
+                    if(event.isValue()){
+                        for(Content content:articleList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(true);
+                                break;
+                            }
+                        }
+                    }else{
+                        for(Content content:articleList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(false);
+                                break;
+                            }
+                        }
+                    }
+                    articleAdapter.notifyDataSetChanged();
+                    msgEvent = null;
                     break;
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void SearchMain(SearchEvent event){
+        /*List<Content> searchList = new ArrayList<>();
+        if(event.getPosition() == 0){
+            for(Content content :contentList){
+                if(content.toString().contains(event.getTag())){
+                    searchList.add(content);
+                }
+            }
+            HotAdapter searthAdapter = new HotAdapter(getActivity(),searchList);
+            recyclerView.setAdapter(searthAdapter);
+
+        }*/
+        if(event.getPosition() == 1) {
+            flag = event.getTag();
+            pageNum = 1;
+            presenter.searchData(flag, 0, pageNum, UserUtil.USER_ID);
         }
     }
 }

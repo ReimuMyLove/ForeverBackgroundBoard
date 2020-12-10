@@ -35,7 +35,9 @@ public class SafePresenter {
      */
     /* 返回设置页面 */
     public void Return(Context context) {
-
+        Intent intent = new Intent(context, SettingActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        context.startActivity(intent);
     }
 
     /* 修改密码 */

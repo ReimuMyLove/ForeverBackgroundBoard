@@ -70,6 +70,8 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     Button btnCollect;
     Button dismiss;
     ImageView cover;
+    TextView tag0;
+    TextView tag2;
 
     private AnimationDrawable loadingDrawable;
     private int position;
@@ -84,7 +86,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
 
     private Context context;
 
-    private boolean isFollow = false;
+   // private boolean isFollow = false;
     private boolean isPull = false;
 
     private MyOnClikeListener myOnClikeListener;
@@ -112,12 +114,22 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         btnPull = itemView.findViewById(R.id.follow_poem_btn_pull);
         lnReport = itemView.findViewById(R.id.follow_poem_ln_report);
         unLike = itemView.findViewById(R.id.follow_poem_tv_unLike);
-        //tag = itemView.findViewById(R.id.follow_article_tv_tag);
         share = itemView.findViewById(R.id.follow_poem_btn_share);
         shareNum = itemView.findViewById(R.id.follow_poem_tv_share_num);
         collected = itemView.findViewById(R.id.follow_poem_btn_collection);
         lnPoem = itemView.findViewById(R.id.follow_poem_ln_content);
         cover = itemView.findViewById(R.id.follow_poem_iv_cover);
+        tag0 = itemView.findViewById(R.id.follow_poem_tv_tag0);
+        tag2 = itemView.findViewById(R.id.follow_poem_tv_tag02);
+        followAnim = itemView.findViewById(R.id.follow_poem_iv_follow_anim);
+
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            followAnim.setVisibility(View.INVISIBLE);
+        }
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
 
         if (contents.get(position).isCollect())
             collected.setBackgroundResource(R.drawable.collectionselected);
@@ -133,6 +145,11 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             like.setBackgroundResource(R.drawable.likeselected);
         else
             like.setBackgroundResource(R.drawable.likeunselect);
+
+        if(contents.get(position).getUser().isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
 
         likeNum = itemView.findViewById(R.id.follow_poem_tv_like_num);
         popuMenu = itemView.findViewById(R.id.follow_poem_pull_menu);
@@ -159,6 +176,20 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
        userName.setText(user.getName());
        fanNum.setText(user.getFennum() + "");
 
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            followAnim.setVisibility(View.INVISIBLE);
+        }
+
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
+
+        if(user.isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
+
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
         else
@@ -169,7 +200,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
-        if( contents.get(position).getPic() != null) {
+        if(contents.get(position).getPic()!= null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
                     .into(head);
@@ -221,16 +252,12 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     break;
                 case R.id.follow_poem_btn_collection:
                     if(contents.get(position).isCollect()) {
-                        /*collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
-                        int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
-                        contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");
-                        contents.get(position).setCollect(false);*/
+
                         MsgEvent event = new MsgEvent();
                         event.setId(contents.get(position).getId());
                         event.setType("collect");
                         event.setValue(contents.get(position).isCollect());
-                        //event.setPosition(position);
+
                         EventBus.getDefault().postSticky(event);
                         presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
@@ -243,9 +270,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                 case R.id.follow_poem_btn_like:
                     if(!contents.get(position).isLike()) {
                         like.setBackgroundResource(R.drawable.likeselected);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(true);
                         Log.e("like","like");
                         MsgEvent event = new MsgEvent();
@@ -256,9 +280,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                         presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(false);
                         MsgEvent event = new MsgEvent();
                         event.setType("like");
@@ -273,11 +294,11 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     btnFollow.setVisibility(View.INVISIBLE);
                     loadingDrawable =(AnimationDrawable)followAnim.getDrawable();
                     loadingDrawable.start();
-                    if(isFollow) {  //关注
-                        isFollow = false;
+                    if(user.isFollow()) {  //关注
+                        user.setFollow(false);
                         presenter.confirmFollow(UserUtil.USER_ID,contents.get(position).getUserid());
                     }else {         //取关
-                        isFollow= true;
+                        user.setFollow(true);
                         presenter.confirmUnFolly(UserUtil.USER_ID,contents.get(position).getUserid());
                     }
                     break;
@@ -285,7 +306,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     Intent intent2 = new Intent(context, PoemActivity.class);
                     Bundle bundle2 = new Bundle();
                     bundle2.putSerializable("poem",contents.get(position));
-                    bundle2.putBoolean("isFollow",isFollow);
                     bundle2.putSerializable("user",contents.get(position).getUser());
                     bundle2.putInt("position",position);
                     intent2.putExtra("bundle",bundle2);
@@ -309,7 +329,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             btnFollow.setText("关注+");
             int fenNum = Integer.parseInt(fanNum.getText().toString()) - 1;
             fanNum.setText(fenNum + "");
-            isFollow= true;
+            user.setFollow(true);
         }
     }
 
@@ -320,7 +340,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context,"取消关注失败",Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -338,7 +358,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             int fenNum = Integer.parseInt(fanNum.getText().toString()) + 1;
             fanNum.setText(fenNum + "");
             Toast.makeText(context, "关注成功", Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -349,7 +369,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context, "关注失败", Toast.LENGTH_SHORT).show();
-            isFollow = true;
+            user.setFollow(true);
         }
     }
 
@@ -395,7 +415,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         Intent intent2 = new Intent(context, PoemActivity.class);
         Bundle bundle2 = new Bundle();
         bundle2.putSerializable("poem",contents.get(position));
-        bundle2.putBoolean("isFollow",isFollow);
         bundle2.putSerializable("user",contents.get(position).getUser());
         bundle2.putInt("position",position);
         intent2.putExtra("bundle",bundle2);
@@ -409,6 +428,11 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
 
     @Override
     public void deleteComment() {
+
+    }
+
+    @Override
+    public void noSet() {
 
     }
 
@@ -453,9 +477,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     @Override
     public void collect() {
         collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
-        contents.get(position).setCollectnum(collectionNums);
-        collectionNum.setText(collectionNums + "");*/
         contents.get(position).setCollect(true);
         MsgEvent event = new MsgEvent();
         event.setId(contents.get(position).getId());

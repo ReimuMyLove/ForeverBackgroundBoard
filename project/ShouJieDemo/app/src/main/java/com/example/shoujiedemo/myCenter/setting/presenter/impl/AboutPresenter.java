@@ -28,4 +28,10 @@ public class AboutPresenter {
     /**
      * 逻辑实现方法
      */
+    /* 返回设置页面 */
+    public void Return(Context context) {
+        Intent intent = new Intent(context, SettingActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        context.startActivity(intent);
+    }
 }

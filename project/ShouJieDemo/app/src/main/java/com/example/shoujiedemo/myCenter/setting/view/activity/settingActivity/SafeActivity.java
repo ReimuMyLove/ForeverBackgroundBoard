@@ -18,7 +18,7 @@ import com.example.shoujiedemo.util.BaseActivity;
 
 public class SafeActivity extends BaseActivity implements SafeView {
     Button  myCenter_setting_safe_return;           //返回按钮
-    View
+    LinearLayout
             myCenter_setting_safe_changePassword,   //修改密码
             myCenter_setting_safe_setSafeQuestion,  //安全问题
             myCenter_setting_safe_setEmail,         //设置邮箱
@@ -58,10 +58,10 @@ public class SafeActivity extends BaseActivity implements SafeView {
     @Override
     public void FindView() {
         myCenter_setting_safe_return = findViewById(R.id.myCenter_setting_safe_return);
-        myCenter_setting_safe_changePassword = findViewById(R.id.myCenter_setting_safe_changePassword);
-        myCenter_setting_safe_setSafeQuestion = findViewById(R.id.myCenter_setting_safe_setSafeQuestion);
+        myCenter_setting_safe_changePassword = findViewById(R.id.myCenter_setting_safe_setEmail);
+        myCenter_setting_safe_setSafeQuestion = findViewById(R.id.myCenter_setting_safe_setEmail);
         myCenter_setting_safe_setEmail = findViewById(R.id.myCenter_setting_safe_setEmail);
-        myCenter_setting_safe_destroyAccount = findViewById(R.id.myCenter_setting_safe_destroyAccount);
+        myCenter_setting_safe_destroyAccount = findViewById(R.id.myCenter_setting_safe_setEmail);
     }
 
     /**
@@ -73,7 +73,7 @@ public class SafeActivity extends BaseActivity implements SafeView {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.myCenter_setting_safe_return:
-                    onBackPressed();
+                    safePresenter.Return(context);
                     break;
                 case R.id.myCenter_setting_safe_changePassword:
                     safePresenter.ChangePassword(context);
@@ -89,10 +89,5 @@ public class SafeActivity extends BaseActivity implements SafeView {
                     break;
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Set;
+import com.example.shoujiedemo.util.ConfigUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class SetAdapter extends BaseAdapter {
 
         title.setText(setList.get(i).getName());
         Glide.with(context)
-                .load( setList.get(i).getPic())
+                .load(ConfigUtil.BASE_WENJI_URL + setList.get(i).getPic())
                 .into(img);
 
         return view;

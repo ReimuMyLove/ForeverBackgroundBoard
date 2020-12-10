@@ -15,10 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.bean.SearchEvent;
+import com.example.shoujiedemo.util.ToastUtils;
+import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -51,9 +54,7 @@ public class FroundFragment extends Fragment{
     private EditText edSearch;
 
 
-    public FroundFragment(){
 
-    }
 
     public FroundFragment(ViewPager2 viewPager2,Context context) {
         // Required empty public constructor
@@ -77,6 +78,27 @@ public class FroundFragment extends Fragment{
         froudnTab = view.findViewById(R.id.fround_topTab);
         btnSearch = view.findViewById(R.id.btn_search);
         edSearch = view.findViewById(R.id.ed_search);
+
+        MultiChoicesCircleButton.Item item1 = new MultiChoicesCircleButton.Item("文章", getResources().getDrawable(R.drawable.article), 30);
+
+        MultiChoicesCircleButton.Item item2 = new MultiChoicesCircleButton.Item("诗", getResources().getDrawable(R.drawable.poem), 90);
+
+        MultiChoicesCircleButton.Item item3 = new MultiChoicesCircleButton.Item("感悟", getResources().getDrawable(R.drawable.heart), 150);
+
+        List<MultiChoicesCircleButton.Item> buttonItems = new ArrayList<>();
+        buttonItems.add(item1);
+        buttonItems.add(item2);
+        buttonItems.add(item3);
+
+        MultiChoicesCircleButton multiChoicesCircleButton = (MultiChoicesCircleButton) view.findViewById(R.id.multiChoicesCircleButton);
+        multiChoicesCircleButton.setButtonItems(buttonItems);
+
+        multiChoicesCircleButton.setOnSelectedItemListener(new MultiChoicesCircleButton.OnSelectedItemListener() {
+            @Override
+            public void onSelected(MultiChoicesCircleButton.Item item, int index) {
+                Toast.makeText(getActivity(),item.getText(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if(hotFragment == null) {
             hotFragment = new HotFragment();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,13 +130,9 @@ public class SettingActivity extends BaseActivity implements SettingView{
                     Safe();
                     break;
                 case R.id.myCenter_setting_clearCookie:
-                    try {
-                        settingPresenter.ClearCookie(context);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    settingPresenter.ClearCookie(context);
+                    Toast.makeText(context,"清理缓存成功",Toast.LENGTH_SHORT);
                     GetCookieSize();
-                    Toast.makeText(context, "偶然：缓存清理成功", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.myCenter_setting_feedback:
                     Feedback();
@@ -144,7 +141,7 @@ public class SettingActivity extends BaseActivity implements SettingView{
                     About();
                     break;
                 case R.id.myCenter_setting_logout:
-                    settingPresenter.Logout(context);
+                   // settingPresenter.Logout(context);
                     break;
                 case R.id.myCenter_setting_return:
                     onBackPressed();
@@ -155,16 +152,19 @@ public class SettingActivity extends BaseActivity implements SettingView{
 
     public void About() {
         Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        context.startActivity(intent);
     }
 
     public void Safe() {
         Intent intent = new Intent(this, SafeActivity.class);
-        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        context.startActivity(intent);
     }
 
     public void Feedback() {
         Intent intent = new Intent(this, FeedbackViewActivity.class);
-        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+        context.startActivity(intent);
     }
 }

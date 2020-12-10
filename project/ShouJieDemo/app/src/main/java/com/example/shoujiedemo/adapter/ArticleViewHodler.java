@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -71,6 +72,8 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     ListView setList;
     Button btnCollect;
     Button dismiss;
+    TextView tag0;
+    TextView tag2;
 
     private User user;
 
@@ -87,7 +90,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     private List<Content> contents = new ArrayList<>();
     private MyFollowOperatePresenter presenter;
 
-    private boolean isFollow = false;
     private boolean isPull = false;
 
     private AnimationDrawable loadingDrawable;
@@ -124,6 +126,17 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         share = itemView.findViewById(R.id.follow_article_btn_share);
         shareNum = itemView.findViewById(R.id.follow_article_tv_share_num);
         collected = itemView.findViewById(R.id.follow_article_btn_collection);
+        tag0 = itemView.findViewById(R.id.follow_artivle_tv_tag0);
+        tag2 = itemView.findViewById(R.id.follow_article_tv_tag02);
+
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            //followAnim.setVisibility(View.INVISIBLE);
+        }
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
+
 
         if (contents.get(position).isCollect())
             collected.setBackgroundResource(R.drawable.collectionselected);
@@ -139,6 +152,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             like.setBackgroundResource(R.drawable.likeselected);
         else
             like.setBackgroundResource(R.drawable.likeunselect);
+
+        if(contents.get(position).getUser().isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
 
         likeNum = itemView.findViewById(R.id.follow_article_tv_like_num);
         popuMenu = itemView.findViewById(R.id.follow_article_pull_menu);
@@ -166,6 +184,20 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         user = contents.get(position).getUser();
         userName.setText(user.getName());
         fanNum.setText(user.getFennum() + "");
+        tag2.setText(contents.get(position).getTag());
+
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            followAnim.setVisibility(View.INVISIBLE);
+        }
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
+
+        if(user.isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
 
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
@@ -178,14 +210,13 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
         RequestOptions requestOptions = new RequestOptions().centerCrop();
-        if( contents.get(position).getPic() != null) {
+        if(contents.get(position).getPic() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
                     .apply(requestOptions)
                     .into(articleCover);
         }
 
-        //articleCover.setScaleType(ImageView.ScaleType.FIT_XY);
         if(contents.get(position).getUser().getPicname() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
@@ -239,9 +270,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                 case R.id.follow_article_btn_collection:
                     if(contents.get(position).isCollect()) {
                         collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
-                        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
-                        contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");*/
                         contents.get(position).setCollect(false);
                         MsgEvent event = new MsgEvent();
                         event.setId(contents.get(position).getId());
@@ -260,9 +288,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                 case R.id.follow_article_btn_like://点赞
                     if(!contents.get(position).isLike()) {
                         like.setBackgroundResource(R.drawable.likeselected);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(true);
                         MsgEvent event = new MsgEvent();
                         event.setType("like");
@@ -272,9 +297,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                         presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(false);
                         MsgEvent event = new MsgEvent();
                         event.setType("like");
@@ -289,11 +311,21 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                     btnFollow.setVisibility(View.INVISIBLE);
                     loadingDrawable =(AnimationDrawable)followAnim.getDrawable();
                     loadingDrawable.start();
-                    if(isFollow) {  //关注
-                        isFollow = false;
+                    if(user.isFollow()) {  //关注
+                        user.setFollow(false);
+                        MsgEvent event = new MsgEvent();
+                        event.setType("follow");
+                        event.setId(user.getId());
+                        event.setValue(user.isFollow());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmFollow(UserUtil.USER_ID,contents.get(position).getUserid());
                     }else {         //取关
-                        isFollow= true;
+                        user.setFollow(true);
+                        MsgEvent event = new MsgEvent();
+                        event.setType("follow");
+                        event.setId(user.getId());
+                        event.setValue(user.isFollow());
+                        EventBus.getDefault().postSticky(event);
                         presenter.confirmUnFolly(UserUtil.USER_ID,contents.get(position).getUserid());
                     }
                     break;
@@ -301,7 +333,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                     Intent intent2 = new Intent(context, ArticleActivity.class);
                     Bundle bundle2 = new Bundle();
                     bundle2.putSerializable("article",contents.get(position));
-                    bundle2.putBoolean("isFollow",isFollow);
                     bundle2.putSerializable("user",contents.get(position).getUser());
                     bundle2.putInt("position",position);
                     intent2.putExtra("bundle",bundle2);
@@ -326,7 +357,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             btnFollow.setText("关注+");
             int fenNum = Integer.parseInt(fanNum.getText().toString()) - 1;
             fanNum.setText(fenNum + "");
-            isFollow= true;
+            user.setFollow(true);
         }
     }
 
@@ -337,7 +368,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context,"取消关注失败",Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -355,7 +386,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             int fenNum = Integer.parseInt(fanNum.getText().toString()) + 1;
             fanNum.setText(fenNum + "");
             Toast.makeText(context, "关注成功", Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -366,7 +397,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context, "关注失败", Toast.LENGTH_SHORT).show();
-            isFollow = true;
+            user.setFollow(true);
         }
     }
 
@@ -415,7 +446,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         bundle.putString("articleText",contents.get(position).getText());
         bundle.putString("articleDate",contents.get(position).getTime());
         bundle.putString("articleWriterName",contents.get(position).getWriter());
-        bundle.putBoolean("isFollow",isFollow);
         intent.putExtra("bundle",bundle);
         context.startActivity(intent);
     }
@@ -442,6 +472,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
 
     @Override
     public void deleteComment() {
+
+    }
+
+    @Override
+    public void noSet() {
 
     }
 

@@ -40,6 +40,8 @@ public interface MyFollowOperationPresenterListener {
 
     void onLoadSetSuccess(String jsons);
 
+    void onLoadSetError();
+
     void onDeleteCommentSuccess();
 
     void onDeleteCommentError();

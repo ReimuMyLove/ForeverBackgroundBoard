@@ -75,7 +75,6 @@ public class CommentAdapter extends RecyclerView.Adapter{
                 viewHolder.menuBtn.setVisibility(View.INVISIBLE);
                 viewHolder.deleteMenu.setVisibility(View.INVISIBLE);
                 EventBus.getDefault().postSticky(commentList.get(position));
-                //commentList.remove(position);
             }
         });
 

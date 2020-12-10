@@ -228,6 +228,11 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    }
 
    @Override
+   public void onLoadSetError() {
+
+   }
+
+   @Override
    public void onDeleteCommentSuccess() {
       Log.e("listener","success");
       contentView.deleteComment();

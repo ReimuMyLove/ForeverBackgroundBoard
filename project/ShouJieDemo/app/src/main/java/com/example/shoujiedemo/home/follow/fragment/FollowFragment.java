@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class FollowFragment extends Fragment implements FollowView {
 
-    //private List<Content> contents = new ArrayList<>();//关注内容列表
     private RecyclerView contentRlv;
     private FollowContentAdapter contentAdapter;
     private MyFollowInitPresenter presenter;
@@ -49,6 +48,7 @@ public class FollowFragment extends Fragment implements FollowView {
     private SmartRefreshLayout smartRefreshLayout;
     private int pageNum;
     private int refreshTag = 0;
+    private boolean isRefresh = false;
 
     public FollowFragment() {
         // Required empty public constructor
@@ -72,14 +72,13 @@ public class FollowFragment extends Fragment implements FollowView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 1) {
+        if(!isRefresh) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 presenter.confirmInitContent(2,pageNum);
-
                 refreshLayout.finishRefresh(600);
             }
 
@@ -145,6 +144,7 @@ public class FollowFragment extends Fragment implements FollowView {
 
             contentAdapter.notifyDataSetChanged();
         }
+        isRefresh = true;
     }
 
     @Override
@@ -153,6 +153,7 @@ public class FollowFragment extends Fragment implements FollowView {
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
+        isRefresh = true;
     }
 
     /**

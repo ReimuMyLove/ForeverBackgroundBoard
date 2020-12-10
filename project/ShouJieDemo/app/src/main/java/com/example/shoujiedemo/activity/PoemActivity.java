@@ -699,15 +699,20 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                 break;
             }
         }
+        commentNum.setText(new StringBuilder().append(commentList.size()));
+        commentNum2.setText(new StringBuilder().append(commentList.size()));
+        commentAdapter.notifyDataSetChanged();
         MsgEvent event = new MsgEvent();
         event.setId(poem.getId());
         event.setType("comment");
         event.setValue(false);
         event.setIntValue(poem.getCheatnum());
         EventBus.getDefault().postSticky(event);
-        commentNum.setText(new StringBuilder().append(commentList.size()));
-        commentNum2.setText(new StringBuilder().append(commentList.size()));
-        commentAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void noSet() {
+
     }
 
 

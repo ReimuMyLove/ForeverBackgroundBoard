@@ -64,7 +64,8 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     ListView setList;
     Button btnCollect;
     Button dismiss;
-    ImageView cover;
+    ImageView cover; TextView tag0;
+    TextView tag2;
 
     private MyOnClikeListener myOnClikeListener;
     private List<Content> contents = new ArrayList<>();
@@ -79,7 +80,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     private AnimationDrawable loadingDrawable;
     private int position;
 
-    private boolean isFollow = false;
     private boolean isPull = false;
 
     public HeartViewHodler(@NonNull View itemView, Context context, List<Content> contents) {
@@ -93,6 +93,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     }
 
     private void initView() {
+
         head = itemView.findViewById(R.id.follow_heart_iv_head);
         userName = itemView.findViewById(R.id.follow_heart_tv_user_name);
         set = itemView.findViewById(R.id.follow_heart_tv_set);
@@ -111,15 +112,31 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         heartContent = itemView.findViewById(R.id.follow_heart_tv_cotent);
         followAnim = itemView.findViewById(R.id.follow_heart_iv_follow_anim);
         cover = itemView.findViewById(R.id.follow_heart_iv_cover);
+        tag0 = itemView.findViewById(R.id.follow_heart_tv_tag0);
+        tag2 = itemView.findViewById(R.id.follow_heart_tv_tag02);
+
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            followAnim.setVisibility(View.INVISIBLE);
+        }
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
 
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
         else
             like.setBackgroundResource(R.drawable.likeunselect);
+
         if (contents.get(position).isCollect())
             collected.setBackgroundResource(R.drawable.collectionselected);
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
+
+        if(contents.get(position).getUser().isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
 
         setAlterView = LayoutInflater.from(context).inflate(R.layout.collect_alterdialog_view,null,false);
         setList = setAlterView.findViewById(R.id.set_list);
@@ -128,9 +145,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         alert = builder.create();
 
 
-        /*Glide.with(context)
-                .load( ConfigUtil.BASE_HEAD_URL + contents.get(position).getPic())
-                .into(cover);*/
     }
 
     public void setMyOnClikeListenser(){
@@ -154,9 +168,24 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         //shareNum.setText(contents.get(position).getForwardnum() + "");
         collectionNum.setText(contents.get(position).getCollectnum() + "");
 
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+            btnFollow.setVisibility(View.INVISIBLE);
+            followAnim.setVisibility(View.INVISIBLE);
+        }
+
         user = contents.get(position).getUser();
         userName.setText(user.getName());
         fanNum.setText(user.getFennum() + "");
+
+
+        if(contents.get(position).getIsoriginal() == 0)
+            tag0.setText("#原创");
+
+        if(user.isFollow())
+            btnFollow.setText("关注+");
+        else
+            btnFollow.setText("已关注");
+
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
         else
@@ -202,9 +231,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                 case R.id.follow_heart_btn_collection:
                     if(contents.get(position).isCollect()) {
                         collected.setBackgroundResource(R.drawable.collectionunselect);//取消收藏
-                        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) -1;
-                        contents.get(position).setCollectnum(collectionNums);
-                        collectionNum.setText(collectionNums + "");*/
                         contents.get(position).setCollect(false);
                         MsgEvent event = new MsgEvent();
                         event.setId(contents.get(position).getId());
@@ -222,9 +248,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                 case R.id.follow_heart_btn_like:
                     if(!contents.get(position).isLike()) {
                         like.setBackgroundResource(R.drawable.likeselected);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) + 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(true);
                         MsgEvent event = new MsgEvent();
                         event.setType("like");
@@ -234,9 +257,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                         presenter.confirmFavourite(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
                         like.setBackgroundResource(R.drawable.likeunselect);
-                        /*int likeNums = Integer.parseInt(likeNum.getText().toString()) - 1;
-                        contents.get(position).setLikes(likeNums);
-                        likeNum.setText(likeNums + "");*/
                         contents.get(position).setLike(false);
                         MsgEvent event = new MsgEvent();
                         event.setType("like");
@@ -251,11 +271,11 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                     btnFollow.setVisibility(View.INVISIBLE);
                     loadingDrawable =(AnimationDrawable)followAnim.getDrawable();
                     loadingDrawable.start();
-                    if(isFollow) {  //关注
-                        isFollow = false;
+                    if(user.isFollow()) {  //关注
+                        user.setFollow(false);
                         presenter.confirmFollow(UserUtil.USER_ID,contents.get(position).getUserid());
                     }else {         //取关
-                        isFollow= true;
+                        user.setFollow(true);
                         presenter.confirmUnFolly(UserUtil.USER_ID,contents.get(position).getUserid());
                     }
                     break;
@@ -263,7 +283,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                     Intent intent2 = new Intent(context,HeartActivity.class);
                     Bundle bundle2 = new Bundle();
                     bundle2.putSerializable("heart",contents.get(position));
-                    bundle2.putBoolean("isFollow",isFollow);
                     bundle2.putSerializable("user",contents.get(position).getUser());
                     bundle2.putInt("position",position);
                     intent2.putExtra("bundle",bundle2);
@@ -288,7 +307,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             btnFollow.setText("关注+");
             int fenNum = Integer.parseInt(fanNum.getText().toString()) - 1;
             fanNum.setText(fenNum + "");
-            isFollow= true;
+            user.setFollow(true);
         }
     }
 
@@ -299,7 +318,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context,"取消关注失败",Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -317,7 +336,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             int fenNum = Integer.parseInt(fanNum.getText().toString()) + 1;
             fanNum.setText(fenNum + "");
             Toast.makeText(context, "关注成功", Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -328,7 +347,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(context, "关注失败", Toast.LENGTH_SHORT).show();
-            isFollow = true;
+            user.setFollow(true);
         }
     }
 
@@ -374,7 +393,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         Intent intent2 = new Intent(context,HeartActivity.class);
         Bundle bundle2 = new Bundle();
         bundle2.putSerializable("heart",contents.get(position));
-        bundle2.putBoolean("isFollow",isFollow);
         bundle2.putSerializable("user",contents.get(position).getUser());
         bundle2.putInt("position",position);
         intent2.putExtra("bundle",bundle2);
@@ -388,6 +406,11 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
 
     @Override
     public void deleteComment() {
+
+    }
+
+    @Override
+    public void noSet() {
 
     }
 
@@ -432,9 +455,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     @Override
     public void collect() {
         collected.setBackgroundResource(R.drawable.collectionselected);//收藏
-        /*int collectionNums = Integer.parseInt(collectionNum.getText().toString()) + 1;
-        contents.get(position).setCollectnum(collectionNums);
-        collectionNum.setText(collectionNums + "");*/
         contents.get(position).setCollect(true);
         MsgEvent event = new MsgEvent();
         event.setId(contents.get(position).getId());

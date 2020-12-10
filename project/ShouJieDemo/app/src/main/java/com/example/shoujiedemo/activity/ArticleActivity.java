@@ -115,7 +115,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
     private Content article;
     private User user;
 
-    private boolean isFollow = false;
+    //private boolean isFollow = false;
     private int position;//位置
     private boolean animFinish = false;//判断动画是否完成
 
@@ -326,11 +326,10 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
 
 
 
-        if(isFollow){
+        if(user.isFollow())
             btnFollow.setText("关注+");
-        }else{
+        else
             btnFollow.setText("已关注");
-        }
         title.setText(article.getTitle());
         date.setText(article.getTime());
         fanNum.setText(new StringBuilder().append(user.getFennum()));
@@ -378,7 +377,6 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         article = (Content)bundle.getSerializable("article");
-        isFollow = bundle.getBoolean("isFollow");
         user = (User)bundle.getSerializable("user");
         position = bundle.getInt("position");
         presenter = new MyFollowOperatePresenterImpl(this);
@@ -544,11 +542,11 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
                     btnFollow.setVisibility(View.INVISIBLE);
                     loadingDrawable =(AnimationDrawable)followAnim.getDrawable();
                     loadingDrawable.start();
-                    if(isFollow) {  //关注
-                        isFollow = false;
+                    if(user.isFollow()) {  //关注
+                        user.setFollow(false);
                         presenter.confirmFollow(UserUtil.USER_ID,user.getId());
                     }else {         //取关
-                        isFollow= true;
+                        user.setFollow(true);
                         presenter.confirmUnFolly(UserUtil.USER_ID,user.getId());
                     }
                     break;
@@ -577,7 +575,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
             btnFollow.setText("关注+");
             int fenNum = Integer.parseInt(fanNum.getText().toString()) - 1;
             fanNum.setText(fenNum + "");
-            isFollow= true;
+            user.setFollow(true);
         }
     }
 
@@ -588,7 +586,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(getApplicationContext(),"取消关注失败",Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -606,7 +604,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
             int fenNum = Integer.parseInt(fanNum.getText().toString()) + 1;
             fanNum.setText(fenNum + "");
             Toast.makeText(getApplicationContext(), "关注成功", Toast.LENGTH_SHORT).show();
-            isFollow= false;
+            user.setFollow(false);
         }
     }
 
@@ -617,7 +615,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
             btnFollow.setVisibility(View.VISIBLE);
             followAnim.setVisibility(View.INVISIBLE);
             Toast.makeText(getApplicationContext(), "关注失败", Toast.LENGTH_SHORT).show();
-            isFollow = true;
+            user.setFollow(true);
         }
     }
 
@@ -676,15 +674,13 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
 
     @Override
     public void comment(Comment comment) {
-        String text = edComment.getText().toString();
+        //String text = edComment.getText().toString();
         String userName = UserUtil.USER_NAME;
         User user = new User();
         user.setId(UserUtil.USER_ID);
         user.setName(userName);
         user.setPicname(userName + ".png");
         comment.setUser(user);
-        commentList.add(comment);
-        commentAdapter.notifyDataSetChanged();
         int commentNums = Integer.parseInt(commentNum.getText().toString());
         commentNums++;
         article.setCheatnum(commentNums);
@@ -696,7 +692,8 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         EventBus.getDefault().postSticky(event);
         commentNum.setText(new StringBuilder().append(commentNums));
         commentNum2.setText(new StringBuilder().append(commentNums));
-
+        commentList.add(comment);
+        commentAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -748,15 +745,21 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
                 break;
             }
         }
+        commentNum.setText(new StringBuilder().append(commentList.size()));
+        commentNum2.setText(new StringBuilder().append(commentList.size()));
+        commentAdapter.notifyDataSetChanged();
         MsgEvent event = new MsgEvent();
         event.setId(article.getId());
         event.setType("comment");
         event.setValue(false);
         event.setIntValue(article.getCheatnum());
         EventBus.getDefault().postSticky(event);
-        commentNum.setText(new StringBuilder().append(commentList.size()));
-        commentNum2.setText(new StringBuilder().append(commentList.size()));
-        commentAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void noSet() {
+
     }
 
 
@@ -820,7 +823,9 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
      */
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onDeleteMain(Comment comment){
-        deleteComment = comment;
-        presenter.deleteComment(comment.getId());
+        if(comment.getTu_id() == article.getId()) {
+            deleteComment = comment;
+            presenter.deleteComment(comment.getId());
+        }
     }
 }

@@ -18,6 +18,7 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.HeartEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.PoemEvent;
+import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Heart;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
@@ -25,6 +26,7 @@ import com.example.shoujiedemo.fround.adapter.PoemAdapter;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.PoemLoadPresenterImpl;
 import com.example.shoujiedemo.fround.view.PoemView;
+import com.example.shoujiedemo.util.UserUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -50,6 +52,9 @@ public class PoemFragment extends Fragment implements PoemView {
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
+    private boolean isRefresh = false;
+    private String flag;
+    private int upDateNum;
 
     public PoemFragment() {
         // Required empty public constructor
@@ -76,14 +81,18 @@ public class PoemFragment extends Fragment implements PoemView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 1) {
+        if(!isRefresh) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(3,pageNum);
+                if(flag != null){
+                    presenter.searchData(flag,3,pageNum,UserUtil.USER_ID);
+                }
+                refreshTag = 0;
+                poemList.clear();
+                presenter.confirmInitContent(3,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);
 
             }
@@ -94,7 +103,7 @@ public class PoemFragment extends Fragment implements PoemView {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                presenter.confirmInitContent(3,pageNum);
+                presenter.confirmInitContent(3,pageNum,UserUtil.USER_ID);
                 refreshLayout.finishLoadMore(600);
             }
         });
@@ -144,6 +153,17 @@ public class PoemFragment extends Fragment implements PoemView {
                 pageNum++;
             poemAdapter.notifyDataSetChanged();
         }
+
+        isRefresh = true;
+    }
+
+    @Override
+    public void showSearchList(List<Content> contents) {
+        if(contents != null) {
+            PoemAdapter searthAdapter = new PoemAdapter(contents,getActivity());
+            recyclerView.setAdapter(searthAdapter);
+            pageNum++;
+        }
     }
 
     @Override
@@ -152,6 +172,7 @@ public class PoemFragment extends Fragment implements PoemView {
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
+        isRefresh = true;
     }
 
     /**
@@ -227,9 +248,36 @@ public class PoemFragment extends Fragment implements PoemView {
                         }
                     }
                     poemAdapter.notifyDataSetChanged();
-
+                    msgEvent = null;
+                    break;
+                case "follow":
+                    if(event.isValue()){
+                        for(Content content:poemList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(true);
+                                break;
+                            }
+                        }
+                    }else{
+                        for(Content content:poemList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(false);
+                                break;
+                            }
+                        }
+                    }
+                    poemAdapter.notifyDataSetChanged();
+                    msgEvent = null;
                     break;
             }
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void SearchMain(SearchEvent event){
+        if(event.getPosition() == 3) {
+            flag = event.getTag();
+            pageNum = 1;
+            presenter.searchData(flag, 3, pageNum, UserUtil.USER_ID);
         }
     }
 }

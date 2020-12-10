@@ -558,17 +558,21 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
                 break;
             }
         }
+        commentNum.setText(new StringBuilder().append(commentList.size()));
+        commentNum2.setText(new StringBuilder().append(commentList.size()));
+        commentAdapter.notifyDataSetChanged();
         MsgEvent event = new MsgEvent();
         event.setId(heart.getId());
         event.setType("comment");
         event.setValue(false);
         event.setIntValue(heart.getCheatnum());
         EventBus.getDefault().postSticky(event);
-        commentNum.setText(new StringBuilder().append(commentList.size()));
-        commentNum2.setText(new StringBuilder().append(commentList.size()));
-        commentAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void noSet() {
+
+    }
 
 
     @Override

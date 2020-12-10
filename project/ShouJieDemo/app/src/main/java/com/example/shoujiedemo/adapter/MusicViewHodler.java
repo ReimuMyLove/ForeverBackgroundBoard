@@ -95,6 +95,11 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
 
     }
 
+    @Override
+    public void noSet() {
+
+    }
+
 
     @Override
     public void showSet(List<Set> sets) {

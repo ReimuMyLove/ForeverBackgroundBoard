@@ -3,9 +3,8 @@ package com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.ContentView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.example.shoujiedemo.R;
  */
 public class MySpacePoemFragment extends Fragment {
     View contentView;
-    RecyclerView
-            mySpace_poemGroup;          //诗列表
 
     public MySpacePoemFragment() {
         // Required empty public constructor
@@ -27,7 +24,7 @@ public class MySpacePoemFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (contentView != null) {
             ViewGroup parent = (ViewGroup) contentView.getParent();
@@ -39,9 +36,5 @@ public class MySpacePoemFragment extends Fragment {
         contentView = inflater.inflate(R.layout.fragment_poem, container, false);
         // Inflate the layout for this fragment
         return contentView;
-    }
-
-    private void findView(View view){
-        mySpace_poemGroup = view.findViewById(R.id.mySpace_poemGroup);
     }
 }

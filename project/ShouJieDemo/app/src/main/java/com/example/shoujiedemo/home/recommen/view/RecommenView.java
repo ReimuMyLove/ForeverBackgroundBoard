@@ -1,12 +1,13 @@
 package com.example.shoujiedemo.home.recommen.view;
 
+import com.example.shoujiedemo.entity.Content;
+
+import java.util.List;
+
 /**
  * 推荐页面的view接口
  */
 public interface RecommenView {
 
-    void changeHeadColor();//点赞按钮变色
-
-    void changCollectionColor();//收藏按钮变色
-
+    void loadContent(List<Content> contents);
 }

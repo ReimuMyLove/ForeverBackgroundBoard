@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.HeartEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
+import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Heart;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
@@ -27,6 +28,7 @@ import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.HeartLoadDataPresenterImpl;
 import com.example.shoujiedemo.fround.view.ArticleView;
 import com.example.shoujiedemo.fround.view.HeartView;
+import com.example.shoujiedemo.util.UserUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -52,6 +54,8 @@ public class MindFragment extends Fragment implements HeartView {
     private int pageNum;
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
+    private boolean isRefresh = false;
+    private String flag;
 
     public MindFragment() {
         // Required empty public constructor
@@ -76,14 +80,17 @@ public class MindFragment extends Fragment implements HeartView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if(pageNum == 1) {
+        if(!isRefresh) {
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(2,pageNum);
+                if(flag != null){
+                    presenter.searchData(flag,2,pageNum,UserUtil.USER_ID);
+                }
+                heartList.clear();
+                presenter.confirmInitContent(2,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);
 
             }
@@ -94,7 +101,7 @@ public class MindFragment extends Fragment implements HeartView {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                presenter.confirmInitContent(2,pageNum);
+                presenter.confirmInitContent(2,pageNum,UserUtil.USER_ID);
                 refreshLayout.finishLoadMore(600);
             }
         });
@@ -146,6 +153,17 @@ public class MindFragment extends Fragment implements HeartView {
 
             heartAdapter.notifyDataSetChanged();
         }
+
+        isRefresh = true;
+    }
+
+    @Override
+    public void showSearchList(List<Content> contents) {
+        if(contents != null) {
+            HeartAdapter searthAdapter = new HeartAdapter(contents,getActivity());
+            recyclerView.setAdapter(searthAdapter);
+            pageNum++;
+        }
     }
 
     @Override
@@ -154,6 +172,7 @@ public class MindFragment extends Fragment implements HeartView {
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
+        isRefresh = true;
     }
 
     /**
@@ -229,9 +248,36 @@ public class MindFragment extends Fragment implements HeartView {
                     }
                     msgEvent = null;
                     heartAdapter.notifyDataSetChanged();
-
+                    break;
+                case "follow":
+                    if(event.isValue()){
+                        for(Content content:heartList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(true);
+                                break;
+                            }
+                        }
+                    }else{
+                        for(Content content:heartList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(false);
+                                break;
+                            }
+                        }
+                    }
+                    heartAdapter.notifyDataSetChanged();
+                    msgEvent = null;
                     break;
             }
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void SearchMain(SearchEvent event){
+
+        if(event.getPosition() == 2) {
+            flag = event.getTag();
+            pageNum = 1;
+            presenter.searchData(flag, 2, pageNum, UserUtil.USER_ID);
         }
     }
 }

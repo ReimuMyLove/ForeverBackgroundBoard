@@ -264,7 +264,7 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     @Override
     public void unFolly(final MyFollowOperationPresenterListener listener, int userId, int followerId) {
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/likes/")
+                .baseUrl("http://49.232.217.140:8080/OuranServices/follow/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
@@ -313,7 +313,7 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     @Override
     public void follow(final MyFollowOperationPresenterListener listener, int userId, int followerId) {
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/likes/")
+                .baseUrl("http://49.232.217.140:8080/OuranServices/follow/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
@@ -400,11 +400,47 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     }
 
     @Override
-    public void loadSet(MyFollowOperationPresenterListener listener,int userId) {
-        String jsons = "{\"name\":\"默认文集\",\"id\":2,\"pic\":null,\"userid\":2}";
-        if(jsons != null) {
-            listener.onLoadSetSuccess(jsons);
-        }
+    public void loadSet(final MyFollowOperationPresenterListener listener, int userId) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://49.232.217.140:8080/OuranServices/wenji/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.loadSet(userId);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if(jsons != null)
+                                listener.onLoadSetSuccess(jsons);
+                            else
+                                listener.onLoadSetError();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
     }
 
     @Override

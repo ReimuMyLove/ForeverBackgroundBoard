@@ -26,6 +26,7 @@ import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenterImpl;
 import com.example.shoujiedemo.fround.view.HotView;
+import com.example.shoujiedemo.util.UserUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -51,6 +52,8 @@ public class HotFragment extends Fragment implements HotView {
     private SmartRefreshLayout smartRefreshLayout;
     private HotAdapter hotAdapter;
     private int refreshTag = 0;
+    private boolean isRefresh = false;
+    private String flag;
 
     public HotFragment() {
         // Required empty public constructor
@@ -111,14 +114,17 @@ public class HotFragment extends Fragment implements HotView {
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
         smartRefreshLayout.setEnableLoadMore(true);
-        if (pageNum == 1){
+        if (!isRefresh){
             smartRefreshLayout.autoRefresh();
         }
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(pageNum);
+                if(flag != null){
+                    presenter.searchData(flag,pageNum,UserUtil.USER_ID);
+                }
+                contentList.clear();
+                presenter.confirmInitContent(1,UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);
 
             }
@@ -129,7 +135,7 @@ public class HotFragment extends Fragment implements HotView {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                presenter.confirmInitContent(pageNum);
+                presenter.confirmInitContent(pageNum, UserUtil.USER_ID);
                 refreshLayout.finishLoadMore(600);
             }
         });
@@ -218,7 +224,26 @@ public class HotFragment extends Fragment implements HotView {
                         }
                     }
                     hotAdapter.notifyDataSetChanged();
-
+                    hotEvent = null;
+                    break;
+                case "follow":
+                    if(event.isValue()){
+                        for(Content content:contentList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(true);
+                                break;
+                            }
+                        }
+                    }else{
+                        for(Content content:contentList){
+                            if(content.getUser().getId() == event.getId()){
+                                content.getUser().setFollow(false);
+                                break;
+                            }
+                        }
+                    }
+                    hotAdapter.notifyDataSetChanged();
+                    hotEvent = null;
                     break;
             }
         }
@@ -261,11 +286,16 @@ public class HotFragment extends Fragment implements HotView {
                 ++pageNum;
             hotAdapter.notifyDataSetChanged();
         }
+        isRefresh = true;
     }
 
     @Override
-    public void showSearchList(List<Content> contents, String flag) {
-
+    public void showSearchList(List<Content> contents) {
+        if(contents != null) {
+            HotAdapter searthAdapter = new HotAdapter(getActivity(), contents);
+            recyclerView.setAdapter(searthAdapter);
+            pageNum++;
+        }
     }
 
     @Override
@@ -274,19 +304,26 @@ public class HotFragment extends Fragment implements HotView {
         Log.i("page",pageNum + "");
         smartRefreshLayout.finishRefresh();
         Toast.makeText(getContext(),"没有更多数据了",Toast.LENGTH_SHORT).show();
+        isRefresh = true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
-        List<Content> searchList = new ArrayList<>();
+        /*List<Content> searchList = new ArrayList<>();
         if(event.getPosition() == 0){
             for(Content content :contentList){
-                if(!content.toString().contains(event.getTag())){
+                if(content.toString().contains(event.getTag())){
                     searchList.add(content);
                 }
             }
-            contentList.removeAll(searchList);
-            hotAdapter.notifyDataSetChanged();
+            HotAdapter searthAdapter = new HotAdapter(getActivity(),searchList);
+            recyclerView.setAdapter(searthAdapter);
+
+        }*/
+        if(event.getPosition() == 0) {
+            flag = event.getTag();
+            pageNum = 1;
+            presenter.searchData(event.getTag(), pageNum, UserUtil.USER_ID);
         }
     }
 }
