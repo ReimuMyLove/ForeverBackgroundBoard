@@ -78,7 +78,7 @@ public class FollowFragment extends Fragment implements FollowView {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                presenter.confirmInitContent(2,pageNum);
+                presenter.confirmInitContent(UserUtil.USER_ID,1);
                 refreshLayout.finishRefresh(600);
             }
 
@@ -88,7 +88,7 @@ public class FollowFragment extends Fragment implements FollowView {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                presenter.confirmInitContent(2,pageNum);
+                presenter.confirmInitContent(UserUtil.USER_ID,pageNum);
                 refreshLayout.finishLoadMore(600);
             }
         });

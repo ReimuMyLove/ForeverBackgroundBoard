@@ -2,6 +2,7 @@ package com.example.shoujiedemo.fround.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.bean.SearchEvent;
+import com.example.shoujiedemo.upload.activity.AriticleUploadActivity;
+import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
 import com.example.shoujiedemo.util.ToastUtils;
 import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
 import com.google.android.material.tabs.TabLayout;
@@ -96,7 +99,29 @@ public class FroundFragment extends Fragment{
         multiChoicesCircleButton.setOnSelectedItemListener(new MultiChoicesCircleButton.OnSelectedItemListener() {
             @Override
             public void onSelected(MultiChoicesCircleButton.Item item, int index) {
-                Toast.makeText(getActivity(),item.getText(),Toast.LENGTH_SHORT).show();
+                switch (index){
+                    case 0:
+                        Intent intent0=new Intent();
+                        intent0.setClass(getContext(), AriticleUploadActivity.class);
+                        startActivity(intent0);
+                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);
+                        break;
+                    case 1:
+                        Intent intent1=new Intent();
+                        intent1.setClass(getContext(), PoemUploadActivity.class);
+                        startActivity(intent1);
+                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);
+                        break;
+                    case 2:
+                        Intent intent2=new Intent();
+                        intent2.setClass(getContext(), PoemUploadActivity.class);
+                        startActivity(intent2);
+                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);
+                        break;
+                }
             }
         });
 

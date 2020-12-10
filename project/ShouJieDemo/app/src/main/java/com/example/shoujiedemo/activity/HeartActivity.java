@@ -33,8 +33,6 @@ import com.bumptech.glide.Glide;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.CommentAdapter;
 import com.example.shoujiedemo.adapter.SetAdapter;
-import com.example.shoujiedemo.bean.ArticleEvent;
-import com.example.shoujiedemo.bean.HeartEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
@@ -50,7 +48,6 @@ import com.hyb.library.PreventKeyboardBlockUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

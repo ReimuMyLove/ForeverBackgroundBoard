@@ -15,12 +15,11 @@
 
     <!-- 肖帅 2020.11.26 -->
 
-    <color name="dayLightBackground">#fff</color>
-
-    <color name="dayLightActivity">#DCDCDC</color>
-
+    <color name="dayLightBackground">#B3EFEFEF</color>
+    <color name="centerBackGround">#fff</color>
+    <color name="dayLightActivity">#DEDEDE</color>
     <color name="dayLightText">#101010</color>
-
     <color name="dayLightTitle">#757575</color>
+    <color name="mySpaceRecycler">#DDDDDD</color>
 
 </resources>

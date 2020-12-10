@@ -1,8 +1,12 @@
 package com.example.shoujiedemo.apiInterface;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterFace {
@@ -79,13 +83,6 @@ public interface ApiInterFace {
 
 
     /**
-     * 上传内容
-     * */
-    @GET("add")
-    Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal);
-
-
-    /**
      * 加载评论
      * @return
      */
@@ -134,4 +131,78 @@ public interface ApiInterFace {
      */
     @GET("findwenjiByUser")
     Observable<ResponseBody> loadSet(@Query("userid") int userId);
+
+    /**
+     * 上传内容
+     * */
+    @Multipart
+    @POST("addtuwen")
+    Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal,@Query("haspic")int haspic,@Part MultipartBody.Part imgs);
+
+
+    @GET("addtuwen")
+    Observable<ResponseBody> upload(@Query("title") String title,@Query("text") String text,@Query("userid") int userid,@Query("typeid") int typeid,@Query("writer") String writer,@Query("tag") String tag,@Query("wenjiid")int wenjiid,@Query("isoriginal")int isoriginal);
+
+    /**
+     * 校验账户
+     * @return
+     */
+    @GET("check")
+    Observable<ResponseBody> login(@Query("name") String name, @Query("password") String password);
+
+    /**
+     * 注册账户
+     */
+    @POST("add")
+    Observable<ResponseBody> register(@Query("name") String name, @Query("password") String password);
+
+    /**
+     * 删除指定文集
+     */
+    @POST("deletewenji")
+    Observable<ResponseBody> delete(@Query("wenjiid") int groupID);
+
+    /**
+     * 获取文集
+     */
+    @GET("findwenjiByUser")
+    Observable<ResponseBody> getArticles(@Query("userid") int userID);
+
+    /**
+     * 添加文集
+     */
+    @POST("addwenji")
+    Observable<ResponseBody> addGroup(@Query("userid") int userID,@Query("name") String groupName);
+
+    /**
+     * 关注
+     */
+    @POST("addfollow")
+    Observable<ResponseBody> addFollow(@Query("userid") int userID,@Query("followid") int followID);
+
+    /**
+     * 上传图片
+     */
+    @Multipart
+    @POST("addwenji")
+    Observable<ResponseBody> addGroup(@Query("userid") int userID,@Query("name") String groupName, @Part MultipartBody.Part file,@Query("hispic") int picNum);
+
+    /**
+     * 获取单个文集
+     */
+    @GET("findwenji")
+    Observable<ResponseBody> getArticlesDetail(@Query("groupid") int groupID);
+
+    /**
+     * 取消关注
+     */
+    @POST("minusFollow")
+    Observable<ResponseBody> cancelFollow(@Query("userid") int userID,@Query("followid") int followerID);
+
+    /**
+     * 获取关注人列表
+     */
+    @POST("findUserFollows")
+    Observable<ResponseBody> findFollow(@Query("userid") int userID);
+
 }

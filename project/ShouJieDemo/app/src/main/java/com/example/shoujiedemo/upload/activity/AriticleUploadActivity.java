@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.activity.ArticleActivity;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
@@ -25,7 +26,7 @@ import com.example.shoujiedemo.upload.view.LoadView;
 
 import java.io.File;
 
-public class PoemUploadActivity extends AppCompatActivity implements LoadView {
+public class AriticleUploadActivity extends AppCompatActivity implements LoadView {
     private UploadPresenterImpl presenter;
     private EditText main_text;
     private EditText writer;
@@ -37,7 +38,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     private Button btn_carma;
     private Button btn_gallery;
     private ImageView imageView;
-    private Uri uri;
+    private Uri uri = null;
     private boolean flag = true;
     private static final int PHOTO_REQUEST_CAREMA = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
@@ -49,7 +50,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_poem_upload);
+        setContentView(R.layout.activity_ariticle_upload);
         initData();
     }
 
@@ -70,7 +71,6 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     }
 
 
-
     private void crop(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
@@ -86,6 +86,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, PHOTO_REQUEST_CUT); // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CUT
     }
+
     private boolean hasSdcard() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return true;
@@ -95,9 +96,9 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     }
 
     private void initData() {
-        imageView=findViewById(R.id.image);
-        btn_carma=findViewById(R.id.btn_camra);
-        btn_gallery=findViewById(R.id.btn_gallery);
+        imageView = findViewById(R.id.image);
+        btn_carma = findViewById(R.id.btn_camra);
+        btn_gallery = findViewById(R.id.btn_gallery);
         radio1 = findViewById(R.id.radio1);
         radio2 = findViewById(R.id.radio2);
         main_text = findViewById(R.id.main_text);
@@ -106,8 +107,9 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         commit = findViewById(R.id.btn_commit);
         tag = findViewById(R.id.tag);
         setOnClikListener();
-        presenter = new UploadPresenterImpl(PoemUploadActivity.this);
+        presenter = new UploadPresenterImpl(AriticleUploadActivity.this);
     }
+
     private Uri external(String external) {
         String myImageUrl = "content://media" + external;
         Uri uri = Uri.parse(myImageUrl);
@@ -134,11 +136,11 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
             if (hasSdcard()) {
                 crop(Uri.fromFile(tempFile));
             } else {
-                Toast.makeText(PoemUploadActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
+                Toast.makeText(AriticleUploadActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == PHOTO_REQUEST_CUT) {//从剪切图片返回的数据
             if (data != null) {
-                 bitmap= data.getParcelableExtra("data");
+                bitmap = data.getParcelableExtra("data");
                 imageView.setImageBitmap(bitmap);
                 //将bitmap转换为Uri
                 uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
@@ -210,20 +212,15 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
      */
     private void changeTag() {
         if (radio2.isChecked()) {
-            Log.e("wrk", 2 + "");
             radio1.setChecked(true);
             radio2.setChecked(false);
-            Log.e("wrk", radio1.isChecked() + "");
         }
     }
 
     private void changeTag1() {
         if (radio1.isChecked()) {
-
-            Log.e("wrk", 1 + "");
             radio1.setChecked(false);
             radio2.setChecked(true);
-            Log.e("wrk", radio1.isChecked() + "");
             flag = false;
 
         }
@@ -231,7 +228,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
 
     private void CommitPoem() {
         Content content = new Content();
-        content.setTypeid(3);
+        content.setTypeid(0);
         content.setText(main_text.getText().toString());
         content.setTitle(title.getText().toString());
         content.setWriter(writer.getText().toString());

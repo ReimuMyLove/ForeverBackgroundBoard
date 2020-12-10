@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.activity.ArticleActivity;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
@@ -25,7 +26,7 @@ import com.example.shoujiedemo.upload.view.LoadView;
 
 import java.io.File;
 
-public class PoemUploadActivity extends AppCompatActivity implements LoadView {
+public class HeartUploadActivity extends AppCompatActivity implements LoadView {
     private UploadPresenterImpl presenter;
     private EditText main_text;
     private EditText writer;
@@ -49,7 +50,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_poem_upload);
+        setContentView(R.layout.activity_heart_upload);
         initData();
     }
 
@@ -106,7 +107,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         commit = findViewById(R.id.btn_commit);
         tag = findViewById(R.id.tag);
         setOnClikListener();
-        presenter = new UploadPresenterImpl(PoemUploadActivity.this);
+        presenter = new UploadPresenterImpl(HeartUploadActivity.this);
     }
     private Uri external(String external) {
         String myImageUrl = "content://media" + external;
@@ -134,11 +135,11 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
             if (hasSdcard()) {
                 crop(Uri.fromFile(tempFile));
             } else {
-                Toast.makeText(PoemUploadActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
+                Toast.makeText(HeartUploadActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == PHOTO_REQUEST_CUT) {//从剪切图片返回的数据
             if (data != null) {
-                 bitmap= data.getParcelableExtra("data");
+                bitmap= data.getParcelableExtra("data");
                 imageView.setImageBitmap(bitmap);
                 //将bitmap转换为Uri
                 uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
@@ -231,7 +232,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
 
     private void CommitPoem() {
         Content content = new Content();
-        content.setTypeid(3);
+        content.setTypeid(2);
         content.setText(main_text.getText().toString());
         content.setTitle(title.getText().toString());
         content.setWriter(writer.getText().toString());

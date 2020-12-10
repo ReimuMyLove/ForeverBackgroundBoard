@@ -61,7 +61,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             holder.article_groupID.setText(set.getId()+"");
             holder.article_title.setText(set.getName());
             holder.article_number.setText(set.getTuwen_num()+"");
-            String URL = ConfigUtil.BASE_ARTICLEGROUP_URL+set.getPic();
+            String URL = ConfigUtil.BASE_WENJI_URL+set.getPic();
             RequestOptions requestOptions = new RequestOptions().centerCrop();
             Glide.with(mContext)
                     .load(URL)

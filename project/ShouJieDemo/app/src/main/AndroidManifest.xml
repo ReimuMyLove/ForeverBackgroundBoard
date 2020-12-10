@@ -39,6 +39,14 @@
         <activity android:name=".myCenter.myCenter.view.fragment.activity.UserInfoActivity" />
         <activity android:name=".myCenter.myCenter.view.fragment.activity.HelpCenterActivity" />
         <activity android:name=".myCenter.mySpace.view.activity.MySpaceActivity" />
+        <activity android:name=".Log.activity.LoginActivity" />
+        <activity android:name=".Log.activity.RegisterActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.popupWindow.imgChange.UserImgChangeActivity" />
+        <activity android:name=".myCenter.setting.view.activity.settingActivity.safeActivity.SetEmailActivity" />
+        <activity android:name=".myCenter.mySpace.view.activity.fragment.activity.MyArticleActivity" />
+        <activity android:name=".upload.activity.HeartUploadActivity"></activity>
+        <activity android:name=".upload.activity.AriticleUploadActivity" />
+        <activity android:name=".upload.activity.PoemUploadActivity" />
     </application>
 
 </manifest>

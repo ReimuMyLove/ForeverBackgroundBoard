@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    android:background="@color/dayLightBackground"
+    android:background="@color/centerBackGround"
     android:overScrollMode="never">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
                 <ImageView
                     android:id="@+id/myCenter_userBackGround"
@@ -27,9 +27,10 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="30dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/setting"/>
+                    android:background="@drawable/setting"
+                    tools:targetApi="lollipop" />
                 <LinearLayout
                     android:id="@+id/myCenter_userImg_top"
                     android:layout_width="match_parent"
@@ -48,19 +49,21 @@
                     android:layout_below="@id/myCenter_userImg_top"
                     android:id="@+id/myCenter_card_top"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="-20dp"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-20dp"
+                    android:paddingBottom="50dp"
                     >
                     <androidx.cardview.widget.CardView
                         android:id="@+id/myCenter_card"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:elevation="15dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginBottom="20dp"
-                        app:cardCornerRadius="10dp">
+                        android:elevation="15dp"
+                        app:cardCornerRadius="10dp"
+                        tools:targetApi="lollipop">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -82,7 +85,7 @@
                             android:paddingBottom="15dp"
                             android:layout_marginTop="10dp">
                             <ImageView
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/iv_space_center"
                                 android:src="@drawable/space_center"
@@ -92,8 +95,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/iv_space_center"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@id/iv_space_center"
                                 android:layout_centerVertical="true"
                                 android:text="我的空间"
                                 android:textColor="@color/dayLightText"
@@ -102,7 +105,7 @@
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
@@ -118,7 +121,7 @@
                             android:layout_marginTop="60dp">
 
                             <ImageView
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:id="@+id/iv_owner_center"
                                 android:src="@drawable/owner_center"
@@ -129,9 +132,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_toRightOf="@id/iv_owner_center"
+                                android:layout_toEndOf="@id/iv_owner_center"
                                 android:text="个人中心"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:textColor="@color/dayLightText"
                                 android:textSize="16sp" />
 
@@ -139,7 +142,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="210dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
@@ -157,7 +160,7 @@
 
                             <ImageView
                                 android:id="@+id/iv_collect_center"
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:src="@drawable/collect_center"
                                 android:layout_width="20dp"
@@ -167,8 +170,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/iv_collect_center"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@id/iv_collect_center"
                                 android:text="收藏"
                                 android:textColor="@color/dayLightText"
                                 android:textSize="16sp" />
@@ -176,7 +179,7 @@
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
@@ -192,7 +195,7 @@
                             android:layout_below="@id/myCenter_Storing">
 
                             <ImageView
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/iv_help_center"
                                 android:src="@drawable/help_center"
@@ -200,8 +203,8 @@
                                 android:layout_height="20dp"/>
 
                             <TextView
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/iv_help_center"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@id/iv_help_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
@@ -212,7 +215,7 @@
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
@@ -227,7 +230,7 @@
                             android:layout_below="@id/myCenter_helpCenter">
 
                             <ImageView
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/iv_follow_center"
                                 android:src="@drawable/help_center"
@@ -235,8 +238,8 @@
                                 android:layout_height="20dp"/>
 
                             <TextView
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/iv_follow_center"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@id/iv_follow_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
@@ -247,7 +250,7 @@
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
@@ -262,7 +265,7 @@
                             android:layout_below="@id/myCenter_myFollow">
 
                             <ImageView
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/iv_like_center"
                                 android:src="@drawable/center_like"
@@ -270,20 +273,19 @@
                                 android:layout_height="20dp"/>
 
                             <TextView
-                                android:layout_marginLeft="5dp"
-                                android:layout_toRightOf="@id/iv_like_center"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@id/iv_like_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="我的点赞"
                                 android:textColor="@color/dayLightText"
-                                android:textSize="16sp"
-                                android:layout_weight= "1"/>
+                                android:textSize="16sp" />
 
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/right"/>
                         </RelativeLayout>
