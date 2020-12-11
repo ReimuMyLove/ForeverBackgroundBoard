@@ -3,8 +3,6 @@ package com.example.shoujiedemo.fround.model;
 import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
-import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenterLisenter;
-import com.example.shoujiedemo.fround.presenter.FroundOperationPresenterListener;
 import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenterListener;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

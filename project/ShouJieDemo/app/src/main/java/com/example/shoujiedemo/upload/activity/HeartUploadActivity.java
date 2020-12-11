@@ -18,9 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.activity.ArticleActivity;
 import com.example.shoujiedemo.entity.Content;
-import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
 import com.example.shoujiedemo.upload.view.LoadView;
 
@@ -160,6 +158,7 @@ public class HeartUploadActivity extends AppCompatActivity implements LoadView {
 
     @Override
     public void skipSuccess() {
+        Toast.makeText(HeartUploadActivity.this, "上传失败", Toast.LENGTH_LONG);
         finish();
     }
 

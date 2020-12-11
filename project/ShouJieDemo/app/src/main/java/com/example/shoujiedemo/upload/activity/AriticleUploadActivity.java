@@ -18,11 +18,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.activity.ArticleActivity;
 import com.example.shoujiedemo.entity.Content;
-import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
 import com.example.shoujiedemo.upload.view.LoadView;
+import com.example.shoujiedemo.util.UserUtil;
 
 import java.io.File;
 
@@ -233,7 +232,7 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
         content.setTitle(title.getText().toString());
         content.setWriter(writer.getText().toString());
         content.setTag(tag.getText().toString());
-        content.setUserid(2);
+        content.setUserid(UserUtil.USER_ID);
         if (uri != null) {
             if (radio1.isChecked()) {
                 presenter.UploadData(content, 1, uri);
