@@ -129,10 +129,10 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         tag0 = itemView.findViewById(R.id.follow_artivle_tv_tag0);
         tag2 = itemView.findViewById(R.id.follow_article_tv_tag02);
 
-        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
-            //followAnim.setVisibility(View.INVISIBLE);
-        }
+        else
+            btnFollow.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
@@ -186,10 +186,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         fanNum.setText(user.getFennum() + "");
         tag2.setText(contents.get(position).getTag());
 
-        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
-            followAnim.setVisibility(View.INVISIBLE);
-        }
+        else
+            btnFollow.setVisibility(View.VISIBLE);
+
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
@@ -209,7 +210,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
 
-        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
+
         if(contents.get(position).getPic() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
@@ -220,6 +225,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         if(contents.get(position).getUser().getPicname() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
+                    .apply(requestOptions)
                     .into(head);
         }
 

@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.CommentAdapter;
 import com.example.shoujiedemo.adapter.SetAdapter;
@@ -197,15 +198,22 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         alert = builder.create();
 
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
+
         if(heart.getUser().getPicname() !=null) {
             Glide.with(this)
                     .load(ConfigUtil.BASE_HEAD_URL + heart.getUser().getPicname())
+                    .apply(requestOptions)
                     .into(head);
         }
 
         if(heart.getPic() !=null) {
             Glide.with(this)
                     .load(ConfigUtil.BASE_IMG_URL + heart.getPic())
+                    .apply(requestOptions)
                     .into(cover);
         }
 

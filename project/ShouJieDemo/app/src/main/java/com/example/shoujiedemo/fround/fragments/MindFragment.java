@@ -75,7 +75,6 @@ public class MindFragment extends Fragment implements HeartView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mind, container, false);
         recyclerView = view.findViewById(R.id.heart_rlv_view);
-
         smartRefreshLayout = view.findViewById(R.id.heart_smartrefresh);
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
@@ -89,6 +88,7 @@ public class MindFragment extends Fragment implements HeartView {
                 if(flag != null){
                     presenter.searchData(flag,2,pageNum,UserUtil.USER_ID);
                 }
+                pageNum = 1;
                 heartList.clear();
                 presenter.confirmInitContent(2,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);

@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.activity.HeartActivity;
 import com.example.shoujiedemo.activity.PoemActivity;
@@ -115,10 +116,11 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         tag0 = itemView.findViewById(R.id.follow_heart_tv_tag0);
         tag2 = itemView.findViewById(R.id.follow_heart_tv_tag02);
 
-        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
-            followAnim.setVisibility(View.INVISIBLE);
-        }
+        else
+            btnFollow.setVisibility(View.VISIBLE);
+
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
@@ -168,10 +170,10 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         //shareNum.setText(contents.get(position).getForwardnum() + "");
         collectionNum.setText(contents.get(position).getCollectnum() + "");
 
-        if(contents.get(position).getUser().getId() == UserUtil.USER_ID) {
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
-            followAnim.setVisibility(View.INVISIBLE);
-        }
+        else
+            btnFollow.setVisibility(View.VISIBLE);
 
         user = contents.get(position).getUser();
         userName.setText(user.getName());
@@ -195,14 +197,21 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             collected.setBackgroundResource(R.drawable.collectionselected);
         else
             collected.setBackgroundResource(R.drawable.collectionunselect);
+
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
         if( contents.get(position).getPic() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
+                    .apply(requestOptions)
                     .into(head);
         }
         if(contents.get(position).getUser().getPicname() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
+                    .apply(requestOptions)
                     .into(cover);
         }
     }

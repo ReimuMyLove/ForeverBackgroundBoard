@@ -51,6 +51,7 @@ public class ArticleAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         ArticleViewHodler articleViewHodler = (ArticleViewHodler)holder;
         articleViewHodler.initData(position);
     }

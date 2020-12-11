@@ -17,7 +17,6 @@
 
         <com.example.shoujiedemo.util.CircleImageView
             android:id="@+id/follow_poem_iv_head"
-            android:src="@drawable/wangzuxian"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_marginLeft="3dp"
@@ -30,7 +29,6 @@
             android:layout_marginLeft="11dp"
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/follow_poem_iv_head"
-            android:text="王祖贤"
             android:textSize="19sp" />
 
         <TextView
@@ -63,7 +61,6 @@
                 android:id="@+id/follow_poem_tv_fan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2020"
                 android:textSize="12sp" />
 
         <ImageView
@@ -110,7 +107,6 @@
             android:layout_height="wrap_content">
 
             <com.example.shoujiedemo.util.CircleImageView
-                android:src="@drawable/bg02"
                 android:layout_gravity="center"
                 android:alpha="0.4"
                 android:id="@+id/follow_poem_iv_cover"
@@ -126,7 +122,6 @@
             android:layout_marginTop="9dp"
             android:orientation="vertical">
             <TextView
-                android:text="偶然"
                 android:id="@+id/follow_poem_tv_title"
                 android:gravity="center_horizontal"
                 android:textColor="#000"
@@ -136,7 +131,6 @@
             <TextView
                 android:id="@+id/follow_poem_tv_writer_name"
                 android:gravity="center_horizontal"
-                android:text="徐志摩"
                 android:paddingTop="10dp"
                 android:paddingBottom="15dp"
                 android:textColor="#000"
@@ -149,7 +143,6 @@
                 android:textColor="#000"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center"
-                android:text="我是天空里的一片云,\n偶尔投影在你的波心\n你不必讶异，\n更无须欢喜\n在转瞬间消灭了踪影。\n你我相逢在黑夜的海上，\n你有你的，我有我的，方向；\n你记得也好，\n最好你忘掉，\n在这交会是互放的光亮！"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

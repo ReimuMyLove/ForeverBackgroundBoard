@@ -79,7 +79,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/wangzuxian" />
+                />
 
             <ImageView
                 android:id="@+id/follow_poem_details_iv_follow_anim"
@@ -144,13 +144,12 @@
             </LinearLayout>
 
             <com.example.shoujiedemo.util.CircleImageView
-                android:src="@drawable/bg02"
                 android:layout_below="@id/poem_title_below"
                 android:alpha="0.4"
                 android:layout_centerInParent="true"
                 android:id="@+id/iv_poem_details_cover"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tv_writer_details_poem"

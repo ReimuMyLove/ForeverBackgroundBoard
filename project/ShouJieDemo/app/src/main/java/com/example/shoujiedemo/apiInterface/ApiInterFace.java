@@ -205,4 +205,11 @@ public interface ApiInterFace {
     @POST("findUserFollows")
     Observable<ResponseBody> findFollow(@Query("userid") int userID);
 
+    /**
+     * 关注
+     */
+    @GET("addfollow")
+    Observable<ResponseBody> loadByTime(@Query("date") String date);
+
+
 }

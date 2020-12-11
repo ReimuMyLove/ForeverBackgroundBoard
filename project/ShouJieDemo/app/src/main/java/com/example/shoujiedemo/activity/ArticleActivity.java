@@ -342,7 +342,10 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         shareNum2.setText(new StringBuilder().append(article.getForwardnum()));
         writer.setText(article.getWriter());
 
-        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
 
         if(article.getPic() !=null) {
             Glide.with(this)
@@ -354,6 +357,7 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         if(article.getUser().getPicname()!=null) {
             Glide.with(this)
                     .load(ConfigUtil.BASE_HEAD_URL + article.getUser().getPicname())
+                    .apply(requestOptions)
                     .into(head);
         }
 

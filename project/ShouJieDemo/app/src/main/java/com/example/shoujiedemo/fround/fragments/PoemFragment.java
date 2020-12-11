@@ -76,7 +76,6 @@ public class PoemFragment extends Fragment implements PoemView {
         view.findViewById(R.id.poem_rlv_view);
 
         recyclerView = view.findViewById(R.id.poem_rlv_view);
-
         smartRefreshLayout = view.findViewById(R.id.poem_smartrefresh);
         smartRefreshLayout.setHeaderHeight(100);
         smartRefreshLayout.setFooterHeight(150);
@@ -91,6 +90,7 @@ public class PoemFragment extends Fragment implements PoemView {
                     presenter.searchData(flag,3,pageNum,UserUtil.USER_ID);
                 }
                 refreshTag = 0;
+                pageNum = 1;
                 poemList.clear();
                 presenter.confirmInitContent(3,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);

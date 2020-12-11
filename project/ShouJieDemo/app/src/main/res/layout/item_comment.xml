@@ -7,7 +7,7 @@
 
     <com.example.shoujiedemo.util.CircleImageView
         android:id="@+id/item_comment_user_img"
-        android:src="@drawable/bg02"
+        android:src="#F5F5F5"
         android:layout_width="35dp"
         android:layout_height="35dp"/>
 

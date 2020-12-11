@@ -102,6 +102,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
                 if(flag != null){
                     presenter.searchData(flag,0,pageNum,UserUtil.USER_ID);
                 }
+                pageNum = 1;
                 articleList.clear();
                 presenter.confirmInitContent(0,1, UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);

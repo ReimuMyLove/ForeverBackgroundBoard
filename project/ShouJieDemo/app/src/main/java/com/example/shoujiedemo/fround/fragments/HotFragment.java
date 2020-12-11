@@ -124,6 +124,7 @@ public class HotFragment extends Fragment implements HotView {
                     presenter.searchData(flag,pageNum,UserUtil.USER_ID);
                 }
                 contentList.clear();
+                pageNum = 1;
                 presenter.confirmInitContent(1,UserUtil.USER_ID);
                 refreshLayout.finishRefresh(600);
 

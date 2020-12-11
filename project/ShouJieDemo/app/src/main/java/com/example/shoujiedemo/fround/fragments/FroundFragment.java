@@ -82,16 +82,20 @@ public class FroundFragment extends Fragment{
         btnSearch = view.findViewById(R.id.btn_search);
         edSearch = view.findViewById(R.id.ed_search);
 
-        MultiChoicesCircleButton.Item item1 = new MultiChoicesCircleButton.Item("文章", getResources().getDrawable(R.drawable.article), 30);
+        MultiChoicesCircleButton.Item item1 = new MultiChoicesCircleButton.Item("文章", getResources().getDrawable(R.drawable.article), 15);
 
-        MultiChoicesCircleButton.Item item2 = new MultiChoicesCircleButton.Item("诗", getResources().getDrawable(R.drawable.poem), 90);
+        MultiChoicesCircleButton.Item item2 = new MultiChoicesCircleButton.Item("诗", getResources().getDrawable(R.drawable.poem), 65);
 
-        MultiChoicesCircleButton.Item item3 = new MultiChoicesCircleButton.Item("感悟", getResources().getDrawable(R.drawable.heart), 150);
+        MultiChoicesCircleButton.Item item3 = new MultiChoicesCircleButton.Item("感悟", getResources().getDrawable(R.drawable.heart), 115);
+
+        MultiChoicesCircleButton.Item item4 = new MultiChoicesCircleButton.Item("音乐", getResources().getDrawable(R.drawable.heart), 165);
+
 
         List<MultiChoicesCircleButton.Item> buttonItems = new ArrayList<>();
         buttonItems.add(item1);
         buttonItems.add(item2);
         buttonItems.add(item3);
+        buttonItems.add(item4);
 
         MultiChoicesCircleButton multiChoicesCircleButton = (MultiChoicesCircleButton) view.findViewById(R.id.multiChoicesCircleButton);
         multiChoicesCircleButton.setButtonItems(buttonItems);

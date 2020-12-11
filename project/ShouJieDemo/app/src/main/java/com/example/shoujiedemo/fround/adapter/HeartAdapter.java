@@ -37,6 +37,7 @@ public class HeartAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        //holder.setIsRecyclable(false);
         com.example.shoujiedemo.adapter.HeartViewHodler headViewHodler = (com.example.shoujiedemo.adapter.HeartViewHodler) holder;
         headViewHodler.initData(position);
     }

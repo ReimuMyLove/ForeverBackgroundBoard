@@ -1,6 +1,7 @@
 package com.example.shoujiedemo.home.recommen.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,12 +16,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 
 import com.example.shoujiedemo.bean.DepthPageTransformer;
 import com.example.shoujiedemo.bean.ScaleInTransformer;
 import com.example.shoujiedemo.home.follow.fragment.FollowFragment;
+import com.example.shoujiedemo.home.recommen.activity.DateActivity;
 import com.example.shoujiedemo.util.StatusBarUtil;
 import com.google.android.material.tabs.TabLayout;
 
@@ -46,6 +50,7 @@ public class HomeFragment extends Fragment {
     private List<Integer> scrolledPixeledList = new ArrayList<>(); //记录手指滑动时的像素坐标记录
     private RecommenFragment recommenFragment;
     private FollowFragment followFragment;
+    private ImageView btnDate;
 
 
     public HomeFragment(){
@@ -73,7 +78,6 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Log.e("start","開水");
     }
 
     /**
@@ -82,6 +86,16 @@ public class HomeFragment extends Fragment {
     private void initView(View view) {
         homeView = view.findViewById(R.id.home_view);
         homeTab = view.findViewById(R.id.tab_layout);
+        btnDate = view.findViewById(R.id.btn_date);
+
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),DateActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         if(recommenFragment == null) {
             recommenFragment = new RecommenFragment(homeView);

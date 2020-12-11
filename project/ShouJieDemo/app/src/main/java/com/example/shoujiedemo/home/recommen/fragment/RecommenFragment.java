@@ -1,7 +1,7 @@
 package com.example.shoujiedemo.home.recommen.fragment;
 
 
-import android.graphics.BitmapFactory;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,31 +20,23 @@ import com.alexvasilkov.foldablelayout.UnfoldableView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.ScaleInTransformer;
-import com.example.shoujiedemo.entity.Article;
 import com.example.shoujiedemo.entity.Content;
-import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenter;
-import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
-import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
-import com.example.shoujiedemo.home.follow.presenter.MyFollowUserPresenter;
-import com.example.shoujiedemo.home.follow.view.FollowView;
+import com.example.shoujiedemo.entity.Day;
 import com.example.shoujiedemo.home.recommen.adapter.ContentAdapter;
 import com.example.shoujiedemo.home.recommen.presenter.OperatePresenter;
 import com.example.shoujiedemo.home.recommen.presenter.OperatePresenterImpl;
 import com.example.shoujiedemo.home.recommen.view.RecommenView;
 import com.example.shoujiedemo.util.BaseFragment;
 import com.example.shoujiedemo.util.ConfigUtil;
-import com.example.shoujiedemo.util.HandleBackInterface;
-import com.google.android.material.tabs.TabLayout;
 
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -63,6 +55,12 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
     private TextView detailsText;//详细页面内容
     private UnfoldableView unfoldableView;//折叠式图控件
     private TextView detailsWriter;//详细页面作者
+    private TextView selectDay;
+    private TextView selectDate;
+    private View currentTime;
+    private int month;
+    private int year;
+    private int day;
 
     private List<Content> articleList = new ArrayList<>();//内容列表
 
@@ -96,6 +94,15 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recommen,container,false);
+
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        year = calendar.get(Calendar.YEAR);
+        //获取当前月
+        month = calendar.get(Calendar.MONTH) + 1;
+        // 获取当前日
+        day = calendar.get(Calendar.DATE);
+
         //初始化视图
         initView(view);
         return view;
@@ -114,19 +121,6 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
      */
     private void initView(View view) {
         articleList = new ArrayList<>();
-        /*Content a1 = new Content();
-
-        //a1.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg02));
-        Content a2 = new Content();
-        //a2.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg03));
-        Content a3 = new Content();
-        //a3.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg04));
-        Content a4 = new Content();
-        //a4.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg05));
-        articleList.add(a1);
-        articleList.add(a2);
-        articleList.add(a3);
-        articleList.add(a4);*/
 
         viewPager2= view.findViewById(R.id.viewpager2_view);
         unfoldableView = view.findViewById(R.id.unfoldable_view);
@@ -136,6 +130,52 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
         detailsTitle = detailsLayout.findViewById(R.id.details_title);
         detailsWriter = detailsLayout.findViewById(R.id.details_writer);
         listTouchInterceptor = view.findViewById(R.id.touch_interceptor_view);
+        selectDay = view.findViewById(R.id.recommen_selectDay);
+        selectDate = view.findViewById(R.id.recommen_selectDate);
+        currentTime = view.findViewById(R.id.recommen_currentTime);
+
+        String monthInEngLish = null;
+        switch(month) {
+            case 1:
+                monthInEngLish = "Jan";
+                break;
+            case 2:
+                monthInEngLish = "Feb";
+                break;
+            case 3:
+                monthInEngLish = "Mar";
+                break;
+            case 4:
+                monthInEngLish = "Apr";
+                break;
+            case 5:
+                monthInEngLish = "May";
+                break;
+            case 6:
+                monthInEngLish = "Jun";
+                break;
+            case 7:
+                monthInEngLish = "Jul";
+                break;
+            case 8:
+                monthInEngLish = " Aug";
+                break;
+            case 9:
+                monthInEngLish = "Sept";
+                break;
+            case 10:
+                monthInEngLish = "Oct";
+                break;
+            case 11:
+                monthInEngLish = "Nov";
+                break;
+            case 12:
+                monthInEngLish = "Dec";
+                break;
+        }
+                selectDay.setText(day + "");
+                selectDate.setText(monthInEngLish + ". " + year);
+
 
         operatePresenter.loadContent();
         //设置滚动方向
@@ -201,18 +241,25 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
             public void onUnfolding(UnfoldableView unfoldableView) {
                 listTouchInterceptor.setClickable(true);
                 detailsLayout.setVisibility(View.VISIBLE);
-
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(currentTime, "translationX",
+                        0, -280);
+                animator1.setDuration(400);
+                animator1.start();;
             }
 
             @Override
             public void onUnfolded(UnfoldableView unfoldableView) {
                 listTouchInterceptor.setClickable(false);
+
             }
 
             @Override
             public void onFoldingBack(UnfoldableView unfoldableView) {
                 listTouchInterceptor.setClickable(true);
-
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(currentTime, "translationX",
+                        -280, 0);
+                animator1.setDuration(400);
+                animator1.start();
             }
 
             @Override
@@ -235,6 +282,7 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
     public boolean onBackPressed() {
         if(unfoldableView.isUnfolded() || unfoldableView.isUnfolding()){
             unfoldableView.foldBack();
+            currentTime.setVisibility(View.VISIBLE);
             return true;
         }
         return super.onBackPressed();
@@ -259,6 +307,11 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
 
     }
 
+    @Override
+    public void loadByTime(List<Content> contents) {
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onLoadDetailsMain(Content content){
         if(content != null) {
@@ -272,5 +325,11 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
                     .into(detailsImg);
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onLoadByTime(Day day){
+        selectDate.setText(day.getMonthInEnglish() + ". " +day.getYear());
+        selectDay.setText(day.getDay() + "");
     }
 }

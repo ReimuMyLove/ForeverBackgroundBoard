@@ -73,6 +73,7 @@ public class FollowContentAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         int type = getItemViewType(position);
         switch(type){
             case CONTENT_TYPE_ARTICLE://文章

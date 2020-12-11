@@ -10,4 +10,6 @@ import java.util.List;
 public interface RecommenView {
 
     void loadContent(List<Content> contents);
+
+    void loadByTime(List<Content> contents);
 }

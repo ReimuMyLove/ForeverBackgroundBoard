@@ -62,7 +62,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
         holder.itemDate.setTypeface(typeface);
         Content article =  articleList.get(position);
         holder.itemTitle.setText("《" + article.getTitle() + "》");
-        holder.itemDate.setText(article.getTime());
+        holder.itemDate.setText(article.getDateEnglish() + "." + article.getDay());
         holder.itemCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
             }
         });
 
-        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
+
         Glide.with(context)
                 .load(ConfigUtil.BASE_IMG_URL + articleList.get(position).getPic())
                 .apply(requestOptions)
@@ -110,7 +114,6 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
             itemCover = itemView.findViewById(R.id.iv_item);
             itemTitle = itemView.findViewById(R.id.tv_item_title);
             itemDate = itemView.findViewById(R.id.recommen_item_date);
-            itemDate.setText("November 25, 2020");
             item = itemView.findViewById(R.id.item_view);
 
         }

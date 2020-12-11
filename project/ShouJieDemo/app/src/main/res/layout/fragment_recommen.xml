@@ -3,9 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#25D3D3D3"
     android:id="@+id/fragment_recommen"
     tools:context=".home.recommen.fragment.RecommenFragment">
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="20dp"
+            android:layout_alignParentLeft="true"
+            android:elevation="8dp"
+            android:layout_marginLeft="-43dp"
+            android:id="@+id/recommen_currentTime"
+            app:cardCornerRadius="50dp"
+            android:layout_width="130dp"
+            android:layout_height="60dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/recommen_selectDate"
+                            android:textStyle="italic"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="48dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_below="@id/recommen_selectDate"
+                            android:textColor="#2c2c2c"
+                            android:layout_centerInParent="true"
+                            android:text="8"
+                            android:textSize="35sp"
+                            android:layout_alignLeft="@id/recommen_selectDate"
+                            android:layout_marginLeft="13dp"
+                            android:id="@+id/recommen_selectDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+        </androidx.cardview.widget.CardView>
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager2_view"
             android:layout_width="wrap_content"

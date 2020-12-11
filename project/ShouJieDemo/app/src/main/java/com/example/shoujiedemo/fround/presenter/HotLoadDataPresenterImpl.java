@@ -88,11 +88,12 @@ public class HotLoadDataPresenterImpl implements HotLoadDataPresenter,HotLoadDat
             }
         }
 
-
-        for(Content content1:contents){
-            for(User user1 :users){
-                if(content1.getUserid() == user1.getId()){
-                    content1.setUser(user1);
+        if(contents != null) {
+            for (Content content1 : contents) {
+                for (User user1 : users) {
+                    if (content1.getUserid() == user1.getId()) {
+                        content1.setUser(user1);
+                    }
                 }
             }
         }

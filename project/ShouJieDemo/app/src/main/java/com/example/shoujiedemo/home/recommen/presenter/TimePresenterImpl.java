@@ -1,42 +1,34 @@
 package com.example.shoujiedemo.home.recommen.presenter;
 
-import android.util.Log;
-
-import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
-import com.example.shoujiedemo.home.recommen.model.OperateModel;
-import com.example.shoujiedemo.home.recommen.model.OperateModelImpl;
+import com.example.shoujiedemo.entity.Day;
+import com.example.shoujiedemo.home.recommen.model.TimeModel;
+import com.example.shoujiedemo.home.recommen.model.TimeModelImpl;
 import com.example.shoujiedemo.home.recommen.view.RecommenView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class OperatePresenterImpl implements OperatePresenter, OpreatePresenterListener {
+public class TimePresenterImpl implements TimePresenter,TimePresenterListener{
 
-    private RecommenView recommenView;
-    private OperateModel operateModel;
+    private TimeModel model;
+    private RecommenView view;
 
-    public OperatePresenterImpl(RecommenView recommenView) {
-        this.recommenView = recommenView;
-        this.operateModel = new OperateModelImpl();
+    public TimePresenterImpl(RecommenView view) {
+        this.view = view;
+        model = new TimeModelImpl();
     }
 
-
     @Override
-    public void loadContent() {
-
-        operateModel.loadContent(this);
+    public void loadByTime(Day day) {
+        model.loadByTime(day);
     }
 
-
     @Override
-    public void loadContentSuccess(String jsons) {
-        List<Content>contents = new ArrayList<>();
+    public void onLoadByTimeSuccess(String jsons) {
+        List<Content> contents = new ArrayList<>();
         Gson gson = new Gson();
         contents = gson.fromJson(jsons, new TypeToken<List<Content>>() {}.getType());
         String dateInEnglish = null;
@@ -85,12 +77,11 @@ public class OperatePresenterImpl implements OperatePresenter, OpreatePresenterL
             content.setDateEnglish(dateInEnglish);
             content.setDay(month + "." + day);
         }
-        recommenView.loadContent(contents);
+        view.loadByTime(contents);
     }
 
     @Override
-    public void loadContentError() {
+    public void onLoadByTimeError() {
 
     }
-
 }

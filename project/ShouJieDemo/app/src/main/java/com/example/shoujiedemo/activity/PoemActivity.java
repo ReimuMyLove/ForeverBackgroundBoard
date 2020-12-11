@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.CommentAdapter;
 import com.example.shoujiedemo.adapter.SetAdapter;
@@ -339,16 +340,23 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         alert = builder.create();
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
+
 
         if(poem.getUser().getPicname() != null) {
             Glide.with(this)
                     .load(ConfigUtil.BASE_HEAD_URL + poem.getUser().getPicname())
+                    .apply(requestOptions)
                     .into(head);
         }
 
         if(poem.getPic() != null) {
             Glide.with(this)
                     .load(ConfigUtil.BASE_IMG_URL + poem.getPic())
+                    .apply(requestOptions)
                     .into(cover);
         }
 

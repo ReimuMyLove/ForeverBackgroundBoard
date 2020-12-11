@@ -37,6 +37,7 @@ public class PoemAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        //holder.setIsRecyclable(false);
         PoemViewHodler poemViewHodler = (PoemViewHodler)holder;
         poemViewHodler.initData(position);
     }

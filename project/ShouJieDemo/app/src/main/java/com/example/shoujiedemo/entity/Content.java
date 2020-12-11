@@ -27,6 +27,8 @@ public class Content implements Serializable {
     private User user;//用户
     private boolean isLike = false;//点赞
     private boolean isCollect = false;//收藏
+    private String dateEnglish;//英文日期
+    private String day;
 
     public Content(){
 
@@ -167,6 +169,22 @@ public class Content implements Serializable {
 
     public void setCollect(boolean collect) {
         isCollect = collect;
+    }
+
+    public String getDateEnglish() {
+        return dateEnglish;
+    }
+
+    public void setDateEnglish(String dateEnglish) {
+        this.dateEnglish = dateEnglish;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     @Override

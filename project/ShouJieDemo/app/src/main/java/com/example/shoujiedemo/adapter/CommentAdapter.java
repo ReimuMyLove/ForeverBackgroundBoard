@@ -53,9 +53,11 @@ public class CommentAdapter extends RecyclerView.Adapter{
         viewHolder.date.setText(commentList.get(position).getTime());
         viewHolder.text.setText(commentList.get(position).getText());
 
-        if(commentList.get(position).getUser1id() == UserUtil.USER_ID){
+        if(commentList.get(position).getUser1id() == UserUtil.USER_ID)
             viewHolder.menuBtn.setVisibility(View.VISIBLE);
-        }
+        else
+            viewHolder.menuBtn.setVisibility(View.INVISIBLE);
+
         viewHolder.menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,9 +80,14 @@ public class CommentAdapter extends RecyclerView.Adapter{
             }
         });
 
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.iv_default)
+                .fallback(R.drawable.ouran_default)
+                .centerCrop();
         if(commentList.get(position).getUser().getPicname() !=null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + commentList.get(position).getUser().getPicname())
+                    .apply(requestOptions)
                     .into(viewHolder.userImg);
         }
 
