@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.example.shoujiedemo.bean.StatusBarHeightView
+        app:use_type="use_height"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/left"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:text="关注列表"
+            android:textSize="20sp"
+            android:textColor="#90000000"
+            android:background="#fff"
+            android:layout_marginLeft="8dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myFollow_articleRec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dayLightActivity">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

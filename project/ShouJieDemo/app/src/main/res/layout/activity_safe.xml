@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border">
+            android:background="#fff"
+            android:gravity="center_vertical">
             <Button
                 android:id="@+id/myCenter_setting_safe_return"
                 android:layout_width="30dp"
@@ -27,97 +27,116 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="账号与安全"
-                android:textSize="20dp"
+                android:text="@string/AccountAndSafe"
+                android:textSize="20sp"
                 android:textColor="@color/dayLightTitle"
                 android:gravity="center"/>
         </LinearLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 修改密码 -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/myCenter_setting_safe_changePassword"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginTop="50dp"
             android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border"
+            android:background="#fff"
             android:clickable="true"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:focusable="true">
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="修改密码"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/changePassword"
                 android:textColor="@color/dayLightText"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/right" />
-        </LinearLayout>
+        </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 修改安全问题 -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/myCenter_setting_safe_setSafeQuestion"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border"
+            android:background="#fff"
             android:clickable="true"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:focusable="true">
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="设置安全问题"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/setSafeQuestion"
                 android:textColor="@color/dayLightText"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/right" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <!-- 设置邮箱 -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/myCenter_setting_safe_setEmail"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:gravity="center_vertical"
             android:background="@drawable/mycenter_setting_textview_border"
             android:clickable="true"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:focusable="true">
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="绑定邮箱"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/setEmail"
                 android:textColor="@color/dayLightText"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/right" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <!-- 注销账号 -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/myCenter_setting_safe_destroyAccount"
             android:layout_width="match_parent"
             android:layout_height="42dp"
@@ -126,31 +145,35 @@
             android:background="@drawable/mycenter_setting_textview_border"
             android:clickable="true"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:focusable="true">
 
             <TextView
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="注销账号*"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/destroyAccount"
                 android:textColor="@color/dayLightText"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/right" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <!-- 警告内容 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="25dp"
-            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="25dp"
+            android:textSize="15sp"
             android:text="@string/destroyAccountWarning"/>
 
     </LinearLayout>

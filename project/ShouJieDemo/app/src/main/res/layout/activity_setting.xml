@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/myCenter_setting_Activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/dayLightBackground">
+        <com.example.shoujiedemo.util.StatusBarHeightView
+            app:use_type="use_height"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <!-- 设置标题 -->
+        <LinearLayout
+            android:id="@+id/myCenter_setting_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="#fff"
+            android:gravity="center_vertical">
+            <Button
+                android:id="@+id/myCenter_setting_return"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/left"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting"
+                android:textSize="20sp"
+                android:textColor="@color/dayLightTitle"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- 夜间模式-->
+        <RelativeLayout
+            android:id="@+id/myCenter_setting_nightMode"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:paddingStart="10dp"
+            android:background="#fff"
+            android:paddingEnd="20dp"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/nightMode"
+                android:textColor="@color/dayLightText"
+                android:textSize="15sp"
+                tools:ignore="RelativeOverlap" />
+
+            <com.example.shoujiedemo.util.SwitchButton
+                android:id="@+id/myCenter_setting_nightModeSwitch"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_width="50dp"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"/>
+
+        <!-- 安全设置 -->
+        <RelativeLayout
+            android:id="@+id/myCenter_setting_safe"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:paddingStart="10dp"
+            android:background="#fff"
+            android:paddingEnd="20dp"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/dayLightText"
+                android:text="@string/AccountAndSafe"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/right"
+                android:contentDescription="@string/todo" />
+        </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!-- 清理缓存 -->
+        <RelativeLayout
+            android:id="@+id/myCenter_setting_clearCookie"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:background="#fff"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:text="@string/clearCookie"
+                android:textColor="@color/dayLightText"
+                tools:ignore="RelativeOverlap" />
+            <TextView
+                android:id="@+id/myCenter_setting_cookieSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/dayLightText"
+                tools:ignore="RelativeOverlap" />
+            <ImageView
+                android:id="@+id/myCenter_setting_cookieSize_right"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right"
+                android:contentDescription="@string/todo" />
+        </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!-- 帮助与反馈 -->
+        <RelativeLayout
+            android:id="@+id/myCenter_setting_feedback"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:background="#fff"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:text="@string/feedback"
+                android:textColor="@color/dayLightText"
+                tools:ignore="RelativeOverlap" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right"
+                android:contentDescription="@string/todo" />
+        </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!-- 关于 -->
+        <RelativeLayout
+            android:id="@+id/myCenter_setting_about"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:background="#fff"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:text="@string/about"
+                android:textColor="@color/dayLightText"
+                tools:ignore="RelativeOverlap" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right"
+                android:contentDescription="@string/todo"/>
+        </RelativeLayout>
+
+        <!-- 退出登录 -->
+        <Button
+            android:id="@+id/myCenter_setting_logout"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:background="@drawable/mycenter_setting_button_border"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/dayLightText"
+            android:textSize="15sp"
+            android:text="@string/logout"/>
+
+    </LinearLayout>
+
+</LinearLayout>

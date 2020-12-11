@@ -48,14 +48,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ArticleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mLayoutInflater.inflate(R.layout.article_list, parent, false);
         return new ViewHolder(view,mContext,userID);//返回一个holder对象，给下个方法使用
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArticleAdapter.ViewHolder holder, int position) {
         if(setList!=null){
             Set set = setList.get(position);
             holder.article_groupID.setText(set.getId()+"");
@@ -83,18 +83,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void deleteSuccessful() {
-        getData(userID);
+        Toast.makeText(mContext, "偶然：删除文集成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void getGroupFailed() {
-        Toast.makeText(mContext, "获取数据失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "偶然：获取数据失败", Toast.LENGTH_SHORT).show();
     }
 
-
-    public void getData(int userID){
-        mySpacePresenter.getGroups(userID);
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements ArticleView{
         TextView

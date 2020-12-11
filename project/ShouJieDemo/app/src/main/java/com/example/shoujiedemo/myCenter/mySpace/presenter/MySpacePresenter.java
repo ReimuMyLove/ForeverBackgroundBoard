@@ -3,6 +3,7 @@ package com.example.shoujiedemo.myCenter.mySpace.presenter;
 import android.util.Log;
 
 import com.example.shoujiedemo.entity.Set;
+import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.myCenter.mySpace.model.ArticleModel;
 import com.example.shoujiedemo.myCenter.mySpace.model.ArticleModelImpl;
 import com.example.shoujiedemo.myCenter.mySpace.model.IdeaModel;
@@ -18,12 +19,9 @@ import com.example.shoujiedemo.myCenter.mySpace.view.inter.PoemView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.List;
 
-public class MySpacePresenter implements MySpacePresenterListener,ArticleInterface,PoemInterface,IdeaInterface,MySpaceInterface{
+public class MySpacePresenter implements MySpacePresenterListener{
     private ArticleModel articleModel;
     private ArticleView articleView;
     private ArticleAdapterView articleAdapterView;
@@ -100,15 +98,9 @@ public class MySpacePresenter implements MySpacePresenterListener,ArticleInterfa
     public void setGroup(String jsons) {
         Gson gson = new Gson();
         String sets;
-        try {
-            JSONObject jsonObject =new JSONObject(jsons);
-            JSONArray jsonArray = jsonObject.getJSONArray("wenjidate");
-            sets = jsonArray.toString();
-            List<Set> setList = gson.fromJson(sets, new TypeToken<List<Set>>() {}.getType());
-            articleFragmentView.getSets(setList);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        sets = jsons;
+        List<Set> setList = gson.fromJson(sets, new TypeToken<List<Set>>() {}.getType());
+        articleFragmentView.getSets(setList);
     }
 
     @Override
@@ -121,6 +113,10 @@ public class MySpacePresenter implements MySpacePresenterListener,ArticleInterfa
      */
     public void addGroups(int userID, String groupName){
         articleModel.getGroup(userID,groupName,this);
+    }
+
+    public void addFollow(int userID, int followID) {
+        articleModel.addFollow(userID,followID,this);
     }
 
     /**
@@ -137,5 +133,42 @@ public class MySpacePresenter implements MySpacePresenterListener,ArticleInterfa
     @Override
     public void addGroupFailed() {
         mySpaceView.addGroupFailed();
+    }
+
+    /**
+     * 添加关注回调方法
+     */
+
+    @Override
+    public void addFollowFailed() {
+        mySpaceView.addFollowFailed();
+    }
+
+    @Override
+    public void addFollowSuccessful() {
+        mySpaceView.addFollowSuccessful();
+    }
+
+    /**
+     * 获取空间主人信息
+     * @param ownerID 空间主人UID
+     */
+    public void getOwnerInfo(int ownerID) {
+        articleModel.getOwnerInfo(ownerID,this);
+    }
+
+    /**
+     * 获取空间主人信息回调方法
+     */
+    @Override
+    public void getOwnerInfoFailed() {
+        mySpaceView.getOwnerInfoFailed();
+    }
+
+    @Override
+    public void getOwnerInfoSuccessful(String jsons) {
+        Gson gson = new Gson();
+        User userInfo = gson.fromJson(jsons,User.class);
+        mySpaceView.getOwnerInfoSuccessful(userInfo);
     }
 }

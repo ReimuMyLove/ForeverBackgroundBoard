@@ -211,5 +211,11 @@ public interface ApiInterFace {
     @GET("addfollow")
     Observable<ResponseBody> loadByTime(@Query("date") String date);
 
+    /**
+     * 获取空间主人信息
+     */
+    @GET("")
+    Observable<ResponseBody> getOwnerInfo(@Query("userid") int userID);
+
 
 }

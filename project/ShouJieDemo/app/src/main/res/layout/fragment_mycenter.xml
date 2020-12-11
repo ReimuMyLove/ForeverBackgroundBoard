@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    android:background="@color/centerBackGround"
+    android:background="#fff"
     android:overScrollMode="never">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -15,7 +15,7 @@
                     android:id="@+id/myCenter_userBackGround"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:background="@drawable/bg06" />
+                    android:background="@drawable/bg03" />
                 <com.example.shoujiedemo.util.TrancircleImageView
                     android:id="@+id/myCenter_userImg_background"
                     android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/iv_follow_center"
-                                android:src="@drawable/help_center"
+                                android:src="@drawable/follow_center"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"/>
 

@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.shoujiedemo.Log.presenter.LogPresenter;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.Log.presenter.LogPresenter;
 import com.example.shoujiedemo.util.BaseActivity;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {

@@ -7,4 +7,5 @@ public class ConfigUtil {
     public static final String BASE_HEAD_URL = "http://49.232.217.140:8080/OuranServices/imgs/user/";
 
     public static final String BASE_WENJI_URL = "http://49.232.217.140:8080/OuranServices/imgs/wenji/";
+
 }

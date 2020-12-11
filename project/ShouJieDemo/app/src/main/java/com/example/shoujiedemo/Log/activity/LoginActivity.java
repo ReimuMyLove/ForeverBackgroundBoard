@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.shoujiedemo.Log.presenter.LogPresenter;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.Log.presenter.LogPresenter;
 import com.example.shoujiedemo.home.recommen.activity.MainActivity;
 import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.DBHelper;
@@ -62,6 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         SQLiteDatabase db = helper.getWritableDatabase();
         String sql = "delete from UserInfo";
         db.execSQL(sql);
+        db.close();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -96,7 +97,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
      * Register注册方法
      */
     private void Register(){
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
     }
 }

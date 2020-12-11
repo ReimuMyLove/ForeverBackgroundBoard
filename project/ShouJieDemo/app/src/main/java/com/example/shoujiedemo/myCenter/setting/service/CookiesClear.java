@@ -32,12 +32,13 @@ public class CookiesClear {
         long size = 0;
         try {
             File[] fileList = file.listFiles();
-            for (int i = 0; i < fileList.length; i++) {
+            assert fileList != null;
+            for (File value : fileList) {
                 // 如果下面还有文件
-                if (fileList[i].isDirectory()) {
-                    size = size + getFolderSize(fileList[i]);
+                if (value.isDirectory()) {
+                    size = size + getFolderSize(value);
                 } else {
-                    size = size + fileList[i].length();
+                    size = size + value.length();
                 }
             }
         } catch (Exception e) {
@@ -61,7 +62,7 @@ public class CookiesClear {
      * 清空方法
      * @param context
      */
-    public void clearAllCache(Context context) {
+    public void clearAllCache(Context context) throws Exception {
         deleteDir(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             deleteDir(context.getExternalCacheDir());
@@ -71,13 +72,15 @@ public class CookiesClear {
     private static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            assert children != null;
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
                 if (!success) {
                     return false;
                 }
             }
         }
+        assert dir != null;
         return dir.delete();
     }
 }

@@ -9,4 +9,12 @@ public interface MySpacePresenterListener {
 
     void addGroupSuccessful(String jsons);
     void addGroupFailed();
+
+    void addFollowFailed();
+
+    void addFollowSuccessful();
+
+    void getOwnerInfoFailed();
+
+    void getOwnerInfoSuccessful(String jsons);
 }

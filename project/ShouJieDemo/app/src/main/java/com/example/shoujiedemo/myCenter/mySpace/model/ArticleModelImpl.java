@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ArticleModelImpl implements ArticleModel{
     private static final String BASE_URL = "http://49.232.217.140:8080/OuranServices/wenji/";
+    private static final String BASE_FOLLOW_URL = "http://49.232.217.140:8080/OuranServices/follow/";
+    private static final String BASE_OWNER_URL = "http://49.232.217.140:8080/OuranServices/user/";
 
     /**
      * 删除文集
@@ -147,6 +149,92 @@ public class ArticleModelImpl implements ArticleModel{
                                 listener.getGroupFailed();
                             }else {
                                 listener.setGroup(jsons);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
+    }
+
+    @Override
+    public void addFollow(int userID, int followID, final MySpacePresenterListener listener) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_FOLLOW_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.addFollow(userID,followID);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if (jsons.equals("false")){
+                                listener.addFollowFailed();
+                            }else {
+                                listener.addFollowSuccessful();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
+    }
+
+    @Override
+    public void getOwnerInfo(int ownerID, final MySpacePresenterListener listener) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_OWNER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.getOwnerInfo(ownerID);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if (jsons.equals("false")){
+                                listener.getOwnerInfoFailed();
+                            }else {
+                                listener.getOwnerInfoSuccessful(jsons);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

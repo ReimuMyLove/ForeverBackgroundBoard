@@ -9,7 +9,7 @@ import com.example.shoujiedemo.Log.model.LoginModelImpl;
 import com.example.shoujiedemo.Log.model.RegisterModel;
 import com.example.shoujiedemo.Log.model.RegisterModelImpl;
 
-public class LogPresenter implements LoginPresenterListener, LoginInterface, RegisterInterface, RegisterPresenterListener {
+public class LogPresenter implements LoginPresenterListener,LoginInterface, RegisterInterface,RegisterPresenterListener {
     private LoginModel loginModel;
     private LoginView loginView;
     private RegisterModel registerModel;

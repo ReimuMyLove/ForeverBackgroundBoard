@@ -3,7 +3,6 @@ package com.example.shoujiedemo.Log.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.example.shoujiedemo.Log.presenter.LoginPresenterListener;
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.entity.User;
@@ -24,7 +23,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginModelImpl implements LoginModel {
+public class LoginModelImpl implements LoginModel{
     private static final String BASE_URL = "http://49.232.217.140:8080/OuranServices/user/";
     @Override
     public void login(String name, String password, final Context context, final LoginPresenterListener listener) {
@@ -49,12 +48,15 @@ public class LoginModelImpl implements LoginModel {
                             String userInfo = responseBody.string();
                             Gson gson = new Gson();
                             User user;
-                            user = gson.fromJson(userInfo, User.class);
+                            user = gson.fromJson(userInfo,User.class);
                             UserUtil.USER_NAME = user.getName();
                             UserUtil.USER_ID = user.getId();
                             UserUtil.USER_FANS = user.getFennum();
                             UserUtil.RECENT_USER_ID = user.getId();
                             UserUtil.USER_IMG = user.getPicname();
+                            UserUtil.USER_AGE = user.getAge();
+                            UserUtil.USER_SEX = user.getSex();
+                            UserUtil.USER_SIGN = user.getSign();
                             userInfoSet(user,context);
                             listener.OnLoginSuccessful();
                         } catch (IOException e) {
@@ -95,6 +97,7 @@ public class LoginModelImpl implements LoginModel {
         //编写sql语句
         String sql =
                 MessageFormat.format("insert into userInfo(userID,userName,userPassword,userSex,picName,userAge,userFans,userFollow,userSign)values(''{0}'',''{1}'',''{2}'',''{3}'',''{4}'',''{5}'',''{6}'',''{7}'',''{8}'')", ID, name, password, sex, picname, age, fennum, follownum, sign);
-         db.execSQL(sql);
+        db.execSQL(sql);
+        db.close();
     }
 }

@@ -329,7 +329,10 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onLoadByTime(Day day){
-        selectDate.setText(day.getMonthInEnglish() + ". " +day.getYear());
-        selectDay.setText(day.getDay() + "");
+        if(day.getDay() != 0) {
+            Log.e("day",day.getMonthInEnglish() + ". " + day.getYear());
+            selectDate.setText(day.getMonthInEnglish() + ". " + day.getYear());
+            selectDay.setText(day.getDay() + "");
+        }
     }
 }

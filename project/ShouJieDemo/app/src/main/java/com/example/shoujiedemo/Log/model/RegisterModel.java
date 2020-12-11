@@ -1,5 +1,6 @@
 package com.example.shoujiedemo.Log.model;
 
+import com.example.shoujiedemo.Log.presenter.LoginPresenterListener;
 import com.example.shoujiedemo.Log.presenter.RegisterPresenterListener;
 
 public interface RegisterModel {
