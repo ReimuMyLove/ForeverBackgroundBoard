@@ -206,7 +206,7 @@ public interface ApiInterFace {
     Observable<ResponseBody> findFollow(@Query("userid") int userID);
 
     /**
-     * 穿越
+     * 关注
      */
     @GET("recommendbytime")
     Observable<ResponseBody> loadByTime(@Query("time") String date);
@@ -217,5 +217,15 @@ public interface ApiInterFace {
     @GET("")
     Observable<ResponseBody> getOwnerInfo(@Query("userid") int userID);
 
+    /**
+     *得到评论列表内容
+     * */
+    @POST("getAllCheatByUser")
+    Observable<ResponseBody> getMessage(@Query("userid") int userid,@Query("pagenum") int pagenum) ;
+    /**
+     * 得到粉丝列表内容（谁关注了谁）
+     * */
 
+    @POST("findUserFens")
+    Observable<ResponseBody> getFens(@Query("userid") int userid) ;
 }

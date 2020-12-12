@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +20,7 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
 import com.example.shoujiedemo.upload.view.LoadView;
+import com.example.shoujiedemo.util.SwitchButton;
 
 import java.io.File;
 
@@ -31,10 +31,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     private EditText title;
     private EditText tag;
     private Button commit;
-    private RadioButton radio1;
-    private RadioButton radio2;
-    private Button btn_carma;
-    private Button btn_gallery;
+    private SwitchButton radio1;
     private ImageView imageView;
     private Uri uri;
     private boolean flag = true;
@@ -49,20 +46,10 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poem_upload);
-        //initData();
+        initData();
     }
 
-    @Override
-    public void skipSuccess() {
-
-    }
-
-    @Override
-    public void skipFailure() {
-
-    }
-
-    /*public void gallery() {
+    public void gallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, PHOTO_REQUEST_GALLERY);//携带请求码
@@ -77,7 +64,6 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         }
         startActivityForResult(intent, PHOTO_REQUEST_CAREMA);//携带请求码
     }
-
 
 
     private void crop(Uri uri) {
@@ -95,28 +81,23 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, PHOTO_REQUEST_CUT); // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CUT
     }
+
     private boolean hasSdcard() {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     private void initData() {
-        imageView=findViewById(R.id.image);
-        btn_carma=findViewById(R.id.btn_camra);
-        btn_gallery=findViewById(R.id.btn_gallery);
-        radio1 = findViewById(R.id.radio1);
-        radio2 = findViewById(R.id.radio2);
-        main_text = findViewById(R.id.main_text);
-        writer = findViewById(R.id.writer);
-        title = findViewById(R.id.title);
-        commit = findViewById(R.id.btn_commit);
-        tag = findViewById(R.id.tag);
+        imageView = findViewById(R.id.upload_poem_cover);
+        radio1 = findViewById(R.id.isOriginal);
+        main_text = findViewById(R.id.ed_poem_content);
+        writer = findViewById(R.id.upload_ed_poem_writer);
+        title = findViewById(R.id.upload_ed_poem_title);
+        commit = findViewById(R.id.upload_btn_poem_commit);
+        tag = findViewById(R.id.custom_tag);
         setOnClikListener();
         presenter = new UploadPresenterImpl(PoemUploadActivity.this);
     }
+
     private Uri external(String external) {
         String myImageUrl = "content://media" + external;
         Uri uri = Uri.parse(myImageUrl);
@@ -147,7 +128,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
             }
         } else if (requestCode == PHOTO_REQUEST_CUT) {//从剪切图片返回的数据
             if (data != null) {
-                 bitmap= data.getParcelableExtra("data");
+                bitmap = data.getParcelableExtra("data");
                 imageView.setImageBitmap(bitmap);
                 //将bitmap转换为Uri
                 uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
@@ -180,9 +161,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         MyOnclickLisenter myOnclickLisenter = new MyOnclickLisenter();
         commit.setOnClickListener(myOnclickLisenter);
         radio1.setOnClickListener(myOnclickLisenter);
-        radio2.setOnClickListener(myOnclickLisenter);
-        btn_carma.setOnClickListener(myOnclickLisenter);
-        btn_gallery.setOnClickListener(myOnclickLisenter);
+        imageView.setOnClickListener(myOnclickLisenter);
     }
 
     class MyOnclickLisenter implements View.OnClickListener {
@@ -190,24 +169,18 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.btn_commit:
+                case R.id.upload_btn_poem_commit:
                     CommitPoem();
                     break;
-                case R.id.radio1:
+                case R.id.isOriginal:
                     changeTag();
                     break;
-                case R.id.radio2:
-                    changeTag1();
-                    break;
-                case R.id.btn_camra:
-                    camera();
-                    imageView.setImageBitmap(bitmap);
-                case R.id.btn_gallery:
+                case R.id.upload_poem_cover:
                     gallery();
-                    imageView.setImageBitmap(bitmap);
+                    break;
             }
         }
-    }*/
+    }
 
     /**
      * 点击单选框时，只需监控非本单选框是否选中
@@ -217,26 +190,13 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
      * 故改变本单选框需要不能监控本单选框
      * 要通过监控其它非本单选框来实现
      */
-    /*private void changeTag() {
-        if (radio2.isChecked()) {
-            Log.e("wrk", 2 + "");
-            radio1.setChecked(true);
-            radio2.setChecked(false);
-            Log.e("wrk", radio1.isChecked() + "");
-        }
+    private void changeTag() {
+        Log.e("wrk", 2 + "");
+        radio1.setChecked(flag);
+        flag=!flag;
+        Log.e("wrk", radio1.isChecked() + "");
     }
 
-    private void changeTag1() {
-        if (radio1.isChecked()) {
-
-            Log.e("wrk", 1 + "");
-            radio1.setChecked(false);
-            radio2.setChecked(true);
-            Log.e("wrk", radio1.isChecked() + "");
-            flag = false;
-
-        }
-    }
 
     private void CommitPoem() {
         Content content = new Content();
@@ -249,18 +209,18 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         if (uri != null) {
             if (radio1.isChecked()) {
                 presenter.UploadData(content, 1, uri);
-            }else {
+            } else {
                 presenter.UploadData(content, 0, uri);
             }
         } else {
             if (radio1.isChecked()) {
                 presenter.UploadData(content, 1);
-            }else {
+            } else {
                 presenter.UploadData(content, 0);
             }
         }
         Log.e("", content.toString());
 
 
-    }*/
+    }
 }

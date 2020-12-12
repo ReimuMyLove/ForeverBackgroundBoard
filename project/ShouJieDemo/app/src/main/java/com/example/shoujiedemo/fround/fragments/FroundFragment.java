@@ -22,6 +22,7 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.upload.activity.AriticleUploadActivity;
+import com.example.shoujiedemo.upload.activity.HeartUploadActivity;
 import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
 import com.example.shoujiedemo.util.ToastUtils;
 import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
@@ -120,7 +121,7 @@ public class FroundFragment extends Fragment{
                         break;
                     case 2:
                         Intent intent2=new Intent();
-                        intent2.setClass(getContext(), PoemUploadActivity.class);
+                        intent2.setClass(getContext(), HeartUploadActivity.class);
                         startActivity(intent2);
                         /*getActivity().overridePendingTransition(R.anim.activity_start_animal,
                                 R.anim.activity_end_animal);*/

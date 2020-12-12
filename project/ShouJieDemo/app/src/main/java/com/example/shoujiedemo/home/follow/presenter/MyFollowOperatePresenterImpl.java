@@ -194,8 +194,8 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
             }
          }
       }
-      for(Comment comment1:comments){ ;
-         String time = comment1.getTime().substring(5,16);
+      for(Comment comment1:comments){
+          String time = comment1.getTime().substring(5,16);
          comment1.setTime(time);
       }
 
