@@ -50,10 +50,20 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poem_upload);
-        initData();
+        //initData();
     }
 
-    public void gallery() {
+    @Override
+    public void skipSuccess() {
+
+    }
+
+    @Override
+    public void skipFailure() {
+
+    }
+
+    /*public void gallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, PHOTO_REQUEST_GALLERY);//携带请求码
@@ -198,7 +208,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
                     imageView.setImageBitmap(bitmap);
             }
         }
-    }
+    }*/
 
     /**
      * 点击单选框时，只需监控非本单选框是否选中
@@ -208,7 +218,7 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
      * 故改变本单选框需要不能监控本单选框
      * 要通过监控其它非本单选框来实现
      */
-    private void changeTag() {
+    /*private void changeTag() {
         if (radio2.isChecked()) {
             Log.e("wrk", 2 + "");
             radio1.setChecked(true);
@@ -253,5 +263,5 @@ public class PoemUploadActivity extends AppCompatActivity implements LoadView {
         Log.e("", content.toString());
 
 
-    }
+    }*/
 }

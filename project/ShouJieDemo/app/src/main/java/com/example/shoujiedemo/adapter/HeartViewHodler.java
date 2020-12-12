@@ -448,8 +448,10 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 set1 = (Set) setAdapter.getItem(i);
-                view.setBackgroundColor(0x30CFCFCF);
-
+                for(int j = 0;j<sets.size();++j)
+                    sets.get(j).setSelect(false);
+                ((Set) setAdapter.getItem(i)).setSelect(true);
+                setAdapter.notifyDataSetChanged();
             }
         });
 

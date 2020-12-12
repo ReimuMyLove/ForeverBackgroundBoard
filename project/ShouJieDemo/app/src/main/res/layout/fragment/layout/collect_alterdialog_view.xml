@@ -32,6 +32,10 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/set_list"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:fadeScrollbars="true"
         android:listSelector="@android:color/transparent"
         android:layout_below="@id/collect_title"
         android:layout_width="match_parent"

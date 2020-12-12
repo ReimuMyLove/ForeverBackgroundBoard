@@ -15,7 +15,7 @@
                     android:id="@+id/myCenter_userBackGround"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:background="@drawable/bg03" />
+                    android:background="@drawable/bg06" />
                 <com.example.shoujiedemo.util.TrancircleImageView
                     android:id="@+id/myCenter_userImg_background"
                     android:layout_width="match_parent"
@@ -312,7 +312,7 @@
                         android:textSize="20sp"
                         android:gravity="center"
                         android:textColor="@android:color/white"
-                        android:text="粉丝数:2020"/>
+                        android:text="2020"/>
                 </LinearLayout>
             </RelativeLayout>
 </ScrollView>

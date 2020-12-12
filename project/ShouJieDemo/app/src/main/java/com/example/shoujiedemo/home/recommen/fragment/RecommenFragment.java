@@ -26,6 +26,8 @@ import com.example.shoujiedemo.entity.Day;
 import com.example.shoujiedemo.home.recommen.adapter.ContentAdapter;
 import com.example.shoujiedemo.home.recommen.presenter.OperatePresenter;
 import com.example.shoujiedemo.home.recommen.presenter.OperatePresenterImpl;
+import com.example.shoujiedemo.home.recommen.presenter.TimePresenter;
+import com.example.shoujiedemo.home.recommen.presenter.TimePresenterImpl;
 import com.example.shoujiedemo.home.recommen.view.RecommenView;
 import com.example.shoujiedemo.util.BaseFragment;
 import com.example.shoujiedemo.util.ConfigUtil;
@@ -61,6 +63,8 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
     private int month;
     private int year;
     private int day;
+    private TimePresenter presenter;
+    private View  recyclerView;
 
     private List<Content> articleList = new ArrayList<>();//内容列表
 
@@ -80,7 +84,7 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
         // Required empty public constructor
         this.homeView = homeView;
         operatePresenter = new OperatePresenterImpl(this);
-
+        presenter = new TimePresenterImpl(this);
     }
 
     @Override
@@ -210,7 +214,7 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
                         if(currentPosition == 0){
                             if (scrolledPixeledList.size() > 1 && scrolledPixeledList.get(scrolledPixeledList.size() - 1) == 0) {
                                    //有可能出现滑到一半放弃的情况也是可以出现currentPosition == oldPositon=0，则先判断是否是往右滑时放弃
-                                    return;
+                                homeView.setCurrentItem(1,true);
                                }
                             //若还有上一个bottom fragment页面则切换
                             if(homeView.getCurrentItem() > 0){
@@ -293,7 +297,7 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
         articleList = contents;
         //实现一屏多页
         //viewPager2.setOffscreenPageLimit(articleList.size());//设置预加载页
-        View recyclerView = viewPager2.getChildAt(0);
+        recyclerView = viewPager2.getChildAt(0);
         if(recyclerView != null && recyclerView instanceof RecyclerView){
             recyclerView.setPadding(70, 0, 70, 0);
             ((RecyclerView) recyclerView).setClipToPadding(false);
@@ -309,7 +313,11 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
 
     @Override
     public void loadByTime(List<Content> contents) {
-
+        articleList.clear();
+        articleList = contents;
+        Log.e("article",articleList.toString());
+        contentAdapter = new ContentAdapter(getContext(),articleList,unfoldableView,detailsLayout);
+        viewPager2.setAdapter(contentAdapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
@@ -330,9 +338,10 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onLoadByTime(Day day){
         if(day.getDay() != 0) {
-            Log.e("day",day.getMonthInEnglish() + ". " + day.getYear());
             selectDate.setText(day.getMonthInEnglish() + ". " + day.getYear());
             selectDay.setText(day.getDay() + "");
+            Log.e("day",day.getYear() + ". " + day.getMonth() + day.getDay());
+            presenter.loadByTime(day);
         }
     }
 }

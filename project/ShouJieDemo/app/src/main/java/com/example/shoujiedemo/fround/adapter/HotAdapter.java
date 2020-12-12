@@ -47,9 +47,9 @@ public class HotAdapter extends RecyclerView.Adapter{
                 viewHodler = articleViewHodler;
                 break;
             case CONTENT_TYPE_MUSIC://音乐
-                View musicView = LayoutInflater.from(context).inflate(R.layout.item_follow_music,parent,false);
-                MusicViewHodler musicViewHodler = new MusicViewHodler(musicView,context);
-                viewHodler = musicViewHodler;
+                /*View musicView = LayoutInflater.from(context).inflate(R.layout.item_follow_music,parent,false);
+                MusicViewHodler musicViewHodler = new MusicViewHodler(musicView,context,contentList);
+                viewHodler = musicViewHodler;*/
                 break;
             case CONTENT_TYPE_HEAD://感悟
                 View headView = LayoutInflater.from(context).inflate(R.layout.item_follow_heart,parent,false);

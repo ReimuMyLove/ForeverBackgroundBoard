@@ -108,22 +108,22 @@ public class FroundFragment extends Fragment{
                         Intent intent0=new Intent();
                         intent0.setClass(getContext(), AriticleUploadActivity.class);
                         startActivity(intent0);
-                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
-                                R.anim.activity_end_animal);
+                        /*getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                     case 1:
                         Intent intent1=new Intent();
                         intent1.setClass(getContext(), PoemUploadActivity.class);
                         startActivity(intent1);
-                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
-                                R.anim.activity_end_animal);
+                       /* getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                     case 2:
                         Intent intent2=new Intent();
                         intent2.setClass(getContext(), PoemUploadActivity.class);
                         startActivity(intent2);
-                        getActivity().overridePendingTransition(R.anim.activity_start_animal,
-                                R.anim.activity_end_animal);
+                        /*getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                 }
             }

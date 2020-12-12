@@ -16,7 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".home.recommen.activity.DateActivity"></activity>
+        <activity android:name=".activity.MusicActivity"></activity>
+
+        <service
+            android:name=".fround.service.NetPlayMusicService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".home.recommen.activity.DateActivity" />
         <activity android:name=".activity.HeartActivity" />
         <activity android:name=".activity.PoemActivity" />
         <activity android:name=".activity.ArticleActivity" />

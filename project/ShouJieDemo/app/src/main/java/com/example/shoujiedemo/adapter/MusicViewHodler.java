@@ -13,29 +13,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Comment;
+import com.example.shoujiedemo.entity.Music;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.home.follow.view.ContentView;
 import com.example.shoujiedemo.home.follow.view.FollowView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MusicViewHodler  extends RecyclerView.ViewHolder implements ContentView {
 
 
     private Context context;
+    private List<Music> musicList = new ArrayList<>();
 
     private boolean isLike = false;
     private boolean isCollect = false;
     private boolean isFollow = false;
     private boolean isPull = false;
+    private int position;
 
-    public MusicViewHodler(@NonNull View itemView,Context context) {
+    public MusicViewHodler(@NonNull View itemView, Context context, List<Music> musicList) {
         super(itemView);
         this.context = context;
+        this.musicList = musicList;
         initView();
     }
 
     private void initView() {
+
+    }
+
+    public void initData(int position){
 
     }
 

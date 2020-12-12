@@ -7,8 +7,17 @@ public class Set {
     private int id;
     private String pic;
     private int userid;
+    private boolean isSelect;
 
     public Set() {
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
     public int getTuwen_num() {

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.example.shoujiedemo.bean.StatusBarHeightView
+        app:use_type="use_height"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -104,6 +109,11 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/right" />
         </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 设置邮箱 -->
         <RelativeLayout
@@ -111,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border"
+            android:background="#fff"
             android:clickable="true"
             android:paddingStart="10dp"
             android:paddingEnd="20dp"
@@ -134,6 +144,11 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/right" />
         </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 注销账号 -->
         <RelativeLayout
@@ -142,7 +157,7 @@
             android:layout_height="42dp"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border"
+            android:background="#fff"
             android:clickable="true"
             android:orientation="horizontal"
             android:paddingStart="10dp"
@@ -165,6 +180,11 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/right" />
         </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 警告内容 -->
         <TextView
@@ -177,4 +197,4 @@
             android:text="@string/destroyAccountWarning"/>
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

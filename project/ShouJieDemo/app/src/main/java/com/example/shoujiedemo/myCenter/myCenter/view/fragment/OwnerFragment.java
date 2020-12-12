@@ -84,7 +84,7 @@ public class OwnerFragment extends Fragment {
         SetViewHW();
         //设置粉丝数、用户名
         myCenter_userName.setText(UserUtil.USER_NAME);
-        myCenter_userFans.setText(UserUtil.USER_FANS+"");
+        myCenter_userFans.setText("粉丝数:" + UserUtil.USER_FANS);
         userImgPopupWindow = new UserImgPopupWindow(view.getContext());
         return view;
     }

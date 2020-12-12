@@ -13,7 +13,7 @@ public class User implements Serializable {
     private String sign;
     private int fennum;
     private int follownum;
-    private boolean isFollow = false;
+    private boolean isFollow;
 
     public User(){
 

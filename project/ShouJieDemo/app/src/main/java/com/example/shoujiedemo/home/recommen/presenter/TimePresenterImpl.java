@@ -1,5 +1,7 @@
 package com.example.shoujiedemo.home.recommen.presenter;
 
+import android.util.Log;
+
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Day;
 import com.example.shoujiedemo.home.recommen.model.TimeModel;
@@ -23,7 +25,7 @@ public class TimePresenterImpl implements TimePresenter,TimePresenterListener{
 
     @Override
     public void loadByTime(Day day) {
-        model.loadByTime(day);
+        model.loadByTime(this,day);
     }
 
     @Override

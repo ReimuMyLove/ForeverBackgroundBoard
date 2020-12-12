@@ -1,6 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/itemBackGroundColorWhite"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.example.shoujiedemo.util.CircleImageView
+        android:id="@+id/follow_heart_iv_head"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="3dp"
+        android:src="@drawable/wangzuxian" />
+
+    <TextView
+        android:id="@+id/follow_heart_tv_user_name"
+        android:text="名字"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/follow_heart_iv_head"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/article_text_fan"
+        android:layout_below="@id/follow_heart_tv_user_name"
+        android:layout_alignLeft="@id/follow_heart_tv_user_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:text="粉丝:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_toRightOf="@id/article_text_fan"
+        android:layout_below="@id/follow_heart_tv_user_name"
+        android:layout_marginTop="3dp"
+        android:id="@+id/follow_heart_tv_fan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_miusic"
+        app:cardCornerRadius="2dp"
+        android:elevation="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@id/follow_heart_tv_fan"
+        android:layout_width="350dp"
+        android:layout_height="100dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:id="@+id/music_cover"
+                android:src="@drawable/wulai"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <TextView
+                android:id="@+id/songName"
+                android:text="无赖"
+                android:layout_marginTop="15dp"
+                android:textColor="#000"
+                android:textSize="19sp"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/music_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/music_songer"
+                android:text="郑中基"
+                android:layout_marginTop="20dp"
+                android:textColor="#000"
+                android:layout_alignLeft="@id/songName"
+                android:layout_below="@id/songName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/play"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/play"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/follow_heart_iv_follow_anim"
+        android:layout_width="55dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/follow_heart_btn_pull"
+        android:src="@drawable/loading_anim" />
+    <Button
+        android:id="@+id/follow_heart_btn_pull"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/pull" />
+
+    <Button
+        android:id="@+id/follow_heart_btn_follow"
+        android:layout_width="55dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/follow_heart_btn_pull"
+        android:background="@drawable/btn_circle_shape"
+        android:text="已关注" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_miusic"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:paddingRight="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/follow_poem_btn_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/share" />
+
+            <TextView
+                android:id="@+id/follow_poem_tv_share_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="102" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingRight="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp">
+
+            <Button
+                android:id="@+id/follow_poem_btn_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/follow_poem_tv_comment_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="102" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp">
+
+            <Button
+                android:id="@+id/follow_poem_btn_like"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/likeunselect" />
+
+            <TextView
+                android:id="@+id/follow_poem_tv_like_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="102" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

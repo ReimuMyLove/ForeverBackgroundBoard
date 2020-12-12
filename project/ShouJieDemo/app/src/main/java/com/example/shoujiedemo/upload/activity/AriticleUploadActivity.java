@@ -51,10 +51,20 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ariticle_upload);
-        initData();
+        //initData();
     }
 
-    public void gallery() {
+    @Override
+    public void skipSuccess() {
+
+    }
+
+    @Override
+    public void skipFailure() {
+
+    }
+
+    /*public void gallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, PHOTO_REQUEST_GALLERY);//携带请求码
@@ -200,7 +210,7 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
                     imageView.setImageBitmap(bitmap);
             }
         }
-    }
+    }*/
 
     /**
      * 点击单选框时，只需监控非本单选框是否选中
@@ -210,7 +220,7 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
      * 故改变本单选框需要不能监控本单选框
      * 要通过监控其它非本单选框来实现
      */
-    private void changeTag() {
+    /*private void changeTag() {
         if (radio2.isChecked()) {
             radio1.setChecked(true);
             radio2.setChecked(false);
@@ -250,5 +260,5 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
         Log.e("", content.toString());
 
 
-    }
+    }*/
 }

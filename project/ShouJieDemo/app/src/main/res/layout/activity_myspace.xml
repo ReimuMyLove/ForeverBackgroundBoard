@@ -67,7 +67,7 @@
                 android:layout_gravity="top"
                 android:layout_marginStart="10dp"
                 android:text="@string/userName"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@android:color/white"/>
 
             <LinearLayout
@@ -80,7 +80,7 @@
                     android:layout_marginStart="10dp"
                     android:text="粉丝数:"
                     android:textColor="@android:color/white"
-                    android:textSize="25sp" />
+                    android:textSize="18sp" />
                 <TextView
                     android:id="@+id/mySpace_userFans"
                     android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                     android:layout_marginStart="20dp"
                     android:text="0"
                     android:textColor="@android:color/white"
-                    android:textSize="25sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

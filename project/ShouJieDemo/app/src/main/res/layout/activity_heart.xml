@@ -127,7 +127,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_below="@id/heart_details_iv_cover"
                 android:id="@+id/tv_content_details_heart"
-                android:textColor="#000"
+                android:textColor="#95000000"
                 android:textSize="17sp"
                 android:lineHeight="30dp"
                 android:layout_width="match_parent"

@@ -262,12 +262,11 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     break;
                 case R.id.follow_poem_btn_collection:
                     if(contents.get(position).isCollect()) {
-
+                        contents.get(position).setCollect(false);
                         MsgEvent event = new MsgEvent();
                         event.setId(contents.get(position).getId());
                         event.setType("collect");
                         event.setValue(contents.get(position).isCollect());
-
                         EventBus.getDefault().postSticky(event);
                         presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
@@ -471,7 +470,10 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 set1 = (Set) setAdapter.getItem(i);
-                view.setBackgroundColor(0x30CFCFCF);
+                for(int j = 0;j<sets.size();++j)
+                    sets.get(j).setSelect(false);
+                ((Set) setAdapter.getItem(i)).setSelect(true);
+                setAdapter.notifyDataSetChanged();
 
             }
         });

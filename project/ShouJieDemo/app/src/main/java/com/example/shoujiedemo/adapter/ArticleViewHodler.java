@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.activity.MusicActivity;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
@@ -253,7 +254,8 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.follow_article_iv_head://点击头像进入用户空间
-
+                    Intent intent = new Intent(context, MusicActivity.class);
+                    context.startActivity(intent);
                     break;
                 case R.id.follow_article_tv_set://点击文集进入用户空间
 
@@ -281,7 +283,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                         event.setId(contents.get(position).getId());
                         event.setType("collect");
                         event.setValue(contents.get(position).isCollect());
-                        //event.setPosition(position);
                         EventBus.getDefault().postSticky(event);
                         presenter.confirmUnCollect(UserUtil.USER_ID,contents.get(position).getId());
                     }else{
@@ -510,8 +511,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         setList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                set1 = (Set) setAdapter.getItem(i);
-                view.setBackgroundColor(0x30CFCFCF);
+               set1 = (Set) setAdapter.getItem(i);
+                for(int j = 0;j<sets.size();++j)
+                    sets.get(j).setSelect(false);
+                ((Set) setAdapter.getItem(i)).setSelect(true);
+                setAdapter.notifyDataSetChanged();
 
             }
         });

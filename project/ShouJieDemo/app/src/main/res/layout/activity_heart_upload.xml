@@ -1,193 +1,149 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="感悟"
-        android:textSize="40dp" />
-
-    <LinearLayout
+    <com.example.shoujiedemo.bean.StatusBarHeightView
+        android:id="@+id/use_height"
+        app:use_type="use_height"
+        android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp">
+        android:layout_height="wrap_content"/>
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/radio1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:checked="true"
-                android:text="原创">
-
-            </RadioButton>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/radio2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:text="非原创">
-
-            </RadioButton>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_camra"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/btn_circle_shape" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="打开照相机"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_gallery"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-
-                    android:background="@drawable/btn_circle_shape" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="从相册选择图片"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginBottom="10dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="220dp"
-        android:layout_gravity="center_horizontal"
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/upload_heart_top"
+        android:id="@+id/upload_heart_cover"
+        android:src="@drawable/upload_def02"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_border"
-        android:orientation="vertical">
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <TextView
+        android:text="感悟"
+        android:paddingTop="20dp"
+        android:gravity="center_horizontal"
+        android:background="#fff"
+        android:id="@+id/upload_heart_top"
+        android:layout_marginTop="20dp"
+        android:textColor="#95000000"
+        android:textSize="23sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/main_text"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:background="@null"
-            android:gravity="top"
-            android:hint="请填写诗歌内容"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/upload_heart_back"
+        android:layout_alignTop="@id/upload_heart_top"
+        android:background="@drawable/left"
+        android:gravity="center"
+        android:layout_width="25dp"
+        android:layout_height="25dp"/>
 
-    </LinearLayout>
 
     <EditText
-        android:id="@+id/tag"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginLeft="80dp"
-        android:background="@null"
+        android:background="#fff"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:hint="感悟内容"
         android:gravity="top"
-        android:hint="#三毛" />
-
-    <LinearLayout
+        android:id="@+id/ed_heart_content"
+        android:layout_below="@id/upload_heart_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_height="200dp"/>
+
+
+    <View
+        android:layout_below="@id/ed_heart_content"
+        android:background="#F5F5F5"
+        android:layout_centerInParent="true"
+        android:layout_width="280dp"
+        android:layout_height="1dp"/>
+
+
+    <Button
+        android:id="@+id/upload_btn_heart_commit"
+        android:text="上传"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_circle_shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/select_tags"
+        android:layout_below="@id/ed_heart_content"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_height="wrap_content">
 
         <TextView
+            android:text="选择分类:"
+            android:textSize="16sp"
+            android:id="@+id/tags_right"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:text="文By"
-            android:textSize="25dp" />
-
-        <EditText
-            android:id="@+id/writer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:hint="writer"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
-
+            android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tv_select_tag"
+            android:layout_toRightOf="@id/tags_right"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
-            android:text="题目"
-            android:textSize="25dp" />
-
-        <EditText
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:hint="title"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+            android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btn_commit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_border"
-            android:text="提交"
-            android:textSize="18dp" />
-    </LinearLayout>
-</LinearLayout>
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:id="@+id/tag02"
+            android:layout_toLeftOf="@id/tag01"
+            android:text="现代"
+            android:background="@drawable/btn_circle_shape"
+            android:layout_width="55dp"
+            android:layout_height="26dp"/>
+        <Button
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/custom_tag"
+            android:id="@+id/tag01"
+            android:text="古典"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_circle_shape"
+            android:layout_width="55dp"
+            android:layout_height="26dp"/>
+        <EditText
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:id="@+id/custom_tag"
+            android:layout_alignParentRight="true"
+            android:background="#fff"
+            android:hint="自定义"
+            android:layout_width="55dp"
+            android:layout_height="26dp"/>
+
+    </RelativeLayout>>
+    <View
+        android:layout_below="@id/select_tags"
+        android:background="#F5F5F5"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <View
+        android:layout_below="@id/select_tags"
+        android:background="#F5F5F5"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+
+
+</RelativeLayout>

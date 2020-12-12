@@ -284,21 +284,11 @@ public class ArticleFragment extends Fragment implements ArticleView {
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
-        /*List<Content> searchList = new ArrayList<>();
-        if(event.getPosition() == 0){
-            for(Content content :contentList){
-                if(content.toString().contains(event.getTag())){
-                    searchList.add(content);
-                }
-            }
-            HotAdapter searthAdapter = new HotAdapter(getActivity(),searchList);
-            recyclerView.setAdapter(searthAdapter);
-
-        }*/
         if(event.getPosition() == 1) {
             flag = event.getTag();
             pageNum = 1;
             presenter.searchData(flag, 0, pageNum, UserUtil.USER_ID);
         }
     }
+
 }

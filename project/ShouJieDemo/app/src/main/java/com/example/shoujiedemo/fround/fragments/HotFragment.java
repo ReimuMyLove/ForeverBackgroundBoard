@@ -327,4 +327,5 @@ public class HotFragment extends Fragment implements HotView {
             presenter.searchData(event.getTag(), pageNum, UserUtil.USER_ID);
         }
     }
+
 }

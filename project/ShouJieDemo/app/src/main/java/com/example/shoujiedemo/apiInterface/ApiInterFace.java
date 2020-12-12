@@ -206,10 +206,10 @@ public interface ApiInterFace {
     Observable<ResponseBody> findFollow(@Query("userid") int userID);
 
     /**
-     * 关注
+     * 穿越
      */
-    @GET("addfollow")
-    Observable<ResponseBody> loadByTime(@Query("date") String date);
+    @GET("recommendbytime")
+    Observable<ResponseBody> loadByTime(@Query("time") String date);
 
     /**
      * 获取空间主人信息

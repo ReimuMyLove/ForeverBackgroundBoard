@@ -3,12 +3,14 @@ package com.example.shoujiedemo.myCenter.myCenter.service;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,17 +28,22 @@ import com.example.shoujiedemo.util.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHolder> {
+public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHolder> implements MyFollowAdapterView{
     private final LayoutInflater mLayoutInflater;
     private final Context mContext;
     private List<User> userList;
+    private int position;
+    private MyFollowPresenter myFollowPresenter;
+    private ViewHolder viewHolder = null;
 
     public MyFollowAdapter(Context mContext, List<User> userList) {
         this.mLayoutInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
         this.userList = userList;
+        myFollowPresenter = new MyFollowPresenter(this);
     }
 
     @NonNull
@@ -48,7 +55,9 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyFollowAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyFollowAdapter.ViewHolder holder, final int position) {
+        this.position = position;
+
         if (userList!=null){
             User user = userList.get(position);
             holder.userID = user.getId();
@@ -61,15 +70,48 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
                     .load(URL)
                     .apply(requestOptions)
                     .into(holder.myFollow_img);
+
         }
+
+        holder.myFollow_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewHolder = holder;
+                holder.anim.setVisibility(View.VISIBLE);
+                holder.myFollow_cancel.setVisibility(View.INVISIBLE);
+                holder.loadingDrawable = (AnimationDrawable)viewHolder.anim.getDrawable();
+                holder.loadingDrawable.start();
+                cancelFollow(userList.get(position).getId());
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {
         return userList == null ? 0 : userList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements MyFollowAdapterView{
+    @Override
+    public void cancelFailed() {
+        viewHolder.loadingDrawable.stop();
+        viewHolder.anim.setVisibility(View.INVISIBLE);
+        viewHolder.myFollow_cancel.setVisibility(View.VISIBLE);
+        Toast.makeText(mContext,"取消关注失败",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void cancelSuccessful(int followerID) {
+        viewHolder.myFollow_cancel.setText("关注+");
+        viewHolder.loadingDrawable.stop();
+        viewHolder.anim.setVisibility(View.INVISIBLE);
+        viewHolder.myFollow_cancel.setVisibility(View.VISIBLE);
+        notifyDataSetChanged();
+        Toast.makeText(mContext,"取消关注成功",Toast.LENGTH_SHORT).show();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView
                 myFollow_userName,      //关注人用户名
                 myFollow_userSign,      //关注人签名
@@ -78,19 +120,20 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
                 myFollow_cancel;        //取消关注
         CircleImageView
                 myFollow_img;           //关注人头像
-        Context context;
-        MyFollowPresenter
-                myFollowPresenter;       //
+        Context context;//
         int userID = 0;
         ImageView anim;
+        private AnimationDrawable loadingDrawable;
+
+
+
         public ViewHolder(View view,Context context){
             super(view);
             this.context = context;
-            //获取控件
+
+
             findView(view);
-            //设置监听器
-            setListener();
-            myFollowPresenter = new MyFollowPresenter(this);
+
         }
 
         /**
@@ -105,56 +148,24 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
             anim = view.findViewById(R.id.follow_anim);
         }
 
-        public void setListener(){
-            MyListener listener = new ViewHolder.MyListener();
-            myFollow_cancel.setOnClickListener(listener);
-            myFollow_img.setOnClickListener(listener);
-        }
 
-        @Override
-        public void cancelFailed() {
-            String result = "false";
-            EventBus.getDefault().postSticky(result);
-        }
-
-        @Override
-        public void cancelSuccessful(int followerID) {
-            EventBus.getDefault().postSticky(new Integer(followerID));
-        }
-
-        /**
-         * 绑定监听器方法
-         */
-        private class MyListener implements View.OnClickListener{
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.myFollow_img:
-                        visitFollower(userID,context);
-                        break;
-                    case R.id.myFollow_cancel:
-                        cancelFollow(userID);
-                        /*anim.setVisibility(View.VISIBLE);
-                        myFollow_cancel.setVisibility(View.INVISIBLE);*/
-                        break;
-                }
-            }
-        }
-
-        /**
-         * 拜访关注人方法
-         */
-        private void visitFollower(int userID,Context context){
-            Intent intent = new Intent(context, MySpaceActivity.class);
-            UserUtil.RECENT_USER_ID = userID;
-            context.startActivity(intent);
-        }
-
-        /**
-         * 取消关注方法
-         */
-        private void cancelFollow(int userID){
-            myFollowPresenter.cancelFollower(userID);
-        }
     }
+
+    /**
+     * 拜访关注人方法
+     */
+    private void visitFollower(int userID,Context context){
+        Intent intent = new Intent(context, MySpaceActivity.class);
+        UserUtil.RECENT_USER_ID = userID;
+        context.startActivity(intent);
+    }
+
+    /**
+     * 取消关注方法
+     */
+    private void cancelFollow(int userID){
+        myFollowPresenter.cancelFollower(userID);
+    }
+
+
 }

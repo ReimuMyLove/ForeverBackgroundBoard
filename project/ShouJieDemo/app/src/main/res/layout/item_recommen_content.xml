@@ -32,7 +32,7 @@
                     <TextView
                         android:id="@+id/recommen_item_date"
                         android:textColor="#000"
-                        android:textSize="23sp"
+                        android:textSize="24sp"
                         android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -44,7 +44,6 @@
                         android:id="@+id/tv_item_title"
                         android:textStyle="italic"
                         android:textColor="#85000000"
-                        android:text="《nihao 》"
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>

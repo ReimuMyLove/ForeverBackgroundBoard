@@ -148,8 +148,8 @@
                 android:alpha="0.4"
                 android:layout_centerInParent="true"
                 android:id="@+id/iv_poem_details_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_width="350dp"
+                android:layout_height="350dp"/>
 
             <TextView
                 android:id="@+id/tv_writer_details_poem"

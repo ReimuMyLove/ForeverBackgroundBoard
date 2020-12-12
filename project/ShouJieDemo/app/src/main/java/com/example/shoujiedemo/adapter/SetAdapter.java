@@ -48,16 +48,36 @@ public class SetAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, final ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_set_selector,viewGroup,false);
 
         ImageView img = view.findViewById(R.id.set_img);
         TextView title = view.findViewById(R.id.set_title);
+        final View view1 = view.findViewById(R.id.set_rl);
+
 
         title.setText(setList.get(i).getName());
         Glide.with(context)
                 .load(ConfigUtil.BASE_WENJI_URL + setList.get(i).getPic())
                 .into(img);
+
+        if(setList.get(i).isSelect())
+            view.setBackgroundColor(0x30CFCFCF);
+        else
+            view.setBackgroundColor(0xffffff);
+
+        /*view1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(Set set :setList)
+                    set.setSelect(false);
+
+                setList.get(i).setSelect(true);
+
+                notifyDataSetChanged();
+            }
+        });*/
+
 
         return view;
     }
