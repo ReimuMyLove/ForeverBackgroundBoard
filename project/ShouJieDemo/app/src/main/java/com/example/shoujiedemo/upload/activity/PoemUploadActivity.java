@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.entity.Content;
-import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
 import com.example.shoujiedemo.upload.view.LoadView;
 

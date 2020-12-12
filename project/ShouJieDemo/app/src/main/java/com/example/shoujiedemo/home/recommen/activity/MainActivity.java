@@ -11,7 +11,7 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.home.recommen.fragment.HomeFragment;
-import com.example.shoujiedemo.fragment.MessageFragment;
+import com.example.shoujiedemo.message.activity.MessageFragment;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.OwnerFragment;
 import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.StatusBarUtil;

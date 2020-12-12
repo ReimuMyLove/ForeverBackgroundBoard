@@ -7,10 +7,7 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowOperationPresenterL
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

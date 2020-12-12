@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.home.recommen.presenter.ItemPresenterListener;
-import com.example.shoujiedemo.home.recommen.presenter.OpreatePresenterListener;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
