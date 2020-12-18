@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    android:background="#fff"
+    android:background="#FFFFFF"
     android:overScrollMode="never">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -15,7 +15,7 @@
                     android:id="@+id/myCenter_userBackGround"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:background="@drawable/bg06" />
+                    android:background="@drawable/bg03" />
                 <com.example.shoujiedemo.util.TrancircleImageView
                     android:id="@+id/myCenter_userImg_background"
                     android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                                 android:layout_toEndOf="@id/iv_space_center"
                                 android:layout_centerVertical="true"
                                 android:text="我的空间"
-                                android:textColor="@color/dayLightText"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -135,7 +135,7 @@
                                 android:layout_toEndOf="@id/iv_owner_center"
                                 android:text="个人中心"
                                 android:layout_marginStart="5dp"
-                                android:textColor="@color/dayLightText"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -172,8 +172,8 @@
                                 android:layout_centerInParent="true"
                                 android:layout_marginStart="5dp"
                                 android:layout_toEndOf="@id/iv_collect_center"
-                                android:text="收藏"
-                                android:textColor="@color/dayLightText"
+                                android:text="我的评论"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -209,7 +209,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="帮助中心"
-                                android:textColor="@color/dayLightText"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -244,7 +244,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="我的关注"
-                                android:textColor="@color/dayLightText"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -279,7 +279,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="我的点赞"
-                                android:textColor="@color/dayLightText"
+                                android:textColor="@color/colorText"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -303,6 +303,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="25sp"
+                        android:textStyle="bold"
                         android:text="用户名"
                         android:textColor="@android:color/white"/>
                     <TextView
@@ -311,8 +312,9 @@
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:text="2020"/>
+                        android:text="粉丝数:2020"/>
                 </LinearLayout>
             </RelativeLayout>
 </ScrollView>

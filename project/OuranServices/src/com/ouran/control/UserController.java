@@ -1,5 +1,6 @@
 package com.ouran.control;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jfinal.core.Controller;
+import com.jfinal.upload.UploadFile;
 import com.ouran.model.User;
 import com.ouran.service.UserService;
 
@@ -22,9 +24,9 @@ public class UserController extends Controller {
 	 */
 	public void find() {
 		if (null != getPara("name")) {
-			renderJson("userdata", service.findUser(getParaToInt("pagenum"),getPara("name")));
+			renderJson("userdata", service.findUser(getParaToInt("pagenum"), getPara("name")));
 		} else if (null != getParaToInt("id")) {
-			renderJson("userdata", service.findUser(getParaToInt("id")));
+			renderJson(service.findUser(getParaToInt("id")));
 		} else {
 			renderJson("userdata", service.getAll());
 		}
@@ -78,45 +80,26 @@ public class UserController extends Controller {
 		String pas = getPara("password");
 		String sex = getPara("sex");
 		String sign = getPara("sign");
-		if (null != getParaToInt("haspic")) {
-			InputStream in;
-			try {
-				in = getRequest().getInputStream();
-				// 获取本地输出流
-				User user=service.findUser(id);
-				String path = getRequest().getServletContext().getRealPath("/imgs/user/");
-				OutputStream out = new FileOutputStream(path + user.getPicname());
-				// 循环读写，保存图片
-				int len = -1;
-				byte[] bytes = new byte[1024];
-				while ((len = in.read(bytes)) != -1) {
-					out.write(bytes, 0, len);
-				}
 
-				System.out.println("接收图片成功");
-				in.close();
-				out.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (service.update(id, age, sex, sign)) {
+			renderText("true");
+		} else {
+			renderText("false");
 		}
-		service.update(id, name, pas, age, sex, sign);
-
 	}
 
 	/**
 	 * 用户注册功能 名字和密码为必须值 其它值不填客户端系统填入默认信息
 	 */
 	public void add() {
-		Boolean flagBoolean=false;
+		Boolean flagBoolean = false;
 		String path1 = getRequest().getServletContext().getRealPath("/imgs/");
 		System.out.print(path1);
 		if (null != getPara("name") && null != getPara("password")) {
-			List<User>users= service.findAlluser();
+			List<User> users = service.findAlluser();
 			for (User user : users) {
-				if(getPara("name").equals(user.getName())) {
-					flagBoolean=true;
+				if (getPara("name").equals(user.getName())) {
+					flagBoolean = true;
 				}
 			}
 			User user = new User();
@@ -167,12 +150,13 @@ public class UserController extends Controller {
 				String sign = getPara("sign");
 				user.setSign(sign);
 			}
-			if(!flagBoolean) {
-			if (service.add(user)) {
-				renderText("TRUE");
+			if (!flagBoolean) {
+				if (service.add(user)) {
+					renderText("TRUE");
+				} else {
+					renderText("FALSE");
+				}
 			} else {
-				renderText("FALSE");
-			}}else {
 				renderText("ERROR");
 			}
 		} else {
@@ -183,6 +167,51 @@ public class UserController extends Controller {
 
 	/**
 	 * 用户关注 需要传入用户id和用户关注的followid 用户的follownum+1 被关注的follow fennum+1
+	 */
+	public void changeuserimage() {
+		User user = service.findUser(getParaToInt("userid"));
+		String oldname = user.getPicname();
+		UploadFile file = getFile();
+		String str = file.getFileName();
+		if (str != null) {
+			user.setPicname(str);
+			File file1 = new File(
+					"C:\\Users\\Admin\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\OuranServices\\imgs\\tuwen"
+							+ oldname);
+			if(file1.exists()) {
+				file1.delete();
+			}
+			service.update(user.getId(), str);
+			renderText(str);
+		} else {
+			renderText("false");
+		}
+
+	}
+
+	public void changeback1image() {
+		User user = service.findUser(getParaToInt("userid"));
+		String oldname = user.getBackgroundpic1();
+		UploadFile file = getFile();
+		String str = file.getFileName();
+		if (str != null) {
+			user.setPicname(str);
+			File file1 = new File(
+					"C:\\Users\\Admin\\eclipse-workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\OuranServices\\imgs\\tuwen"
+							+ oldname);
+			if(file1.exists()) {
+				file1.delete();
+			}
+			service.updateback1(user.getId(), str);
+			renderText(str);
+		} else {
+			renderText("false");
+		}
+		
+	}
+
+	/**
+	 * 更改用户信息
 	 */
 
 	public void addFellowNum() {
@@ -209,7 +238,7 @@ public class UserController extends Controller {
 	}
 
 	public void backgroundpic1() {
-		User user=service.findUser(getParaToInt("userid"));
+		User user = service.findUser(getParaToInt("userid"));
 		user.setBackgroundpic1(getPara("userid") + "backpic01.png");
 		user.update();
 		InputStream in;
@@ -234,9 +263,9 @@ public class UserController extends Controller {
 		}
 
 	}
-	
+
 	public void backgroundpic2() {
-		User user=service.findUser(getParaToInt("userid"));
+		User user = service.findUser(getParaToInt("userid"));
 		user.setBackgroundpic2(getPara("userid") + "backpic02.png");
 		user.update();
 		InputStream in;
@@ -259,6 +288,27 @@ public class UserController extends Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	/**
+	 * 修改密码接口 我给你用户名ID/旧密码/新密码 你返回true/false/keyError 分别是成功 失败 密码错误
+	 */
+
+	public void changepassward() {
+		if (null != getParaToInt("id") && null != getPara("oldpassward") && null != getPara("newpassward")) {
+
+			User user = service.findUser(getParaToInt("id"));
+			if (user.getPassword().equals(getPara("oldpassward"))) {
+				if (service.changepassward(getParaToInt("id"), getPara("newpassward"))) {
+					renderText("true");
+				}
+
+			} else {
+				renderText("keyError");
+			}
+		} else {
+			renderText("false");
+		}
 	}
 }

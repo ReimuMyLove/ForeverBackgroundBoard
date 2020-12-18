@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:Android="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:scrollbars="none"
     android:overScrollMode="never"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/mySpace_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/mySpace_background"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/dayLightTitle"
-            android:textSize="15dp"
-            android:background="@drawable/myspace_followbutton"
-            android:text="关注 +"/>
         <ImageView
             android:id="@+id/mySpace_background"
             android:layout_width="match_parent"
@@ -30,8 +18,8 @@
             android:contentDescription="@string/todo" />
         <Button
             android:id="@+id/mySpace_add"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/add"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
@@ -41,19 +29,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/mySpace_background"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal"
             android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:orientation="horizontal">
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp">
+
             <com.example.shoujiedemo.util.CircleImageView
                 android:id="@+id/mySpace_userImg"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/bg06"/>
+                android:src="@drawable/bg06" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/mySpace_follow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_toRightOf="@id/user_name_right"
+            android:layout_alignTop="@id/user_name_right"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:background="@drawable/follow_mys"
+            android:text="关注 +"/>
+
         <LinearLayout
+            android:id="@+id/user_name_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/mySpace_background"
@@ -65,9 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/userName"
-                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textSize="25sp"
                 android:textColor="@android:color/white"/>
 
             <LinearLayout
@@ -80,15 +86,15 @@
                     android:layout_marginStart="10dp"
                     android:text="粉丝数:"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
                 <TextView
                     android:id="@+id/mySpace_userFans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:text="0"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -102,38 +108,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="0dip"
-            app:cardElevation="4dp">
+            app:cardElevation="5dp">
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/mySpace_topTab"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 app:tabRippleColor="@android:color/transparent"
-                app:tabIndicatorColor="#BEBEBE"
+                app:tabIndicatorColor="@color/colorTitle"
                 app:tabIndicatorFullWidth="false"
-                app:tabTextColor="@color/dayLightText">
+                app:tabTextColor="@color/colorText">
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/mySpace_article"
                     android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/mySpace_idea"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/mySpace_poem"
+                    android:id="@+id/mySpace_music"
                     android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.tabs.TabLayout>
         </androidx.cardview.widget.CardView>
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mySpace_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp">
-        </androidx.viewpager2.widget.ViewPager2>
     </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/mySpace_view"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp">
+    </androidx.viewpager2.widget.ViewPager2>
 </LinearLayout>

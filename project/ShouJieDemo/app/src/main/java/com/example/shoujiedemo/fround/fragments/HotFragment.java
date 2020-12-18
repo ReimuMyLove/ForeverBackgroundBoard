@@ -21,6 +21,7 @@ import com.example.shoujiedemo.bean.HotEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
 import com.example.shoujiedemo.fround.adapter.HotAdapter;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenter;
@@ -46,6 +47,8 @@ public class HotFragment extends Fragment implements HotView {
 
     private MsgEvent hotEvent;
     private List<Content> contentList = new ArrayList<>();
+    private List<Content> searchList = new ArrayList<>();
+    private HotAdapter searchAdapter;
     private RecyclerView recyclerView;
     private HotLoadDataPresenter presenter;
     private int pageNum;
@@ -53,10 +56,13 @@ public class HotFragment extends Fragment implements HotView {
     private HotAdapter hotAdapter;
     private int refreshTag = 0;
     private boolean isRefresh = false;
-    private String flag;
+    private String flag = "";
+    private int search = 0;
+    private int searchTag = 0;
+    private boolean isSearchRefresh = false;
 
     public HotFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -120,13 +126,19 @@ public class HotFragment extends Fragment implements HotView {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if(flag != null){
+                if(flag.length() != 0 && search == 1){
+                    pageNum = 1;
+                    searchList.clear();
+                    searchTag = 0;
                     presenter.searchData(flag,pageNum,UserUtil.USER_ID);
+                    refreshLayout.finishRefresh(600);
+                }else {
+                    contentList.clear();
+                    pageNum = 1;
+                    refreshTag = 0;
+                    presenter.confirmInitContent(1, UserUtil.USER_ID);
+                    refreshLayout.finishRefresh(600);
                 }
-                contentList.clear();
-                pageNum = 1;
-                presenter.confirmInitContent(1,UserUtil.USER_ID);
-                refreshLayout.finishRefresh(600);
 
             }
 
@@ -135,9 +147,13 @@ public class HotFragment extends Fragment implements HotView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(pageNum, UserUtil.USER_ID);
-                refreshLayout.finishLoadMore(600);
+                if(flag.length() != 0 && search == 1) {
+                    presenter.searchData(flag,pageNum,UserUtil.USER_ID);
+                    refreshLayout.finishLoadMore(600);
+                }else{
+                    presenter.confirmInitContent(pageNum, UserUtil.USER_ID);
+                    refreshLayout.finishLoadMore(600);
+                }
             }
         });
 
@@ -149,6 +165,7 @@ public class HotFragment extends Fragment implements HotView {
     public void onDestroy() {
         super.onDestroy();
         Log.e("Hot","onDestroy");
+        EventBus.getDefault().unregister(this);
         //contentList.clear();
     }
 
@@ -292,11 +309,44 @@ public class HotFragment extends Fragment implements HotView {
 
     @Override
     public void showSearchList(List<Content> contents) {
-        if(contents != null) {
-            HotAdapter searthAdapter = new HotAdapter(getActivity(), contents);
-            recyclerView.setAdapter(searthAdapter);
-            pageNum++;
+        Log.e("searchHot",contents.toString());
+        if(searchList.size() < 10 || searchList == null) {
+            if(searchTag == 0) {
+                this.searchList = contents;
+                searchAdapter = new HotAdapter(getContext(), searchList);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(searchAdapter);
+                searchTag = 1;
+            }else{
+                List<Content> newContents = new ArrayList<>();
+                for(Content content :searchList){
+                    for(Content content1:contents){
+                        if(content.getId() == content1.getId())
+                            newContents.add(content1);
+                    }
+                }
+                searchList.addAll(contents);
+                searchList.removeAll(newContents);
+                searchAdapter.notifyDataSetChanged();
+            }
+            if(searchList.size() == 10)
+                pageNum++;
+        }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :searchList){
+                for(Content content1:contents){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
+            searchList.addAll(contents);
+            searchList.removeAll(newList);
+            if(searchList.size() % 10 == 0)
+                ++pageNum;
+            searchAdapter.notifyDataSetChanged();
         }
+        isSearchRefresh = true;
+
     }
 
     @Override
@@ -310,19 +360,10 @@ public class HotFragment extends Fragment implements HotView {
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
-        /*List<Content> searchList = new ArrayList<>();
-        if(event.getPosition() == 0){
-            for(Content content :contentList){
-                if(content.toString().contains(event.getTag())){
-                    searchList.add(content);
-                }
-            }
-            HotAdapter searthAdapter = new HotAdapter(getActivity(),searchList);
-            recyclerView.setAdapter(searthAdapter);
-
-        }*/
+        flag = event.getTag();
+        Log.e("Hottag",flag);
         if(event.getPosition() == 0) {
-            flag = event.getTag();
+            search = 1;
             pageNum = 1;
             presenter.searchData(event.getTag(), pageNum, UserUtil.USER_ID);
         }

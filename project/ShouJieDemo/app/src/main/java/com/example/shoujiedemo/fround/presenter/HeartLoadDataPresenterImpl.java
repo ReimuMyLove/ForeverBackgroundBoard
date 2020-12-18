@@ -202,8 +202,9 @@ public class HeartLoadDataPresenterImpl implements FroundLoadDataPresenter,Froun
             content1.setTime(time);
         }
         if(contents != null){
-            view.showContentListData(contents);
+            view.showSearchList(contents);
         }
+
     }
 
     @Override

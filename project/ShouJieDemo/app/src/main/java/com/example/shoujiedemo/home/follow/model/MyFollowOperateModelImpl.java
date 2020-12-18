@@ -7,7 +7,10 @@ import com.example.shoujiedemo.home.follow.presenter.MyFollowOperationPresenterL
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -71,14 +74,14 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
     }
 
     @Override
-    public void unCollect(final MyFollowOperationPresenterListener listener, int userId, int contentId) {
+    public void unCollect(final MyFollowOperationPresenterListener listener, int setId, int contentId) {
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://49.232.217.140:8080/OuranServices/wenjidetial/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
         ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.disCollect(userId,contentId);
+        Observable<ResponseBody> observable = apiInterface.disCollect(setId,contentId);
         observable.subscribeOn(Schedulers.io())//在io线程中请求
                 .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
                 .subscribe(new Observer<ResponseBody>() {
@@ -465,6 +468,50 @@ public class MyFollowOperateModelImpl implements MyFollowOperateModel {
                                 listener.onDeleteCommentSuccess();
                             else
                                 listener.onDeleteCommentError();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
+                        Log.e("Error",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
+
+                    }
+                });
+    }
+
+    @Override
+    public void deleteContent(final MyFollowOperationPresenterListener listener, int id) {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://49.232.217.140:8080/OuranServices/tuwen/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
+                .build();
+        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Observable<ResponseBody> observable = apiInterface.deleteContent(id);
+        observable.subscribeOn(Schedulers.io())//在io线程中请求
+                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String jsons = responseBody.string();
+                            if(jsons.equals("true"))
+                                listener.onDeleteContentSuccess();
+                            else
+                                listener.onDeleteContentError();
 
                         } catch (IOException e) {
                             e.printStackTrace();

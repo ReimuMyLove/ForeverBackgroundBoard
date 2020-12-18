@@ -46,4 +46,9 @@ public interface MyFollowOperationPresenterListener {
 
     void onDeleteCommentError();
 
+    void onDeleteContentSuccess();
+
+    void onDeleteContentError();
+
+
 }

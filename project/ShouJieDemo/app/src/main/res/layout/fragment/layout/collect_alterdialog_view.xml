@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:text="收藏"
+        android:text="确认"
         android:id="@+id/item_btn_collect"
         android:layout_alignParentBottom="true"
         android:background="@drawable/set_btn_rad"

@@ -3,6 +3,7 @@ package com.example.shoujiedemo.myCenter.mySpace.service;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.bean.DeleteGroupEvent;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.myCenter.mySpace.presenter.MySpacePresenter;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.activity.ChangeGroupImg;
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.activity.MyArticleActivity;
 import com.example.shoujiedemo.myCenter.mySpace.view.inter.ArticleAdapterView;
 import com.example.shoujiedemo.myCenter.mySpace.view.inter.ArticleView;
@@ -35,14 +38,12 @@ import java.util.List;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> implements ArticleAdapterView{
     private final LayoutInflater mLayoutInflater;
     private final Context mContext;
-    private MySpacePresenter mySpacePresenter;
     private List<Set> setList;
     int userID;
 
     public ArticleAdapter(Context context,List<Set> setList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-        mySpacePresenter = new MySpacePresenter(this);
         this.setList = setList;
     }
 
@@ -61,12 +62,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             holder.article_groupID.setText(set.getId()+"");
             holder.article_title.setText(set.getName());
             holder.article_number.setText(set.getTuwen_num()+"");
-            String URL = ConfigUtil.BASE_WENJI_URL+set.getPic();
-            RequestOptions requestOptions = new RequestOptions().centerCrop();
-            Glide.with(mContext)
-                    .load(URL)
-                    .apply(requestOptions)
-                    .into(holder.article_image);
+            if (set.getPic() != null){
+                if (!set.getPic().equals("")){
+                    String URL = ConfigUtil.BASE_WENJI_URL+set.getPic();
+                    RequestOptions requestOptions = new RequestOptions().centerCrop();
+                    Glide.with(mContext)
+                            .load(URL)
+                            .apply(requestOptions)
+                            .into(holder.article_image);
+                }
+            }
         }
     }
 
@@ -82,42 +87,40 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     @Override
-    public void deleteSuccessful() {
-        Toast.makeText(mContext, "偶然：删除文集成功", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void getGroupFailed() {
         Toast.makeText(mContext, "偶然：获取数据失败", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void deleteSuccessful() {
+        Toast.makeText(mContext, "偶然：删除文集成功", Toast.LENGTH_SHORT).show();
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements ArticleView{
-        TextView
+        private TextView
                 article_title,          //标题
                 article_number,         //描述
-                article_groupID;        //文集ID
-        CardView
-                article_delete;         //删除按钮
-        Button
+                article_groupID,        //文集ID
+                article_delete,         //删除按钮
+                article_changeImg;      //更换封面
+        private  Button
                 article_choose;         //点选按钮
-        ImageView
+        private ImageView
                 article_image;          //图片
-        RelativeLayout
+        private RelativeLayout
                 article_layout;         //整个layout布局
-        Context context;
-        View articleView;//这个是用于整个子项的控制的控件
-        MySpacePresenter
+        private Context context;
+        private  MySpacePresenter
                 mySpacePresenter;       //mySpacePresenter
-        CardView
-                article_card;           //cardView
+        private CardView article_menu;  //点击菜单
+
         int userID;
-        public ViewHolder(View view,Context context,int userID) {
+        public ViewHolder(View view,Context context,int userID){
             super(view);
             this.context = context;
-            articleView = view;//这个是整个子项的控件
+            //这个是用于整个子项的控制的控件
             mySpacePresenter = new MySpacePresenter(this);
-            findView(articleView);
+            findView(view);
             setListener();
             setViewHW();
             this.userID = userID;
@@ -131,7 +134,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             article_layout = view.findViewById(R.id.article_layout);
             article_groupID = view.findViewById(R.id.article_groupID);
             article_image = view.findViewById(R.id.article_image);
-            article_card = view.findViewById(R.id.article_card);
+            article_delete = view.findViewById(R.id.article_delete);
+            article_changeImg = view.findViewById(R.id.mySpace_changeBackGround);
+            article_menu = view.findViewById(R.id.article_menu);
         }
 
         public void setListener(){
@@ -140,6 +145,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             article_delete.setOnClickListener(listener);
             article_choose.setOnClickListener(listener);
             article_image.setOnClickListener(listener);
+            article_changeImg.setOnClickListener(listener);
         }
 
         @Override
@@ -156,7 +162,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.article_image:
-
                     case R.id.article_layout:
                         articleIntent(context);
                         break;
@@ -165,6 +170,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                         break;
                     case R.id.article_delete:
                         delete();
+                        break;
+                    case R.id.mySpace_changeBackGround:
+                        changeGroupImg();
                         break;
                 }
             }
@@ -192,12 +200,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
          * 按钮显示方法
          */
         private void listSet(){
-            if (article_delete.getVisibility() == View.VISIBLE){
-                article_delete.setVisibility(View.INVISIBLE);
-                article_delete.setClickable(false);
+            if (article_menu.getVisibility() == View.VISIBLE){
+                article_menu.setVisibility(View.INVISIBLE);
+                article_menu.setClickable(false);
             }else{
-                article_delete.setVisibility(View.VISIBLE);
-                article_delete.setClickable(true);
+                article_menu.setVisibility(View.VISIBLE);
+                article_menu.setClickable(true);
             }
         }
 
@@ -206,6 +214,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
          */
         private void articleIntent(Context context){
             Intent intent = new Intent(context, MyArticleActivity.class);
+            Bundle bundle = new Bundle();
+            int groupID = Integer.parseInt(article_groupID.getText().toString());
+            Log.e("groupId",groupID + "");
+            bundle.putInt("groupID",groupID);
+            intent.putExtra("bundle",bundle);
             context.startActivity(intent);
         }
 
@@ -214,16 +227,21 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
          */
         private void delete(){
             int groupID = Integer.parseInt(article_groupID.getText().toString());
-            EventBus.getDefault().postSticky(new Integer(groupID));
+            DeleteGroupEvent deleteGroupEvent = new DeleteGroupEvent();
+            deleteGroupEvent.setGroupID(groupID);
+            article_menu.setVisibility(View.INVISIBLE);
             mySpacePresenter.delete(groupID);
-            article_delete.setVisibility(View.INVISIBLE);
+            EventBus.getDefault().postSticky(deleteGroupEvent);
         }
 
         /**
          * 更换文集信息
          */
         private void changeGroupImg(){
-
+            int groupID = Integer.parseInt(article_groupID.getText().toString());
+            Intent intent = new Intent(context, ChangeGroupImg.class);
+            intent.putExtra("groupID",groupID);
+            context.startActivity(intent);
         }
     }
 }

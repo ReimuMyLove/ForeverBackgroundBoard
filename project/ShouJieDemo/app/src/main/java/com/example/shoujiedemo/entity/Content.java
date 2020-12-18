@@ -29,6 +29,7 @@ public class Content implements Serializable {
     private boolean isCollect = false;//收藏
     private String dateEnglish;//英文日期
     private String day;
+    private String wenji;
 
     public Content(){
 
@@ -185,6 +186,14 @@ public class Content implements Serializable {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public String getWenji() {
+        return wenji;
+    }
+
+    public void setWenji(String wenji) {
+        this.wenji = wenji;
     }
 
     @Override

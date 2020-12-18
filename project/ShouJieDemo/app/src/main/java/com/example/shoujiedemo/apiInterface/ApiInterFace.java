@@ -126,7 +126,7 @@ public interface ApiInterFace {
     Observable<ResponseBody> loadSearchData(@Query("tag") String flag,@Query("userid") int userId,@Query("pagenum") int pagenum,@Query("typeid") int typeId);
 
     /**
-     * 搜索
+     * 加载文集
      * @return
      */
     @GET("findwenjiByUser")
@@ -177,8 +177,8 @@ public interface ApiInterFace {
     /**
      * 关注
      */
-    @POST("addfollow")
-    Observable<ResponseBody> addFollow(@Query("userid") int userID,@Query("followid") int followID);
+    @POST("addFollow")
+    Observable<ResponseBody> addFollow(@Query("userid") int userID,@Query("followerid") int followID);
 
     /**
      * 上传图片
@@ -193,11 +193,6 @@ public interface ApiInterFace {
     @GET("findwenji")
     Observable<ResponseBody> getArticlesDetail(@Query("groupid") int groupID);
 
-    /**
-     * 取消关注
-     */
-    @POST("minusFollow")
-    Observable<ResponseBody> cancelFollow(@Query("userid") int userID,@Query("followid") int followerID);
 
     /**
      * 获取关注人列表
@@ -206,7 +201,7 @@ public interface ApiInterFace {
     Observable<ResponseBody> findFollow(@Query("userid") int userID);
 
     /**
-     * 关注
+     * 穿越
      */
     @GET("recommendbytime")
     Observable<ResponseBody> loadByTime(@Query("time") String date);
@@ -214,18 +209,164 @@ public interface ApiInterFace {
     /**
      * 获取空间主人信息
      */
-    @GET("")
-    Observable<ResponseBody> getOwnerInfo(@Query("userid") int userID);
+    @GET("find")
+    Observable<ResponseBody> getOwnerInfo(@Query("id") int userID);
+
+    /**
+     * 加载音乐
+     */
+    @GET("getmusic")
+    Observable<ResponseBody> loadMusic(@Query("pagenum") int pagenum,@Query("userid") int userid);
+
+
+    /**
+     * 点赞
+     * @return
+     */
+    @GET("addlike")
+    Observable<ResponseBody> likeMusic(@Query("userid") int userId,@Query("musicid") int contentid);
+
+    /**
+     * 取消点赞
+     * @return
+     */
+    @GET("minuslike")
+    Observable<ResponseBody> disLikeMusic(@Query("userid") int userId,@Query("musicid") int contentid);
+
+    /**
+     * 收藏
+     * @return
+     */
+    @GET("add")
+    Observable<ResponseBody> collectMusic(@Query("wenjiid") int setId,@Query("music_id") int contentId);
+
+    /**
+     * 取消收藏
+     * @return
+     */
+    @GET("delete")
+    Observable<ResponseBody> disCollectMusic(@Query("wenjiid") int setId,@Query("music_id") int contentId);
+
+    /**
+     * 关注
+     * @return
+     */
+    @GET("addFollow")
+    Observable<ResponseBody> followMusic(@Query("userid") int userId,@Query("followerid") int followerId);
+
+    /**
+     * 取消关注
+     * @return
+     */
+    @GET("minusFollow")
+    Observable<ResponseBody> diFfollowMusic(@Query("userid") int userId,@Query("followerid") int followerId);
+
+    /**
+     * 取消关注
+     * @return
+     */
+    @GET("addmusic")
+    Observable<ResponseBody> uploadMusic(@Query("userid") int userId,@Query("id") int songId);
+
+    /**
+     * 取消关注
+     * @return
+     */
+    @GET("addmusic")
+    Observable<ResponseBody> uploadMusic(@Query("userid") int userId,@Query("id") int songId,@Query("text") String text);
 
     /**
      *得到评论列表内容
      * */
     @POST("getAllCheatByUser")
     Observable<ResponseBody> getMessage(@Query("userid") int userid,@Query("pagenum") int pagenum) ;
+
     /**
      * 得到粉丝列表内容（谁关注了谁）
      * */
-
     @POST("findUserFens")
     Observable<ResponseBody> getFens(@Query("userid") int userid) ;
+
+
+    @POST("changepassward")
+    Observable<ResponseBody> changeKey(@Query("id") int userID,@Query("oldpassward") String oldKey, @Query("newpassward") String newKey);
+
+    /**
+     * 销毁账户*
+     */
+    @POST("destroy")
+    Observable<ResponseBody> destroyAccountEnter(@Query("userid") int userID);
+
+
+
+    /**
+     * 获取我的点赞列表
+     */
+    @GET("finduserlike")
+    Observable<ResponseBody> getAgreementList(@Query("userid") int userID);
+
+    /**
+     * 获取我的评论列表
+     */
+    @GET("getUserCheat")
+    Observable<ResponseBody> getCommentList(@Query("userid") int userID);
+
+    /**
+     *修改用户头像
+     * */
+    @Multipart
+    @POST("changeuserimage")
+    Observable<ResponseBody> changeuserimage(@Query("userid") int userID,@Part MultipartBody.Part file);
+
+    /**
+     * 修改用户信息
+     */
+    @POST("update")
+    Observable<ResponseBody> changeInfo(@Query("id") int userID,@Query("age") int age,@Query("sign") String sign, @Query("sex") String sex);
+
+    /**
+     *修改背景图片
+     * */
+    @Multipart
+    @POST("changeback1image")
+    Observable<ResponseBody> changeback1image(@Query("userid") int userID,@Part MultipartBody.Part file);
+
+    /**
+     * 添加文集
+     * */
+    @Multipart
+    @POST("addwenji")
+    Observable<ResponseBody> uploadwenji(@Query("userid") int userID,@Query("name") String name,@Query("haspic") int haspic,@Part MultipartBody.Part file);
+
+
+    /**
+     * 取消关注
+     */
+    @POST("minusFollow")
+    Observable<ResponseBody> cancelFollow(@Query("userid") int userID,@Query("followerid") int followerID);
+
+    /**
+     * 删除
+     */
+    @POST("delect")
+    Observable<ResponseBody> deleteContent(@Query("id") int id);
+
+    /**
+     * 获取文集细节内容
+     */
+    @GET("findwenjiByWenjiid")
+    Observable<ResponseBody> getGroupDetail(@Query("wenjiid")int groupID,@Query("userid")int userid);
+
+    /**
+     * 获取音乐集内容
+     */
+    @GET("findByuser")
+    Observable<ResponseBody> getMyMusic(@Query("userid") int userID);
+
+    /**
+     * 删除音乐
+     */
+    @GET("delete")
+    Observable<ResponseBody> deleteMusic(@Query("musicid") int musicId);
+
 }

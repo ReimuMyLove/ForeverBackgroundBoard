@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/dayLightBackground"
+    android:background="@color/colorBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.example.shoujiedemo.util.StatusBarHeightView
         app:use_type="use_height"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/personalInfo"
                 android:textSize="20sp"
-                android:textColor="@color/dayLightTitle" />
+                android:textColor="@color/colorTitle" />
         </LinearLayout>
         <View
             android:layout_alignParentBottom="true"
@@ -47,6 +47,7 @@
             android:layout_alignParentEnd="true"
             android:gravity="center">
             <Button
+                android:id="@+id/myCenter_PersonalInfo_change"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:gravity="center"
@@ -61,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/dayLightBackground">
+        android:background="@color/colorBackground">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
@@ -80,7 +81,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="ID"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/myCenter_PersonalInfo_ID"
@@ -90,7 +91,7 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="1"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
@@ -117,7 +118,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:text="昵称"
                 tools:ignore="RelativeOverlap" />
             <TextView
@@ -128,7 +129,7 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="梁朝伟"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
@@ -154,7 +155,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="性别"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"
                 tools:ignore="RelativeOverlap" />
             <TextView
@@ -165,7 +166,7 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="女"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
@@ -191,7 +192,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="年龄"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/myCenter_PersonalInfo_userAge"
@@ -201,7 +202,7 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="16"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
@@ -228,7 +229,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
                 android:text="个性签名"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
@@ -245,7 +246,7 @@
             android:paddingEnd="10dp"
             android:textSize="15sp"
             android:text="@string/userSign"
-            android:textColor="@color/dayLightText" />
+            android:textColor="@color/colorText" />
 
     </LinearLayout>
 </LinearLayout>

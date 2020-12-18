@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,6 +37,7 @@ import com.example.shoujiedemo.activity.PoemActivity;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
 
@@ -53,8 +57,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     View lnReport;
     TextView unLike;
     TextView tag ;
-    Button share;
-    TextView shareNum;
     Button collected;
     TextView collectionNum;
     Button comment;
@@ -84,19 +86,26 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
     private AlertDialog.Builder builder = null;
     private SetAdapter setAdapter;
     private Set set1;
+    private View confirmDelete;
+    private Button btnDelete;
+    private Button dismissDelete;
+    private ImageView loading;
+    private Animation animation;
 
     private Context context;
 
    // private boolean isFollow = false;
     private boolean isPull = false;
+    private RecyclerView.Adapter adapter;
 
     private MyOnClikeListener myOnClikeListener;
     private List<Content> contents = new ArrayList<>();
 
-    public PoemViewHodler(@NonNull View itemView, Context context, List<Content> contents) {
+    public PoemViewHodler(@NonNull View itemView, Context context, List<Content> contents,RecyclerView.Adapter adapter) {
         super(itemView);
         this.context = context;
         this.contents = contents;
+        this.adapter = adapter;
         presenter = new MyFollowOperatePresenterImpl(this);
         builder = new AlertDialog.Builder(context);
         initView();
@@ -114,9 +123,6 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         btnFollow = itemView.findViewById(R.id.follow_poem_btn_follow);
         btnPull = itemView.findViewById(R.id.follow_poem_btn_pull);
         lnReport = itemView.findViewById(R.id.follow_poem_ln_report);
-        unLike = itemView.findViewById(R.id.follow_poem_tv_unLike);
-        share = itemView.findViewById(R.id.follow_poem_btn_share);
-        shareNum = itemView.findViewById(R.id.follow_poem_tv_share_num);
         collected = itemView.findViewById(R.id.follow_poem_btn_collection);
         lnPoem = itemView.findViewById(R.id.follow_poem_ln_content);
         cover = itemView.findViewById(R.id.follow_poem_iv_cover);
@@ -125,13 +131,24 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         followAnim = itemView.findViewById(R.id.follow_poem_iv_follow_anim);
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
-            btnFollow.setVisibility(View.INVISIBLE);
+            btnFollow.setVisibility(View.GONE);
         else
             btnFollow.setVisibility(View.VISIBLE);
 
+        if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
+            btnPull.setVisibility(View.INVISIBLE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
+
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
         if (contents.get(position).isCollect())
             collected.setBackgroundResource(R.drawable.collectionselected);
@@ -161,6 +178,11 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         setList = setAlterView.findViewById(R.id.set_list);
         btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
+        confirmDelete = LayoutInflater.from(context).inflate(R.layout.confirm_delete_view,null,false);
+        btnDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_commit);
+        dismissDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_dismiss);
+        loading = confirmDelete.findViewById(R.id.delete_content_loading);
+
         alert = builder.create();
 
     }
@@ -172,20 +194,32 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
        writerName.setText(contents.get(position).getWriter());
        likeNum.setText(contents.get(position).getLikes() + "");
        commentNum.setText(contents.get(position).getCheatnum() + "");
-       shareNum.setText(contents.get(position).getForwardnum() + "");
        collectionNum.setText(contents.get(position).getCollectnum() + "");
        user = contents.get(position).getUser();
        userName.setText(user.getName());
        fanNum.setText(user.getFennum() + "");
+        set.setText("["+contents.get(position).getWenji() + "]");
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
         else
             btnFollow.setVisibility(View.VISIBLE);
 
+        if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
+            btnPull.setVisibility(View.GONE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
+
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
+
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
         if(user.isFollow())
             btnFollow.setText("关注+");
@@ -207,7 +241,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                 .fallback(R.drawable.ouran_default)
                 .centerCrop();
 
-        if(contents.get(position).getPic()!= null) {
+        if(contents.get(position).getUser().getPicname() != null) {
 
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
@@ -215,7 +249,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     .into(head);
         }
 
-        if(contents.get(position).getUser().getPicname() != null) {
+        if(contents.get(position).getPic()!= null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
                     .apply(requestOptions)
@@ -233,6 +267,9 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         btnFollow.setOnClickListener(myOnClikeListener);
         btnPull.setOnClickListener(myOnClikeListener);
         lnPoem.setOnClickListener(myOnClikeListener);
+        lnReport.setOnClickListener(myOnClikeListener);
+        btnDelete.setOnClickListener(myOnClikeListener);
+        dismissDelete.setOnClickListener(myOnClikeListener);
     }
 
     class MyOnClikeListener implements View.OnClickListener{
@@ -241,6 +278,9 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.follow_poem_iv_head://点击头像进入用户空间
+                    Intent intent = new Intent(context, MySpaceActivity.class);
+                    intent.putExtra("user",user);
+                    context.startActivity(intent);
                     break;
                 case R.id.follow_poem_tv_set://点击文集进入用户空间
 
@@ -255,10 +295,24 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
                     }
                     break;
                 case R.id.follow_poem_ln_report:
-
+                    alert.show();
+                    Window window = alert.getWindow();
+                    window.setBackgroundDrawable(new BitmapDrawable());
+                    window.setContentView(confirmDelete);
+                    window.setLayout(700,500);
                     break;
-                case R.id.follow_poem_btn_share:
-
+                case R.id.delete_content_item_btn_commit:
+                    loading.setVisibility(View.VISIBLE);
+                    animation = AnimationUtils.loadAnimation(context, R.anim.loading_music_anim_rotate);
+                    LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+                    animation.setInterpolator(lin);
+                    loading.startAnimation(animation);
+                    presenter.deleteContent(contents.get(position).getId());
+                    break;
+                case R.id.delete_content_item_btn_dismiss:
+                    alert.dismiss();
+                    popuMenu.setVisibility(View.GONE);
+                    isPull = false;
                     break;
                 case R.id.follow_poem_btn_collection:
                     if(contents.get(position).isCollect()) {
@@ -389,7 +443,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(false);
         }else{
-            like.setBackgroundResource(R.drawable.likeunselect);
+            like.setBackgroundResource(R.drawable.likeselected);
             Toast.makeText(context, "取消点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(true);
         }
@@ -484,6 +538,22 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
         window.setContentView(setAlterView);
         window.setLayout(800,1000);
 
+    }
+
+    @Override
+    public void deleteContent() {
+        loading.clearAnimation();
+        popuMenu.setVisibility(View.GONE);
+        isPull = false;
+        alert.dismiss();
+        contents.remove(position);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void deleteError() {
+        Toast.makeText(context,"删除失败",Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -203,7 +203,7 @@ public class PoemLoadPresenterImpl implements FroundLoadDataPresenter,FroundLoad
             content1.setTime(time);
         }
         if(contents != null){
-            view.showContentListData(contents);
+            view.showSearchList(contents);
         }
     }
 

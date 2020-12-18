@@ -1,6 +1,9 @@
 package com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +28,8 @@ public class MyFollowActivity extends BaseActivity implements MyFollowView {
     private MyFollowPresenter myFollowPresenter;
     RecyclerView
             myFollow_articleRec;
+    ImageView
+            myFollow_return;
     MyFollowAdapter
             myFollowAdapter;
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class MyFollowActivity extends BaseActivity implements MyFollowView {
         setContentView(R.layout.activity_myfollow);
         //获取控件
         findView();
+        setListener();
         myFollowPresenter = new MyFollowPresenter(this);
         getFollower();
         EventBus.getDefault().register(this);
@@ -39,6 +45,22 @@ public class MyFollowActivity extends BaseActivity implements MyFollowView {
 
     private void findView(){
         myFollow_articleRec = findViewById(R.id.myFollow_articleRec);
+        myFollow_return = findViewById(R.id.myFollow_return);
+    }
+
+    private void setListener(){
+        MyListener listener = new MyListener();
+        myFollow_return.setOnClickListener(listener);
+    }
+
+    private class MyListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.myFollow_return){
+                onBackPressed();
+            }
+        }
     }
 
     private void getFollower(){
@@ -58,8 +80,9 @@ public class MyFollowActivity extends BaseActivity implements MyFollowView {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void removeFollow(Integer followerID){
         for(int i=0;i<userList.size();i++){
-            if(userList.get(i).getId() == i){
+            if(userList.get(i).getId() == followerID){
                 userList.remove(i);
+                break;
             }
         }
         Toast.makeText(this, "偶然：取消关注成功", Toast.LENGTH_SHORT).show();

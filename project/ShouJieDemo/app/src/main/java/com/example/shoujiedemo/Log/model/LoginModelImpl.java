@@ -46,19 +46,31 @@ public class LoginModelImpl implements LoginModel{
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String userInfo = responseBody.string();
-                            Gson gson = new Gson();
-                            User user;
-                            user = gson.fromJson(userInfo,User.class);
-                            UserUtil.USER_NAME = user.getName();
-                            UserUtil.USER_ID = user.getId();
-                            UserUtil.USER_FANS = user.getFennum();
-                            UserUtil.RECENT_USER_ID = user.getId();
-                            UserUtil.USER_IMG = user.getPicname();
-                            UserUtil.USER_AGE = user.getAge();
-                            UserUtil.USER_SEX = user.getSex();
-                            UserUtil.USER_SIGN = user.getSign();
-                            userInfoSet(user,context);
-                            listener.OnLoginSuccessful();
+                            if(!userInfo.equals("false")){
+                                Gson gson = new Gson();
+                                User user;
+                                user = gson.fromJson(userInfo,User.class);
+                                UserUtil.USER_NAME = user.getName();
+                                UserUtil.USER_ID = user.getId();
+                                UserUtil.USER_FANS = user.getFennum();
+                                UserUtil.RECENT_USER_ID = user.getId();
+                                UserUtil.USER_AGE = user.getAge();
+                                UserUtil.USER_SEX = user.getSex();
+                                UserUtil.USER_SIGN = user.getSign();
+                                if (user.getPicname()!=null){
+                                    UserUtil.USER_IMG = user.getPicname();
+                                }
+                                if (user.getBackgroundpic1()!=null){
+                                    UserUtil.USER_CENTER_BACKGROUND = user.getBackgroundpic1();
+                                }
+                                if (user.getBackgroundpic2()!=null){
+                                    UserUtil.USER_SPACE_BACKGROUND = user.getBackgroundpic2();
+                                }
+                                userInfoSet(user,context);
+                                listener.OnLoginSuccessful();
+                            }else{
+                                listener.OnLoginFailed();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -83,8 +95,16 @@ public class LoginModelImpl implements LoginModel{
      * @param context 当前上下文
      */
     private void userInfoSet(User user, Context context){
+        /**
+         * 登录前清空当前用户数据表中的全部内容 以填写新的内容
+         */
         DBHelper helper = new DBHelper(context);
         SQLiteDatabase db = helper.getWritableDatabase();
+        String sql = "delete from UserInfo";
+        db.execSQL(sql);
+        /**
+         * 内容清空完成 开始写入新的用户信息
+         */
         int ID = user.getId();
         String name = user.getName();
         String password = user.getPassword();
@@ -95,7 +115,7 @@ public class LoginModelImpl implements LoginModel{
         int fennum = user.getFennum();
         int follownum = user.getFollownum();
         //编写sql语句
-        String sql =
+        String sql1 =
                 MessageFormat.format("insert into userInfo(userID,userName,userPassword,userSex,picName,userAge,userFans,userFollow,userSign)values(''{0}'',''{1}'',''{2}'',''{3}'',''{4}'',''{5}'',''{6}'',''{7}'',''{8}'')", ID, name, password, sex, picname, age, fennum, follownum, sign);
         db.execSQL(sql);
         db.close();

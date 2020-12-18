@@ -18,6 +18,7 @@ import com.ouran.control.CheatController;
 import com.ouran.control.FollowController;
 import com.ouran.control.ForwardController;
 import com.ouran.control.LikesController;
+import com.ouran.control.MusicController;
 import com.ouran.control.TuwenController;
 import com.ouran.control.UserController;
 import com.ouran.control.WenjiController;
@@ -26,6 +27,7 @@ import com.ouran.model.Cheat;
 import com.ouran.model.Follow;
 import com.ouran.model.Forward;
 import com.ouran.model.Likes;
+import com.ouran.model.Music;
 import com.ouran.model.Topic;
 import com.ouran.model.TopicDetial;
 import com.ouran.model.Tuwen;
@@ -53,6 +55,7 @@ public class AppConfig extends JFinalConfig{
 		me.add("/wenji",WenjiController.class);
 		me.add("/wenjidetial",WenjiDetialController.class);
 		me.add("/forward",ForwardController.class);
+		me.add("/music",MusicController.class);
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class AppConfig extends JFinalConfig{
 
 	@Override
 	public void configPlugin(Plugins me) {
-		DruidPlugin dp = new DruidPlugin("jdbc:mysql://localhost:3306/ouran_db?useUnicode=true&characterEncoding=utf-8", "root", "WRK990424");
+		DruidPlugin dp = new DruidPlugin("jdbc:mysql://localhost:3306/ouran_db?useUnicode=true&characterEncoding=utf-8", "root", "");
 	//	DruidPlugin dp = new DruidPlugin("jdbc:mysql://localhost:3306/ouran_db?useUnicode=true&characterEncoding=utf-8", "root", "WRK990424");
 		me.add(dp);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
@@ -82,7 +85,7 @@ public class AppConfig extends JFinalConfig{
 		arp.addMapping("tuwen", "id", Tuwen.class);
 		arp.addMapping("types", "type", Types.class);
 		arp.addMapping("user", "id", User.class);
-		arp.addMapping("wenji", "id", Wenji.class);
+		arp.addMapping("music", "id", Music.class);
 		arp.addMapping("wenji_detail", "wenjiid", WenjiDetail.class);
 	}
 

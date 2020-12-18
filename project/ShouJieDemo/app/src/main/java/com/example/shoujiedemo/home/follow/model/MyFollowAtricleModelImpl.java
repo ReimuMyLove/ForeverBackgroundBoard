@@ -3,6 +3,7 @@ package com.example.shoujiedemo.home.follow.model;
 import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
+import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenterImpl;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowAtriclePresenterListener;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

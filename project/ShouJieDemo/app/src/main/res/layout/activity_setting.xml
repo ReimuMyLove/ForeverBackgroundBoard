@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/dayLightBackground">
+        android:background="@color/colorBackground">
         <com.example.shoujiedemo.util.StatusBarHeightView
             app:use_type="use_height"
             android:background="#fff"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/setting"
                 android:textSize="20sp"
-                android:textColor="@color/dayLightTitle"
+                android:textColor="@color/colorTitle"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -63,7 +63,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/nightMode"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp"
                 tools:ignore="RelativeOverlap" />
 
@@ -100,7 +100,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:text="@string/AccountAndSafe"
                 tools:ignore="RelativeOverlap" />
 
@@ -139,7 +139,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
                 android:text="@string/clearCookie"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 tools:ignore="RelativeOverlap" />
             <TextView
                 android:id="@+id/myCenter_setting_cookieSize"
@@ -150,7 +150,7 @@
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 tools:ignore="RelativeOverlap" />
             <ImageView
                 android:id="@+id/myCenter_setting_cookieSize_right"
@@ -187,7 +187,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
                 android:text="@string/feedback"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 tools:ignore="RelativeOverlap" />
             <ImageView
                 android:layout_width="15dp"
@@ -222,7 +222,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
                 android:text="@string/about"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 tools:ignore="RelativeOverlap" />
             <ImageView
                 android:layout_width="15dp"
@@ -243,7 +243,7 @@
             android:background="@drawable/mycenter_setting_button_border"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:textColor="@color/dayLightText"
+            android:textColor="@color/colorText"
             android:textSize="15sp"
             android:text="@string/logout"/>
 

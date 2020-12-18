@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,6 +37,7 @@ import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
 
@@ -77,16 +81,23 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
     private AlertDialog.Builder builder = null;
     private SetAdapter setAdapter;
     private Set set1;
+    private View confirmDelete;
+    private Button btnDelete;
+    private Button dismissDelete;
+    private ImageView loading;
+    private Animation animation;
 
     private AnimationDrawable loadingDrawable;
     private int position;
+    private RecyclerView.Adapter adapter;
 
     private boolean isPull = false;
 
-    public HeartViewHodler(@NonNull View itemView, Context context, List<Content> contents) {
+    public HeartViewHodler(@NonNull View itemView, Context context, List<Content> contents,RecyclerView.Adapter adapter) {
         super(itemView);
         this.context = context;
         this.contents = contents;
+        this.adapter = adapter;
         presenter = new MyFollowOperatePresenterImpl(this);
         builder = new AlertDialog.Builder(context);
         initView();
@@ -102,7 +113,6 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         btnFollow = itemView.findViewById(R.id.follow_heart_btn_follow);
         btnPull = itemView.findViewById(R.id.follow_heart_btn_pull);
         lnReport = itemView.findViewById(R.id.follow_heart_ln_report);
-        unLike = itemView.findViewById(R.id.follow_heart_tv_unLike);
         collected = itemView.findViewById(R.id.follow_heart_btn_collection);
         collectionNum = itemView.findViewById(R.id.follow_heart_tv_collection_num);
         comment = itemView.findViewById(R.id.follow_heart_btn_comment);
@@ -116,14 +126,25 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         tag0 = itemView.findViewById(R.id.follow_heart_tv_tag0);
         tag2 = itemView.findViewById(R.id.follow_heart_tv_tag02);
 
+        if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
+            btnPull.setVisibility(View.GONE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
+
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
         else
             btnFollow.setVisibility(View.VISIBLE);
 
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
 
         if (contents.get(position).isLike())
             like.setBackgroundResource(R.drawable.likeselected);
@@ -144,6 +165,11 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         setList = setAlterView.findViewById(R.id.set_list);
         btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
+        confirmDelete = LayoutInflater.from(context).inflate(R.layout.confirm_delete_view,null,false);
+        btnDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_commit);
+        dismissDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_dismiss);
+        loading = confirmDelete.findViewById(R.id.delete_content_loading);
+
         alert = builder.create();
 
 
@@ -159,6 +185,9 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         btnFollow.setOnClickListener(myOnClikeListener);
         btnPull.setOnClickListener(myOnClikeListener);
         heartContent.setOnClickListener(myOnClikeListener);
+        lnReport.setOnClickListener(myOnClikeListener);
+        btnDelete.setOnClickListener(myOnClikeListener);
+        dismissDelete.setOnClickListener(myOnClikeListener);
 
     }
 
@@ -167,13 +196,18 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         heartContent.setText(contents.get(position).getText());
         likeNum.setText(contents.get(position).getLikes() + "");
         commentNum.setText(contents.get(position).getCheatnum() + "");
-        //shareNum.setText(contents.get(position).getForwardnum() + "");
         collectionNum.setText(contents.get(position).getCollectnum() + "");
+        set.setText("["+contents.get(position).getWenji() + "]");
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
-            btnFollow.setVisibility(View.INVISIBLE);
+            btnFollow.setVisibility(View.GONE);
         else
             btnFollow.setVisibility(View.VISIBLE);
+
+        if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
+            btnPull.setVisibility(View.INVISIBLE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
 
         user = contents.get(position).getUser();
         userName.setText(user.getName());
@@ -182,6 +216,13 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
+
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
         if(user.isFollow())
             btnFollow.setText("关注+");
@@ -202,17 +243,19 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                 .placeholder(R.drawable.iv_default)
                 .fallback(R.drawable.ouran_default)
                 .centerCrop();
-        if( contents.get(position).getPic() != null) {
+        if( contents.get(position).getUser().getPicname() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_HEAD_URL + contents.get(position).getUser().getPicname())
                     .apply(requestOptions)
                     .into(head);
         }
-        if(contents.get(position).getUser().getPicname() != null) {
+        if(contents.get(position).getPic() != null) {
             Glide.with(context)
                     .load(ConfigUtil.BASE_IMG_URL + contents.get(position).getPic())
                     .apply(requestOptions)
                     .into(cover);
+        }else{
+            cover.setVisibility(View.GONE);
         }
     }
 
@@ -222,6 +265,9 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.follow_heart_iv_head://点击头像进入用户空间
+                    Intent intent = new Intent(context, MySpaceActivity.class);
+                    intent.putExtra("user",user);
+                    context.startActivity(intent);
                     break;
                 case R.id.follow_heart_tv_set://点击文集进入用户空间
 
@@ -236,6 +282,24 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
                     }
                     break;
                 case R.id.follow_heart_ln_report:
+                    alert.show();
+                    Window window = alert.getWindow();
+                    window.setBackgroundDrawable(new BitmapDrawable());
+                    window.setContentView(confirmDelete);
+                    window.setLayout(700,500);
+                    break;
+                case R.id.delete_content_item_btn_commit:
+                    loading.setVisibility(View.VISIBLE);
+                    animation = AnimationUtils.loadAnimation(context, R.anim.loading_music_anim_rotate);
+                    LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+                    animation.setInterpolator(lin);
+                    loading.startAnimation(animation);
+                    presenter.deleteContent(contents.get(position).getId());
+                    break;
+                case R.id.delete_content_item_btn_dismiss:
+                    popuMenu.setVisibility(View.GONE);
+                    isPull = false;
+                    alert.dismiss();
                     break;
                 case R.id.follow_heart_btn_collection:
                     if(contents.get(position).isCollect()) {
@@ -367,7 +431,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(false);
         }else{
-            like.setBackgroundResource(R.drawable.likeunselect);
+            like.setBackgroundResource(R.drawable.likeselected);
             Toast.makeText(context, "取消点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(true);
         }
@@ -461,6 +525,28 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
         window.setContentView(setAlterView);
         window.setLayout(800,1000);
 
+    }
+
+    @Override
+    public void deleteContent() {
+        loading.clearAnimation();
+        loading.setVisibility(View.INVISIBLE);
+        popuMenu.setVisibility(View.GONE);
+        isPull = false;
+        alert.dismiss();
+        contents.remove(position);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void deleteError() {
+        loading.clearAnimation();
+        loading.setVisibility(View.INVISIBLE);
+        popuMenu.setVisibility(View.GONE);
+        isPull = false;
+        alert.dismiss();
+        Toast.makeText(context,"删除失败",Toast.LENGTH_SHORT).show();
     }
 
     @Override

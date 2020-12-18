@@ -6,14 +6,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.myCenter.setting.presenter.impl.AboutPresenter;
 import com.example.shoujiedemo.myCenter.setting.view.inter.AboutView;
 import com.example.shoujiedemo.util.BaseActivity;
 
 public class AboutActivity extends BaseActivity implements AboutView {
     Button
             myCenter_setting_about_return;    //返回按钮
-    AboutPresenter aboutPresenter;            //绑定Presenter
     Context context;                          //获取当前上下文
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +22,6 @@ public class AboutActivity extends BaseActivity implements AboutView {
         FindView();
         //绑定监听器
         SetListener();
-        //绑定Presenter
-        aboutPresenter = new AboutPresenter();
     }
 
     /**

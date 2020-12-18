@@ -19,9 +19,11 @@ import com.example.shoujiedemo.bean.HeartEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.PoemEvent;
 import com.example.shoujiedemo.bean.SearchEvent;
+import com.example.shoujiedemo.bean.UploadBean;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Heart;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
+import com.example.shoujiedemo.fround.adapter.HeartAdapter;
 import com.example.shoujiedemo.fround.adapter.PoemAdapter;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.PoemLoadPresenterImpl;
@@ -45,6 +47,8 @@ import java.util.List;
 public class PoemFragment extends Fragment implements PoemView {
 
     private List<Content> poemList = new ArrayList<>();
+    private List<Content> searchList = new ArrayList<>();
+    private PoemAdapter searchAdapter;
     private PoemAdapter poemAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
@@ -53,8 +57,11 @@ public class PoemFragment extends Fragment implements PoemView {
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
     private boolean isRefresh = false;
-    private String flag;
+    private String flag = "";
     private int upDateNum;
+    private int search = 0;
+    private int searchTag = 0;
+    private boolean isSearchRefresh = false;
 
     public PoemFragment() {
         // Required empty public constructor
@@ -86,14 +93,19 @@ public class PoemFragment extends Fragment implements PoemView {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if(flag != null){
+                if(flag.length() != 0 && search == 1){
+                    pageNum = 1;
+                    searchTag = 0;
+                    poemList.clear();
                     presenter.searchData(flag,3,pageNum,UserUtil.USER_ID);
+                    refreshLayout.finishRefresh(600);
+                }else {
+                    refreshTag = 0;
+                    pageNum = 1;
+                    poemList.clear();
+                    presenter.confirmInitContent(3, 1, UserUtil.USER_ID);
+                    refreshLayout.finishRefresh(600);
                 }
-                refreshTag = 0;
-                pageNum = 1;
-                poemList.clear();
-                presenter.confirmInitContent(3,1, UserUtil.USER_ID);
-                refreshLayout.finishRefresh(600);
 
             }
 
@@ -102,9 +114,13 @@ public class PoemFragment extends Fragment implements PoemView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-                presenter.confirmInitContent(3,pageNum,UserUtil.USER_ID);
-                refreshLayout.finishLoadMore(600);
+                if(flag.length() != 0 && search ==1) {
+                    presenter.searchData(flag,3,pageNum,UserUtil.USER_ID);
+                    refreshLayout.finishLoadMore(600);
+                }else{
+                    presenter.confirmInitContent(3, pageNum, UserUtil.USER_ID);
+                    refreshLayout.finishLoadMore(600);
+                }
             }
         });
         return view;
@@ -159,11 +175,45 @@ public class PoemFragment extends Fragment implements PoemView {
 
     @Override
     public void showSearchList(List<Content> contents) {
-        if(contents != null) {
-            PoemAdapter searthAdapter = new PoemAdapter(contents,getActivity());
-            recyclerView.setAdapter(searthAdapter);
-            pageNum++;
+        if(searchList.size() < 10 || searchList == null) {
+            if(searchTag == 0) {
+                this.searchList = contents;
+                searchAdapter = new PoemAdapter(searchList, getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(searchAdapter);
+                searchTag = 1;
+            }else{
+                List<Content> newPoems = new ArrayList<>();
+                for(Content content:searchList){
+                    for(Content content1:contents){
+                        if(content.getId() == content1.getId())
+                            newPoems.add(content1);
+                    }
+                }
+                searchList.addAll(contents);
+                searchList.removeAll(newPoems);
+                searchAdapter.notifyDataSetChanged();
+            }
+            if(searchList.size() == 10)
+                pageNum++;
+        }else{
+            List<Content> newList = new ArrayList<>();
+            for(Content content :searchList){
+                for(Content content1:contents){
+                    if(content.getId() == content1.getId())
+                        newList.add(content1);
+                }
+            }
+            searchList.addAll(contents);
+            searchList.removeAll(newList);
+
+            if(searchList.size() % 10 == 0)
+                pageNum++;
+
+            searchAdapter.notifyDataSetChanged();
         }
+
+        isSearchRefresh = true;
     }
 
     @Override
@@ -274,10 +324,21 @@ public class PoemFragment extends Fragment implements PoemView {
     }
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
+        flag = event.getTag();
+        Log.e("tag",flag);
         if(event.getPosition() == 3) {
-            flag = event.getTag();
+            search = 1;
             pageNum = 1;
             presenter.searchData(flag, 3, pageNum, UserUtil.USER_ID);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void UploadRefresh(UploadBean bean){
+        if(bean.getTypeId() == 3){
+            poemList.clear();
+            pageNum = 1;
+            presenter.confirmInitContent(3,pageNum,UserUtil.USER_ID);
         }
     }
 }

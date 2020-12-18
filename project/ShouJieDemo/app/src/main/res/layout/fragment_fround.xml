@@ -79,6 +79,59 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </com.google.android.material.tabs.TabLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/already_music_view"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <com.example.shoujiedemo.util.CircleImageView
+            android:id="@+id/already_music_view_cover"
+            android:src="@drawable/wulai"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/already_music_view_btn_play"
+            android:background="@drawable/pause"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:id="@+id/already_music_view_tv_songName"
+            android:layout_toRightOf="@id/already_music_view_cover"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/already_music_view_tv_singer"
+            android:layout_toRightOf="@id/already_music_view_cover"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/already_music_view_tv_songName"
+            android:textStyle="italic"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/already_music_view_dismiss"
+            android:background="@drawable/dismiss"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_width="15dp"
+            android:layout_height="15dp"/>
+    </RelativeLayout>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

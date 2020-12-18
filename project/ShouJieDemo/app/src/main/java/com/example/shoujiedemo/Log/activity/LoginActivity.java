@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
@@ -16,15 +20,20 @@ import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.DBHelper;
 
 public class LoginActivity extends BaseActivity implements LoginView {
-    EditText
+    private EditText
             login_userName,             //登录用户名
             login_userPassword;         //登录密码
-    Button
+    private Button
             login_login,                //登录按钮
             login_register;             //注册按钮
-    Context context;                    //获取当前上下文
+    private Context context;            //获取当前上下文
+    private ImageView
+            login_animation;            //转圈图
+    Animation animation;
+
     LogPresenter
             logPresenter;               //获取logPresenter
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +63,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
         login_userPassword = findViewById(R.id.login_userPassword);
         login_login = findViewById(R.id.login_login);
         login_register = findViewById(R.id.login_register);
+        login_animation = findViewById(R.id.login_animation);
     }
 
     @Override
     public void MainIntent() {
-        DBHelper helper = new DBHelper(this);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String sql = "delete from UserInfo";
-        db.execSQL(sql);
-        db.close();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -70,6 +75,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void loginError() {
+        login_animation.clearAnimation();
+        login_animation.setVisibility(View.INVISIBLE);
+        login_login.setText("登录");
         Toast.makeText(context, "用户名或密码错误", Toast.LENGTH_SHORT).show();
     }
 
@@ -82,9 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.login_login:
-                    String name = login_userName.getText().toString();
-                    String password = login_userPassword.getText().toString();
-                    logPresenter.confirmLogin(name,password,getBaseContext());
+                    confirmLogin();
                     break;
                 case R.id.login_register:
                     Register();
@@ -99,5 +105,18 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private void Register(){
         Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
+    }
+
+    private void confirmLogin(){
+        login_animation.setVisibility(View.VISIBLE);
+        login_login.setText("");
+        //动画
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.loading_music_anim_rotate);
+        LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+        animation.setInterpolator(lin);
+        login_animation.startAnimation(animation);
+        String name = login_userName.getText().toString();
+        String password = login_userPassword.getText().toString();
+        logPresenter.confirmLogin(name,password,getBaseContext());
     }
 }

@@ -1,5 +1,8 @@
 package com.ouran.control;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +11,14 @@ import com.ouran.model.Likes;
 import com.ouran.model.Tuwen;
 import com.ouran.service.CheatService;
 import com.ouran.service.LikeService;
+import com.ouran.service.MusicService;
 import com.ouran.service.TuwenService;
 
 public class LikesController extends Controller {
 	LikeService service = new LikeService();
 	TuwenService tuwenService = new TuwenService();
 	CheatService cheatService = new CheatService();
-
+	MusicService musicService=new MusicService();
 	/**
 	 * 给图文或话题或音乐或评论点赞
 	 */
@@ -23,6 +27,15 @@ public class LikesController extends Controller {
 			Likes like = new Likes();
 			like.setUserid(getParaToInt("userid"));
 			like.setTuwenid(getParaToInt("tuwenid"));
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+			String time1 = formatter1.format(date);
+			try {
+				like.setTime(formatter1.parse(time1));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (service.addlike(like)) {
 				tuwenService.addlike(getParaToInt("tuwenid"));
 				renderText("true");
@@ -33,7 +46,17 @@ public class LikesController extends Controller {
 			Likes like = new Likes();
 			like.setUserid(getParaToInt("userid"));
 			like.setTopicdetialid(getParaToInt("topicdetialid"));
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+			String time1 = formatter1.format(date);
+			try {
+				like.setTime(formatter1.parse(time1));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (service.addlike(like)) {
+				musicService.addlike(getParaToInt("musicid"));
 				renderText("true");
 			} else {
 				renderText("false");
@@ -42,6 +65,15 @@ public class LikesController extends Controller {
 			Likes like = new Likes();
 			like.setUserid(getParaToInt("userid"));
 			like.setCheatid(getParaToInt("cheatid"));
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+			String time1 = formatter1.format(date);
+			try {
+				like.setTime(formatter1.parse(time1));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (service.addlike(like)) {
 				cheatService.addlike(getParaToInt("cheatid"));
 				renderText("true");
@@ -52,7 +84,17 @@ public class LikesController extends Controller {
 			Likes like = new Likes();
 			like.setUserid(getParaToInt("userid"));
 			like.setMusicid(getParaToInt("musicid"));
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+			String time1 = formatter1.format(date);
+			try {
+				like.setTime(formatter1.parse(time1));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (service.addlike(like)) {
+				musicService.addlike(like.getMusicid());
 				renderText("true");
 			} else {
 				renderText("false");
@@ -99,7 +141,8 @@ public class LikesController extends Controller {
 			Likes like = new Likes();
 			like.setUserid(getParaToInt("userid"));
 			like.setMusicid(getParaToInt("musicid"));
-			if (service.addlike(like)) {
+			if (service.minusmusiclike(like)>0) {
+				musicService.minuslike(like.getMusicid());
 				renderText("true");
 			} else {
 				renderText("false");
@@ -127,7 +170,7 @@ public class LikesController extends Controller {
 	 * */
 	public void finduserlike() {
 		if (null != getParaToInt("userid")) {
-			List<Likes> likes= service.finduserlike(getParaToInt("userid"));
+			List<Likes> likes= service.finduserliketuwen(getParaToInt("userid"));
 			List<Tuwen> tuwens = new ArrayList<Tuwen>();
 
 			for (Likes like : likes) {
@@ -140,7 +183,9 @@ public class LikesController extends Controller {
 
 				}
 			}
+			setAttr("likedate", likes);
 			setAttr("tuwendate", tuwens);
+			setAttr("userdate", tuwenService.getUserList(tuwens));
 			renderJson();
 		}else {
 			renderJson("false");

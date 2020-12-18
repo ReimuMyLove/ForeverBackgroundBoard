@@ -1,18 +1,16 @@
 package com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.myCenter.setting.presenter.impl.SafePresenter;
-import com.example.shoujiedemo.myCenter.setting.presenter.impl.SettingPresenter;
-import com.example.shoujiedemo.myCenter.setting.view.activity.SettingActivity;
+import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.safeActivity.ChangePasswordActivity;
+import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.safeActivity.DestroyActivity;
+import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.safeActivity.SetEmailActivity;
+import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.safeActivity.SetSafeQuestionActivity;
 import com.example.shoujiedemo.myCenter.setting.view.inter.SafeView;
 import com.example.shoujiedemo.util.BaseActivity;
 
@@ -24,7 +22,6 @@ public class SafeActivity extends BaseActivity implements SafeView {
             myCenter_setting_safe_setEmail,         //设置邮箱
             myCenter_setting_safe_destroyAccount;   //销毁账户
     Context context;                                //获取当前上下文
-    SafePresenter safePresenter;                    //获取SafePresenter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,18 @@ public class SafeActivity extends BaseActivity implements SafeView {
         FindView();
         //绑定监听器
         SetListener();
-        //绑定Presenter
-        safePresenter = new SafePresenter();
+    }
+
+    /**
+     * 获取view方法
+     */
+    @Override
+    public void FindView() {
+        myCenter_setting_safe_return = findViewById(R.id.myCenter_setting_safe_return);
+        myCenter_setting_safe_changePassword = findViewById(R.id.myCenter_setting_safe_changePassword);
+        myCenter_setting_safe_setSafeQuestion = findViewById(R.id.myCenter_setting_safe_setSafeQuestion);
+        myCenter_setting_safe_setEmail = findViewById(R.id.myCenter_setting_safe_setEmail);
+        myCenter_setting_safe_destroyAccount = findViewById(R.id.myCenter_setting_safe_destroyAccount);
     }
 
     /**
@@ -53,18 +60,6 @@ public class SafeActivity extends BaseActivity implements SafeView {
     }
 
     /**
-     * 获取view方法
-     */
-    @Override
-    public void FindView() {
-        myCenter_setting_safe_return = findViewById(R.id.myCenter_setting_safe_return);
-        myCenter_setting_safe_changePassword = findViewById(R.id.myCenter_setting_safe_changePassword);
-        myCenter_setting_safe_setSafeQuestion = findViewById(R.id.myCenter_setting_safe_setSafeQuestion);
-        myCenter_setting_safe_setEmail = findViewById(R.id.myCenter_setting_safe_setEmail);
-        myCenter_setting_safe_destroyAccount = findViewById(R.id.myCenter_setting_safe_destroyAccount);
-    }
-
-    /**
      * 绑定监听器方法
      */
     private class MyListener implements View.OnClickListener {
@@ -76,23 +71,49 @@ public class SafeActivity extends BaseActivity implements SafeView {
                     onBackPressed();
                     break;
                 case R.id.myCenter_setting_safe_changePassword:
-                    safePresenter.ChangePassword(context);
+                    ChangePassword();
                     break;
                 case R.id.myCenter_setting_safe_setSafeQuestion:
-                    safePresenter.SetSafeQuestion(context);
+                    SetSafeQuestion();
                     break;
                 case R.id.myCenter_setting_safe_setEmail:
-                    safePresenter.SetEmail(context);
+                    SetEmail();
                     break;
                 case R.id.myCenter_setting_safe_destroyAccount:
-                    safePresenter.DestroyAccount(context);
+                    DestroyAccount();
                     break;
             }
         }
     }
 
+
+    /* 返回设置页面 */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    /* 修改密码 */
+    public void ChangePassword() {
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    /* 设置安全问题 */
+    public void SetSafeQuestion() {
+        Intent intent = new Intent(this, SetSafeQuestionActivity.class);
+        startActivity(intent);
+    }
+
+    /* 设置邮箱 */
+    public void SetEmail() {
+        Intent intent = new Intent(this, SetEmailActivity.class);
+        startActivity(intent);
+    }
+
+    /* 销毁账户 */
+    public void DestroyAccount() {
+        Intent intent = new Intent(this, DestroyActivity.class);
+        startActivity(intent);
     }
 }

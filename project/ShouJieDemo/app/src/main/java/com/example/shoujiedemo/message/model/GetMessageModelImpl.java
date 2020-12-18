@@ -50,7 +50,6 @@ public class GetMessageModelImpl implements GetMessageModel{
                                 String jsons = responseBody.string();
                                 if (jsons != null && !jsons.equals("")) {
                                     listener.LoadMessageSuccess(jsons);
-                                    Log.i("success", jsons + "");
                                 } else {
                                     listener.LoadMessageError(jsons);
                                     Log.i("error", "无数据");

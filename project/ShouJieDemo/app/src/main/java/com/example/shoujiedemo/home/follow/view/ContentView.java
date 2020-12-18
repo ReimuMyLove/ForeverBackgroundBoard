@@ -34,4 +34,8 @@ public interface ContentView {
     void noSet();//无文集
 
     void showSet(List<Set> sets);//显示文集
+
+    void deleteContent();
+
+    void deleteError();
 }
