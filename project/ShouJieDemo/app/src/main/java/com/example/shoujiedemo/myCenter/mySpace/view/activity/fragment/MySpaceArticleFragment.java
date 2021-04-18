@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.bean.DeleteGroupEvent;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.myCenter.mySpace.presenter.MySpacePresenter;
 import com.example.shoujiedemo.myCenter.mySpace.service.ArticleAdapter;
@@ -73,6 +72,7 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
      * 获取数据方法
      */
     private void getData(int userID){
+        Log.e("文集获取","开始");
         mySpacePresenter.getGroups(userID);
     }
 
@@ -83,16 +83,14 @@ public class MySpaceArticleFragment extends Fragment implements ArticleFragmentV
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void deleteDateSet(DeleteGroupEvent deleteGroupEvent){
-        int groupID = deleteGroupEvent.getGroupID();
-        for(int i=0;i<setList.size();i++){
-            if(setList.get(i).getId() == groupID) {
-                setList.remove(i);
-                break;
-            }
-            articleAdapter.notifyDataSetChanged();
-            Toast.makeText(this.getContext(), "偶然：删除成功", Toast.LENGTH_SHORT).show();
-        }
+    public void deleteDateSet(Integer groupID){
+       for(int i=0;i<setList.size();i++){
+           if(setList.get(i).getId() == groupID) {
+               setList.remove(i);
+               break;
+           }
+           articleAdapter.notifyDataSetChanged();
+       }
     }
 
     @Override

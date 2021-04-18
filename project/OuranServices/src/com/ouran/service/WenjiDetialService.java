@@ -19,30 +19,8 @@ public class WenjiDetialService {
 		}
 		return -1;
 	}
-	/**
-	 * 查找文集下的图文收藏
-	 * */
 	public List<WenjiDetail> find(int wenjiid) {
-		String sql="select *from wenji_detail where wenjiid="+wenjiid +"&& tuwen_id is not null";
-		return dao.find(sql);
-	}
-	public List<WenjiDetail> getusercollectmusic(int userid) {
-		return dao.find("SELECT * FROM wenji_detail where wenjiid in ( SELECT id from wenji where userid ="+userid+" && music_id is not null)");
-	}
-	/**
-	 * 
-	 * 查询文集下的所有数据，包括音乐
-	 * */
-	public List<WenjiDetail> findAll(int wenjiid) {
-		String sql="select *from wenji_detail where wenjiid="+wenjiid ;
-		return dao.find(sql);
-	}
-	/**
-	 * 通过tuwen_id查找收藏
-	 * */
-	
-	public List<WenjiDetail> findBytuwen(int tuwenid) {
-		String sql="select *from wenji_detail where tuwen_id="+tuwenid;
+		String sql="select *from wenji_detail where wenjiid="+wenjiid;
 		return dao.find(sql);
 	}
 	/**

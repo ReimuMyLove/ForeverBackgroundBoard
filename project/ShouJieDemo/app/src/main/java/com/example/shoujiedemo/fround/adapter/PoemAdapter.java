@@ -30,7 +30,7 @@ public class PoemAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHodler = null;
         View poemView = LayoutInflater.from(context).inflate(R.layout.item_follow_poem,parent,false);
-        PoemViewHodler poemViewHodler = new PoemViewHodler(poemView,context,poems,this);
+        PoemViewHodler poemViewHodler = new PoemViewHodler(poemView,context,poems);
         viewHodler = poemViewHodler;
         return viewHodler;
     }

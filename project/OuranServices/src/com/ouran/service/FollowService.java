@@ -3,8 +3,6 @@ package com.ouran.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import com.ouran.model.Follow;
@@ -14,7 +12,7 @@ import com.ouran.model.User;
 public class FollowService {
 	private static final Follow dao = Follow.dao;
 	private static final User userdao = User.dao;
-	private TuwenService tuwenService = new TuwenService();
+	private TuwenService tuwenService=new TuwenService();
 	private List<User> fens = new ArrayList<User>();
 	private List<User> follows = new ArrayList<User>();
 
@@ -34,16 +32,9 @@ public class FollowService {
 		return follows;
 	}
 
-	public List<Follow> getFensList(int id) {
-		String sql = "select * from follow where followerid=" + id+" order by time desc";
-		List<Follow> follows = dao.find(sql);
-		return follows;
-	}
-	/**
-	 * 得到粉丝列表
-	 * */
 	public List<User> getFen(int id) {
-		List<Follow> fensid = getFensList(id);
+		String sql = "select * from follow where followerid=" + id;
+		List<Follow> fensid = dao.find(sql);
 		for (Follow follow : fensid) {
 			String sql1 = "select * from user where id=" + follow.getUserid();
 			User user = userdao.find(sql1).get(0);
@@ -82,13 +73,4 @@ public class FollowService {
 		});
 		return (list2);
 	}
-	/**
-	 * list	去重
-	 * */
-	public  List removeDuplicate(List list) {   
-	    HashSet h = new HashSet(list);   
-	    list.clear();   
-	    list.addAll(h);   
-	    return list;   
-	} 
 }

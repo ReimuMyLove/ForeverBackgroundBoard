@@ -1,24 +1,22 @@
 package com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.entity.User;
-import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.activity.ChangeUserInfoActivity;
 import com.example.shoujiedemo.util.BaseActivity;
+import com.example.shoujiedemo.util.DBHelper;
 import com.example.shoujiedemo.util.UserUtil;
 
 public class UserInfoActivity extends BaseActivity {
     Button
-            myCenter_PersonalInfo_return,
-            myCenter_PersonalInfo_change;       //修改信息
+            myCenter_PersonalInfo_return;
     TextView
             myCenter_PersonalInfo_ID,           //用户ID
             myCenter_PersonalInfo_userName,     //用户名
@@ -46,7 +44,6 @@ public class UserInfoActivity extends BaseActivity {
         myCenter_PersonalInfo_userName = findViewById(R.id.myCenter_PersonalInfo_userName);
         myCenter_PersonalInfo_userSex = findViewById(R.id.myCenter_PersonalInfo_userSex);
         myCenter_PersonalInfo_userAge = findViewById(R.id.myCenter_PersonalInfo_userAge);
-        myCenter_PersonalInfo_change = findViewById(R.id.myCenter_PersonalInfo_change);
         myCenter_PersonalInfo_userSign = findViewById(R.id.myCenter_PersonalInfo_userSign);
     }
 
@@ -56,7 +53,6 @@ public class UserInfoActivity extends BaseActivity {
     public void SetListener() {
         MyListener listener = new MyListener();
         myCenter_PersonalInfo_return.setOnClickListener(listener);
-        myCenter_PersonalInfo_change.setOnClickListener(listener);
     }
 
     /**
@@ -68,15 +64,8 @@ public class UserInfoActivity extends BaseActivity {
         public void onClick(View view) {
             if (view.getId() == R.id.myCenter_PersonalInfo_return) {
                 onBackPressed();
-            }else if(view.getId() == R.id.myCenter_PersonalInfo_change){
-                changeIntent();
             }
         }
-    }
-
-    private void changeIntent() {
-        Intent intent = new Intent(this, ChangeUserInfoActivity.class);
-        startActivityForResult(intent,1);
     }
 
     @SuppressLint("SetTextI18n")
@@ -85,35 +74,17 @@ public class UserInfoActivity extends BaseActivity {
         myCenter_PersonalInfo_userName.setText(UserUtil.USER_NAME);
         myCenter_PersonalInfo_userSex.setText(UserUtil.USER_SEX);
         myCenter_PersonalInfo_userAge.setText(UserUtil.USER_AGE+"");
-        if(!UserUtil.USER_SIGN.equals("")){
-            myCenter_PersonalInfo_userSign.setText(UserUtil.USER_SIGN);
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.query("userInfo",null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                String sign = cursor.getString(cursor.getColumnIndex("sign"));
+                if (!sign.equals("")){
+                    myCenter_PersonalInfo_userSign.setText(sign);
+                }
+            }while(cursor.moveToNext());
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
-        if (requestCode == 1 && resultCode == 100) {
-            assert data != null;
-            User user = (User)data.getSerializableExtra("user");
-            assert user != null;
-            int userAge = user.getAge();
-            myCenter_PersonalInfo_userAge.setText(userAge+"");
-            UserUtil.USER_AGE = userAge;
-            String userSex = "";
-            if(user.getSex()!=null){
-                userSex = user.getSex();
-                UserUtil.USER_SEX = userSex;
-                myCenter_PersonalInfo_userSex.setText(userSex);
-            }
-            String userSign = "";
-            if(user.getSign()!=null){
-                userSign = user.getSign();
-                UserUtil.USER_SIGN = userSign;
-                myCenter_PersonalInfo_userSign.setText(userSign);
-            }
-        }
+        db.close();
     }
 }

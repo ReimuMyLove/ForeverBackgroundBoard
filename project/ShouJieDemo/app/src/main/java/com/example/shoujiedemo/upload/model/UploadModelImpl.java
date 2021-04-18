@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterListener;
-import com.example.shoujiedemo.util.UserUtil;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
@@ -30,7 +29,7 @@ public class UploadModelImpl implements UploadModel {
 
 
     @Override
-    public void Gointent(final UploadPresenterListener listener, Content content, int isoriginal, final Uri uri,int setId) {
+    public void Gointent(final UploadPresenterListener listener, Content content, int isoriginal, final Uri uri) {
         File file = null;
         try {
             file = new File(new URI(uri.toString()));
@@ -53,10 +52,10 @@ public class UploadModelImpl implements UploadModel {
                 content.getTypeid(),
                 content.getWriter(),
                 content.getTag(),
-                setId,
+                content.getUserid(),
                 isoriginal,
                 1,
-                body );
+                body);
         try {
             observable.subscribeOn(Schedulers.io())//在io线程中请求
                     .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
@@ -101,14 +100,14 @@ public class UploadModelImpl implements UploadModel {
     }
 
     @Override
-    public void uploadMusic(final UploadPresenterListener listener, int userId, int songId) {
+    public void Gointent(final UploadPresenterListener listener, Content content, int isoriginal) {
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/music/")
+                .baseUrl("http://49.232.217.140:8080/OuranServices/tuwen/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
         ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.uploadMusic(userId,songId);
+        Observable<ResponseBody> observable = apiInterface.upload(content.getTitle(), content.getText(), content.getUserid(), content.getTypeid(), content.getWriter(), "三毛", content.getUserid(), isoriginal);
         observable.subscribeOn(Schedulers.io())//在io线程中请求
                 .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
                 .subscribe(new Observer<ResponseBody>() {
@@ -123,143 +122,6 @@ public class UploadModelImpl implements UploadModel {
                             //Log.e("Song",responseBody.string());
                             String jsons = responseBody.string();
                             if (jsons != null && !jsons.equals("")) {
-                                listener.loadSuccess(jsons);
-                                Log.i("success", jsons + "");
-                            } else {
-                                listener.loadError();
-                                Log.i("error", "无数据");
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
-                        Log.e("Error", e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
-
-                    }
-                });
-    }
-
-    @Override
-    public void uploadMusic(final UploadPresenterListener listener, int userId, int songId, String text) {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/music/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
-                .build();
-        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.uploadMusic(userId,songId,text);
-        observable.subscribeOn(Schedulers.io())//在io线程中请求
-                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            //Log.e("Song",responseBody.string());
-                            String jsons = responseBody.string();
-                            if (!jsons.equals("false")) {
-                                listener.loadSuccess(jsons);
-                                Log.i("success", jsons + "");
-                            } else {
-                                listener.loadError();
-                                Log.i("error", "无数据");
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
-                        Log.e("Error", e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
-
-                    }
-                });
-    }
-
-    @Override
-    public void loadSet(final UploadPresenterListener listener, int userId) {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/wenji/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
-                .build();
-        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.loadSet(userId);
-        observable.subscribeOn(Schedulers.io())//在io线程中请求
-                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            String jsons = responseBody.string();
-                            if(jsons != null)
-                                listener.loadSetSuccess(jsons);
-                            else
-                                listener.loadSetError();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {//事件队列发生异常的时候调用，事件队列终止，observable不再发送队列
-                        Log.e("Error",e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {//事件队列完结的时候调用，rxjava把事件看成一个队列
-
-                    }
-                });
-    }
-
-    @Override
-    public void Gointent(final UploadPresenterListener listener, Content content, int isoriginal,int setId) {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://49.232.217.140:8080/OuranServices/tuwen/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
-                .build();
-        ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
-        Observable<ResponseBody> observable = apiInterface.upload(content.getTitle(), content.getText(), content.getUserid(), content.getTypeid(), content.getWriter(), content.getTag(), setId, isoriginal);
-        observable.subscribeOn(Schedulers.io())//在io线程中请求
-                .observeOn(AndroidSchedulers.mainThread())//返回在主线程中执行
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {//参数是Disposable，用于解除队列
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            String jsons = responseBody.string();
-                            if (!jsons.equals("false")) {
                                 listener.loadSuccess();
                                 Log.i("success", jsons + "");
                             } else {

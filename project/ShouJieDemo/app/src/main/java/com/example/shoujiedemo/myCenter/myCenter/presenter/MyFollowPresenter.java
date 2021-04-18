@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.myCenter.myCenter.model.MyFollowModel;
 import com.example.shoujiedemo.myCenter.myCenter.model.MyFollowModelImpl;
+import com.example.shoujiedemo.myCenter.myCenter.service.MyFollowPresenterListener;
 import com.example.shoujiedemo.myCenter.myCenter.view.inter.MyFollowAdapterView;
 import com.example.shoujiedemo.myCenter.myCenter.view.inter.MyFollowView;
 import com.example.shoujiedemo.util.UserUtil;
@@ -44,12 +45,8 @@ public class MyFollowPresenter implements MyFollowPresenterListener {
         myFollowModel.findFollower(userID,this);
     }
 
-    public void addFollower(int followerID){
-        int userID = UserUtil.USER_ID;
-        myFollowModel.addFollower(userID,followerID,this);
-    }
     /**
-     * 取消关注结果回调方法
+     * 结果回调方法
      */
 
     @Override
@@ -84,20 +81,5 @@ public class MyFollowPresenter implements MyFollowPresenterListener {
     @Override
     public void findFailed() {
 
-    }
-
-
-    /**
-     * 添加关注回调方法
-     */
-
-    @Override
-    public void addSuccessful(int followerID) {
-        myFollowAdapter.addSuccessful(followerID);
-    }
-
-    @Override
-    public void addFailed() {
-         myFollowAdapter.addFailed();
     }
 }

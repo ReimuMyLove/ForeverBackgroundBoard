@@ -31,7 +31,7 @@ public class MusicAdapter extends RecyclerView.Adapter{
 
         RecyclerView.ViewHolder viewHolder = null;
         View view = LayoutInflater.from(context).inflate(R.layout.item_follow_music,parent,false);
-        MusicViewHodler musicViewHodler = new MusicViewHodler(view,context,musicList,this);
+        MusicViewHodler musicViewHodler = new MusicViewHodler(view,context,musicList);
         viewHolder = musicViewHodler;
         return viewHolder;
 

@@ -8,7 +8,6 @@ public class LikeBean {
     private int topicdetialid;
     private int musicid;
     private int cheatid;
-    private String time;            //点赞时间
 
     public LikeBean(){
 
@@ -62,14 +61,6 @@ public class LikeBean {
         this.cheatid = cheatid;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     @Override
     public String toString() {
         return "LikeBean{" +
@@ -79,7 +70,6 @@ public class LikeBean {
                 ", topicdetialid=" + topicdetialid +
                 ", musicid=" + musicid +
                 ", cheatid=" + cheatid +
-                ", time='" + time + '\'' +
                 '}';
     }
 }

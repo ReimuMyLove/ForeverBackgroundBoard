@@ -44,17 +44,22 @@ public class FollowContentAdapter extends RecyclerView.Adapter{
         switch (viewType){
             case CONTENT_TYPE_ARTICLE://文章
                 View articleView = LayoutInflater.from(context).inflate(R.layout.item_follow_article,parent,false);
-                ArticleViewHodler articleViewHodler = new ArticleViewHodler(articleView,context,contentList,this);
+                ArticleViewHodler articleViewHodler = new ArticleViewHodler(articleView,context,contentList);
                 viewHodler = articleViewHodler;
+                break;
+            case CONTENT_TYPE_MUSIC://音乐
+                /*View musicView = LayoutInflater.from(context).inflate(R.layout.item_follow_music,parent,false);
+                MusicViewHodler musicViewHodler = new MusicViewHodler(musicView,context);
+                viewHodler = musicViewHodler;*/
                 break;
             case CONTENT_TYPE_HEAD://感悟
                 View headView = LayoutInflater.from(context).inflate(R.layout.item_follow_heart,parent,false);
-                HeartViewHodler headViewHodler = new HeartViewHodler(headView,context,contentList,this);
+                HeartViewHodler headViewHodler = new HeartViewHodler(headView,context,contentList);
                 viewHodler = headViewHodler;
                 break;
             case CONTENT_TYPE_POEM://诗
                 View poemView = LayoutInflater.from(context).inflate(R.layout.item_follow_poem,parent,false);
-                PoemViewHodler poemViewHodler = new PoemViewHodler(poemView,context,contentList,this);
+                PoemViewHodler poemViewHodler = new PoemViewHodler(poemView,context,contentList);
                 viewHodler = poemViewHodler;
                 break;
         }
@@ -74,6 +79,9 @@ public class FollowContentAdapter extends RecyclerView.Adapter{
             case CONTENT_TYPE_ARTICLE://文章
                ArticleViewHodler articleViewHodler = (ArticleViewHodler)holder;
                articleViewHodler.initData(position);
+                break;
+            case CONTENT_TYPE_MUSIC://音乐
+                MusicViewHodler musicViewHodler = (MusicViewHodler)holder;
                 break;
             case CONTENT_TYPE_HEAD://感悟
                 HeartViewHodler headViewHodler = (HeartViewHodler) holder;

@@ -22,7 +22,7 @@ public interface MyFollowOperateModel {
 
     void unFavourite(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消点赞
 
-    void unFolly(MyFollowOperationPresenterListener listener,int userId,int followerId);//取消关注
+    void unFolly(MyFollowOperationPresenterListener listener,int userId,int contentId);//取消关注
 
     void report(MyFollowOperationPresenterListener listener,int userId,int contentId);//举报
 
@@ -33,7 +33,4 @@ public interface MyFollowOperateModel {
     void loadSet(MyFollowOperationPresenterListener listener,int userId);//加载文集
 
     void deleteComment(MyFollowOperationPresenterListener listener,int commentId);//删除评论
-
-    void deleteContent(MyFollowOperationPresenterListener listener,int id);//删除内容
-
 }

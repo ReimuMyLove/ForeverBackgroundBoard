@@ -30,7 +30,7 @@ public class HeartAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHodler = null;
         View headView = LayoutInflater.from(context).inflate(R.layout.item_follow_heart,parent,false);
-        HeartViewHodler headViewHodler = new HeartViewHodler(headView,context,hearts,this);
+        HeartViewHodler headViewHodler = new HeartViewHodler(headView,context,hearts);
         viewHodler = headViewHodler;
         return viewHodler;
     }

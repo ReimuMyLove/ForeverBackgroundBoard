@@ -44,7 +44,7 @@ public class ArticleAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHodler = null;
         View articleView = LayoutInflater.from(context).inflate(R.layout.item_follow_article,parent,false);
-        ArticleViewHodler articleViewHodler = new ArticleViewHodler(articleView,context,articles,this);
+        ArticleViewHodler articleViewHodler = new ArticleViewHodler(articleView,context,articles);
         viewHodler = articleViewHodler;
         return viewHodler;
     }

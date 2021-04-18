@@ -35,7 +35,6 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.CommentAdapter;
 import com.example.shoujiedemo.adapter.SetAdapter;
 import com.example.shoujiedemo.bean.MsgEvent;
-import com.example.shoujiedemo.bean.SearchEvent;
 import com.example.shoujiedemo.entity.Comment;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Set;
@@ -177,7 +176,7 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
         followAnim = findViewById(R.id.follow_heart_details_iv_follow_anim);
         fanNum = findViewById(R.id.tv_fanNum_details_heart);
         btnFollow = findViewById(R.id.follow_heart_details_btn_follow);
-        if(user.isFollow()){
+        if(isFollow){
             btnFollow.setText("关注+");
         }else{
             btnFollow.setText("已关注");
@@ -560,7 +559,7 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
     public void deleteComment() {
         for(Comment comment1 :commentList){
             if(comment1.getId() == deleteComment.getId()){
-                commentList.remove(comment1);
+                commentList.remove(deleteComment);
                 break;
             }
         }
@@ -619,16 +618,6 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
-    public void deleteContent() {
-
-    }
-
-    @Override
-    public void deleteError() {
-
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         PreventKeyboardBlockUtil.getInstance(this).setBtnView(edComment).register();
@@ -664,11 +653,4 @@ public class HeartActivity extends AppCompatActivity implements ContentView {
         deleteComment = comment;
         presenter.deleteComment(comment.getId());
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
 }

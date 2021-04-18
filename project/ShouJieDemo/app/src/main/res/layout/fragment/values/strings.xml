@@ -1,1 +1,30 @@
-<resources></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="myCenter">个人中心</string>
+    <string name="mySpace">我的空间</string>
+    <string name="store">收藏</string>
+    <string name="personalInfo">个人信息</string>
+    <string name="helpCenter">帮助中心</string>
+    <string name="myFollow">我的关注</string>
+    <string name="myAgreement">我的点赞</string>
+    <string name="changePassword">修改密码</string>
+    <string name="setSafeQuestion">设置安全问题</string>
+    <string name="setEmail">绑定邮箱</string>
+    <string name="destroyAccount">注销账号*</string>
+    <string name="AccountAndSafe">账号与安全</string>
+    <string name="feedback">帮助与反馈</string>
+    <string name="about">关于</string>
+    <string name="setSafeInfo">绑定安全信息</string>
+    <string name="setting">设置</string>
+    <string name="nightMode">夜间模式</string>
+    <string name="clearCookie">清理缓存</string>
+    <string name="logout">退出登录</string>
+    <string name="todo">TODO</string>
+    <string name="loginName">账户：</string>
+    <string name="loginPassword">密码：</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="userFans">粉丝数:2020</string>
+    <string name="userName">用户名</string>
+    <string name="userSign">如果有来生，要做一只鸟，飞越永恒，没有迷途的烦恼。如果有来生，要当一棵树，站成永恒，没有悲欢的姿势。</string>
+</resources>

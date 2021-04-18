@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/myFollow_return"
             android:src="@drawable/left"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
@@ -39,7 +38,7 @@
         android:id="@+id/myFollow_articleRec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorActivity">
+        android:background="@color/dayLightActivity">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

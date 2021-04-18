@@ -18,13 +18,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="注册用户名："
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:textSize="20sp"/>
             <EditText
                 android:id="@+id/register_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:maxLines="1"
                 android:maxLength="16"
                 android:inputType="text"
@@ -41,14 +41,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:text="注册密码："
                 android:textSize="20sp"/>
             <EditText
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:maxLines="1"
                 android:maxLength="16"
                 android:inputType="textPassword"
@@ -66,13 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="重复密码："
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:textSize="20sp"/>
             <EditText
                 android:id="@+id/register_repeatPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/dayLightText"
                 android:inputType="textPassword"
                 android:textSize="15sp"/>
         </LinearLayout>

@@ -14,8 +14,6 @@ public class User implements Serializable {
     private int fennum;
     private int follownum;
     private boolean isFollow;
-    private String backgroundpic1;      //个人中心的背景图
-    private String backgroundpic2;      //我的空间背景图
 
     public User(){
 
@@ -101,22 +99,6 @@ public class User implements Serializable {
         isFollow = follow;
     }
 
-    public String getBackgroundpic1() {
-        return backgroundpic1;
-    }
-
-    public void setBackgroundpic1(String backgroundpic1) {
-        this.backgroundpic1 = backgroundpic1;
-    }
-
-    public String getBackgroundpic2() {
-        return backgroundpic2;
-    }
-
-    public void setBackgroundpic2(String backgroundpic2) {
-        this.backgroundpic2 = backgroundpic2;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -130,8 +112,6 @@ public class User implements Serializable {
                 ", fennum=" + fennum +
                 ", follownum=" + follownum +
                 ", isFollow=" + isFollow +
-                ", backgroundpic1='" + backgroundpic1 + '\'' +
-                ", backgroundpic2='" + backgroundpic2 + '\'' +
                 '}';
     }
 }

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenterLisenter;
-import com.example.shoujiedemo.fround.presenter.FroundOperationPresenterListener;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
@@ -88,7 +87,7 @@ public class ArticleLoadDataModelImpl implements FroundLoadDataModel{
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String jsons = responseBody.string();
-                            if(jsons !=null) {
+                            if(jsons !=null && !jsons.equals("")) {
                                 listener.onSearchDataSuccess(jsons);
                             }else {
                                 listener.onSearchDataError();

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorBackground">
+        android:background="@color/dayLightBackground">
         <!-- 帮助与反馈标题 -->
         <LinearLayout
             android:id="@+id/myCenter_setting_feedback_title"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/feedback"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/dayLightTitle"
                 android:gravity="center"/>
         </LinearLayout>
         <View

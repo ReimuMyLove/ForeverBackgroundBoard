@@ -20,7 +20,6 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.ArticleEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.SearchEvent;
-import com.example.shoujiedemo.bean.UploadBean;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
@@ -47,9 +46,7 @@ import java.util.List;
 public class ArticleFragment extends Fragment implements ArticleView {
 
     private List<Content> articleList = new ArrayList<>();
-    private List<Content> searchList = new ArrayList<>();
     private ArticleAdapter articleAdapter;
-    private ArticleAdapter searchAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
     private MsgEvent msgEvent;
@@ -57,10 +54,7 @@ public class ArticleFragment extends Fragment implements ArticleView {
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
     private boolean isRefresh = false;
-    private int searchTag = 0;
-    private boolean isSearchRefresh = false;
-    private String flag = "";
-    private int search = 0;
+    private String flag;
 
 
     public ArticleFragment() {
@@ -105,19 +99,13 @@ public class ArticleFragment extends Fragment implements ArticleView {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if(search == 1 && flag.length() != 0) {
-                    pageNum = 1;
-                    searchList.clear();
-                    searchTag = 0;
+                if(flag != null){
                     presenter.searchData(flag,0,pageNum,UserUtil.USER_ID);
-                    refreshLayout.finishRefresh(600);
-                }else{
-                    pageNum = 1;
-                    articleList.clear();
-                    refreshTag = 0;
-                    presenter.confirmInitContent(0, 1, UserUtil.USER_ID);
-                    refreshLayout.finishRefresh(600);
                 }
+                pageNum = 1;
+                articleList.clear();
+                presenter.confirmInitContent(0,1, UserUtil.USER_ID);
+                refreshLayout.finishRefresh(600);
 
             }
 
@@ -126,18 +114,18 @@ public class ArticleFragment extends Fragment implements ArticleView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(flag.length() != 0 && search == 1){
-                    presenter.searchData(flag,0,pageNum,UserUtil.USER_ID);
-                    refreshLayout.finishLoadMore(600);
-                }else {
-                    presenter.confirmInitContent(0, pageNum, UserUtil.USER_ID);
-                    refreshLayout.finishLoadMore(600);
-                }
+
+                presenter.confirmInitContent(0,pageNum,UserUtil.USER_ID);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
     }
 
+    /*private void initView(View view) {
+
+        presenter.confirmInitContent(0,pageNum);
+    }*/
 
     @Override
     public void showContentListData(List<Content> articles) {
@@ -181,47 +169,11 @@ public class ArticleFragment extends Fragment implements ArticleView {
 
     @Override
     public void showSearchList(List<Content> contents) {
-        /*if(contents != null) {
+        if(contents != null) {
             ArticleAdapter searthAdapter = new ArticleAdapter(contents,getActivity());
             recyclerView.setAdapter(searthAdapter);
             pageNum++;
-        }*/
-        if(searchList.size() < 10 || searchList == null) {
-            if(searchTag == 0) {
-                this.searchList = contents;
-                searchAdapter = new ArticleAdapter(searchList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(searchAdapter);
-                searchTag = 1;
-            }else{
-                List<Content> newContents = new ArrayList<>();
-                for(Content content :searchList){
-                    for(Content content1:contents){
-                        if(content.getId() == content1.getId())
-                            newContents.add(content1);
-                    }
-                }
-                searchList.addAll(contents);
-                searchList.removeAll(newContents);
-                searchAdapter.notifyDataSetChanged();
-            }
-            if(articleList.size() == 10)
-                pageNum++;
-        }else{
-            List<Content> newList = new ArrayList<>();
-            for(Content content :searchList){
-                for(Content content1:contents){
-                    if(content.getId() == content1.getId())
-                        newList.add(content1);
-                }
-            }
-            searchList.addAll(contents);
-            searchList.removeAll(newList);
-            if(searchList.size() % 10 == 0)
-                ++pageNum;
-            searchAdapter.notifyDataSetChanged();
         }
-        isSearchRefresh = true;
     }
 
     @Override
@@ -332,22 +284,11 @@ public class ArticleFragment extends Fragment implements ArticleView {
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
-        flag = event.getTag();
         if(event.getPosition() == 1) {
-            search = 1;
+            flag = event.getTag();
             pageNum = 1;
             presenter.searchData(flag, 0, pageNum, UserUtil.USER_ID);
         }
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void UploadRefresh(UploadBean bean){
-        if(bean.getTypeId() == 0){
-            articleList.clear();
-            pageNum = 1;
-            presenter.confirmInitContent(0,pageNum,UserUtil.USER_ID);
-        }
-    }
-
 
 }

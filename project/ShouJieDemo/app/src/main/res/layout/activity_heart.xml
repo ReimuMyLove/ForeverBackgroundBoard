@@ -96,9 +96,9 @@
                 android:id="@+id/follow_heart_details_btn_follow"
                 android:layout_width="55dp"
                 android:layout_height="20dp"
-                android:layout_alignTop="@id/tv_userName_details_heart"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
+                android:layout_alignTop="@id/tv_userName_details_heart"
                 android:background="@drawable/btn_circle_shape"
                 android:text="已关注" />
                 <TextView
@@ -113,22 +113,22 @@
                     android:layout_height="wrap_content"/>
 
             <com.example.shoujiedemo.util.CircleImageView
-                android:layout_below="@id/tv_content_details_heart"
+                android:layout_below="@id/iv_head_details_heart"
                 android:id="@+id/heart_details_iv_cover"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="180dp"
                 android:layout_height="180dp"/>
 
             <TextView
                 android:gravity="left"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginBottom="50dp"
                 android:layout_marginTop="40dp"
-                android:layout_below="@id/iv_head_details_heart"
+                android:layout_below="@id/heart_details_iv_cover"
                 android:id="@+id/tv_content_details_heart"
                 android:textColor="#95000000"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 android:lineHeight="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -136,13 +136,12 @@
 
             <LinearLayout
                 android:id="@+id/ln_num"
-                android:layout_marginTop="60dp"
-                android:layout_below="@id/heart_details_iv_cover"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tv_content_details_heart"
                 android:elevation="2dp"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
-                android:paddingTop="10dp"
-                android:background="#109C9C9C"
+                android:background="#509C9C9C"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -153,7 +152,7 @@
                     <TextView
                         android:text="评论"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -162,7 +161,7 @@
                         android:text="0"
                         android:textSize="12sp"
                         android:id="@+id/follow_heart_tv_comment_num2"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -176,7 +175,7 @@
                     <TextView
                         android:text="收藏"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -185,7 +184,7 @@
                         android:text="0"
                         android:id="@+id/follow_heart_tv_collection_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -197,7 +196,7 @@
                     <TextView
                         android:text="点赞"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -206,7 +205,7 @@
                         android:text="0"
                         android:id="@+id/follow_heart_tv_fa_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="#fff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -244,7 +243,7 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
-        android:background="#60D3D3D3"
+        android:background="#BEBEBE"
         android:layout_above="@id/operation"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>

@@ -19,13 +19,10 @@ import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.bean.HeartEvent;
 import com.example.shoujiedemo.bean.MsgEvent;
 import com.example.shoujiedemo.bean.SearchEvent;
-import com.example.shoujiedemo.bean.UploadBean;
 import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Heart;
 import com.example.shoujiedemo.fround.adapter.ArticleAdapter;
 import com.example.shoujiedemo.fround.adapter.HeartAdapter;
-import com.example.shoujiedemo.fround.adapter.HotAdapter;
-import com.example.shoujiedemo.fround.adapter.PoemAdapter;
 import com.example.shoujiedemo.fround.presenter.ArticleLoadDataPresenterImpl;
 import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenter;
 import com.example.shoujiedemo.fround.presenter.HeartLoadDataPresenterImpl;
@@ -51,8 +48,6 @@ public class MindFragment extends Fragment implements HeartView {
 
     private MsgEvent msgEvent;
     private List<Content> heartList = new ArrayList<>();
-    private List<Content> searchList = new ArrayList<>();
-    private HeartAdapter searchAdapter;
     private HeartAdapter heartAdapter;
     private RecyclerView recyclerView;
     private FroundLoadDataPresenter presenter;
@@ -60,10 +55,7 @@ public class MindFragment extends Fragment implements HeartView {
     private SmartRefreshLayout smartRefreshLayout;
     private int refreshTag = 0;
     private boolean isRefresh = false;
-    private String flag = "";
-    private int search = 0;
-    private int searchTag = 0;
-    private boolean isSearchRefresh = false;
+    private String flag;
 
     public MindFragment() {
         // Required empty public constructor
@@ -93,18 +85,14 @@ public class MindFragment extends Fragment implements HeartView {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if(flag.length() != 0 && search == 1){
-                    pageNum = 1;
-                    searchList.clear();
-                    searchTag = 0;
+                if(flag != null){
                     presenter.searchData(flag,2,pageNum,UserUtil.USER_ID);
-                    refreshLayout.finishRefresh(600);
-                }else {
-                    pageNum = 1;
-                    heartList.clear();
-                    presenter.confirmInitContent(2, 1, UserUtil.USER_ID);
-                    refreshLayout.finishRefresh(600);
                 }
+                pageNum = 1;
+                heartList.clear();
+                presenter.confirmInitContent(2,1, UserUtil.USER_ID);
+                refreshLayout.finishRefresh(600);
+
             }
 
         });
@@ -112,13 +100,9 @@ public class MindFragment extends Fragment implements HeartView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(flag.length() != 0 && search == 1){
-                    presenter.searchData(flag,2,pageNum,UserUtil.USER_ID);
-                    refreshLayout.finishLoadMore(600);
-                }else {
-                    presenter.confirmInitContent(2, pageNum, UserUtil.USER_ID);
-                    refreshLayout.finishLoadMore(600);
-                }
+
+                presenter.confirmInitContent(2,pageNum,UserUtil.USER_ID);
+                refreshLayout.finishLoadMore(600);
             }
         });
         return view;
@@ -175,45 +159,11 @@ public class MindFragment extends Fragment implements HeartView {
 
     @Override
     public void showSearchList(List<Content> contents) {
-        if(searchList.size() < 10 || searchList == null) {
-            if(searchTag == 0) {
-                this.searchList = contents;
-                searchAdapter = new HeartAdapter(searchList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(searchAdapter);
-                searchTag = 1;
-            }else{
-                List<Content> newHearts = new ArrayList<>();
-                for(Content content:searchList){
-                    for(Content content1:contents){
-                        if(content.getId() == content1.getId())
-                            newHearts.add(content1);
-                    }
-                }
-                searchList.addAll(contents);
-                searchList.removeAll(newHearts);
-                searchAdapter.notifyDataSetChanged();
-            }
-            if(searchList.size() == 10)
-                pageNum++;
-        }else{
-            List<Content> newList = new ArrayList<>();
-            for(Content content :searchList){
-                for(Content content1:contents){
-                    if(content.getId() == content1.getId())
-                        newList.add(content1);
-                }
-            }
-            searchList.addAll(contents);
-            searchList.removeAll(newList);
-
-            if(searchList.size() % 10 == 0)
-                pageNum++;
-
-            searchAdapter.notifyDataSetChanged();
+        if(contents != null) {
+            HeartAdapter searthAdapter = new HeartAdapter(contents,getActivity());
+            recyclerView.setAdapter(searthAdapter);
+            pageNum++;
         }
-
-        isSearchRefresh = true;
     }
 
     @Override
@@ -323,20 +273,11 @@ public class MindFragment extends Fragment implements HeartView {
     }
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void SearchMain(SearchEvent event){
-        flag = event.getTag();
+
         if(event.getPosition() == 2) {
-            search = 1;
+            flag = event.getTag();
             pageNum = 1;
             presenter.searchData(flag, 2, pageNum, UserUtil.USER_ID);
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void UploadRefresh(UploadBean bean){
-        if(bean.getTypeId() == 2){
-            heartList.clear();
-            pageNum = 1;
-            presenter.confirmInitContent(2,pageNum,UserUtil.USER_ID);
         }
     }
 }

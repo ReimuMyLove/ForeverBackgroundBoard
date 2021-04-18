@@ -90,22 +90,4 @@ public abstract class BaseMusic<M extends BaseMusic<M>> extends Model<M> impleme
 		return getStr("text");
 	}
 
-	public M setCheatnum(java.lang.Integer cheatnum) {
-		set("cheatnum", cheatnum);
-		return (M)this;
-	}
-	
-	public java.lang.Integer getCheatnum() {
-		return getInt("cheatnum");
-	}
-
-	public M setSinger(java.lang.String singer) {
-		set("singer", singer);
-		return (M)this;
-	}
-	
-	public java.lang.String getSinger() {
-		return getStr("singer");
-	}
-
 }

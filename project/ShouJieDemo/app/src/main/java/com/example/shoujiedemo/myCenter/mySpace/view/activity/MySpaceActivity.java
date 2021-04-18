@@ -3,7 +3,6 @@ package com.example.shoujiedemo.myCenter.mySpace.view.activity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -26,9 +24,9 @@ import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.myCenter.mySpace.presenter.MySpacePresenter;
-import com.example.shoujiedemo.myCenter.mySpace.view.activity.activity.AddGroupActivity;
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.MySpaceArticleFragment;
-import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.MySpaceMusicFragment;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.MySpaceIdeaFragment;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.fragment.MySpacePoemFragment;
 import com.example.shoujiedemo.myCenter.mySpace.view.inter.MySpaceView;
 import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.CircleImageView;
@@ -39,8 +37,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +53,8 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
             mySpace_topTab;                 //获取tab栏
     TabItem
             mySpace_article,                //获取文章标题栏
-            mySpace_music;                  //获取音乐标题栏
+            mySpace_poem,                   //获取诗集标题栏
+            mySpace_idea;                   //获取感悟标题栏
     ViewPager2
             mySpace_view;                   //获取对应viewPage2
     List<Fragment>
@@ -67,24 +64,23 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
             mySpace_add;                    //添加按钮
     MySpacePresenter
             mySpacePresenter;               //绑定Presenter
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myspace);
-        EventBus.getDefault().register(this);
         mySpacePresenter = new MySpacePresenter(this);
         //获取view控件
         FindView();
         //设置控件宽高
         SetViewHW();
-        //设置监听器
-        setListener();
         //设置控件属性
         setViewValue();
+        //设置监听器
+        setListener();
         //绑定fragment页面
         fragments.add(new MySpaceArticleFragment());   //文章页面
-        fragments.add(new MySpaceMusicFragment());     //音乐页面
+        fragments.add(new MySpaceIdeaFragment());      //感悟页面
+        fragments.add(new MySpacePoemFragment());      //诗页面
         //绑定Fragment
         mySpace_view.setAdapter(new MyFragmentPagerAdapter(this,fragments));
         //绑定点击监听器
@@ -95,8 +91,11 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
                     tab.setText("　　文集　　");
                     mySpace_view.setCurrentItem(0);
                 }else if(position == 1){
-                    tab.setText("　　音乐　　");
+                    tab.setText("　　感悟　　");
                     mySpace_view.setCurrentItem(1);
+                }else if(position == 2){
+                    tab.setText("　　诗　　");
+                    mySpace_view.setCurrentItem(2);
                 }
             }
         }).attach();
@@ -130,8 +129,9 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
         mySpace_background = findViewById(R.id.mySpace_background);
         mySpace_userImg = findViewById(R.id.mySpace_userImg);
         mySpace_userName = findViewById(R.id.mySpace_userName);
+        mySpace_poem = findViewById(R.id.mySpace_poem);
         mySpace_article = findViewById(R.id.mySpace_article);
-        mySpace_music = findViewById(R.id.mySpace_music);
+        mySpace_idea = findViewById(R.id.mySpace_idea);
         mySpace_view = findViewById(R.id.mySpace_view);
         mySpace_topTab = findViewById(R.id.mySpace_topTab);
         mySpace_userFans = findViewById(R.id.mySpace_userFans);
@@ -165,38 +165,21 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
      */
     @SuppressLint("SetTextI18n")
     private void setViewValue(){
-        User user = (User)getIntent().getSerializableExtra("user");
-        if(user!=null){     //判断是否有用户对象传递过来
-            if(user.getId() != UserUtil.USER_ID){
-                //判断传递过来的用户对象与本地用户是否一致
-                mySpace_add.setVisibility(View.INVISIBLE);
-                mySpace_follow.setVisibility(View.VISIBLE);
-                getOwnerInfo(user.getId());
-            }else{
-                Toast.makeText(this, "偶然：未知错误", Toast.LENGTH_SHORT).show();
-            }
+        if(UserUtil.RECENT_USER_ID != UserUtil.USER_ID){
+            mySpace_add.setVisibility(View.INVISIBLE);
+            mySpace_follow.setVisibility(View.VISIBLE);
+            getOwnerInfo(UserUtil.RECENT_USER_ID);
         }else{
-            mySpace_add.setVisibility(View.VISIBLE);            //添加文集可见
-            mySpace_follow.setVisibility(View.INVISIBLE);       //自身空间关注按钮不可见
-            mySpace_userFans.setText(UserUtil.USER_FANS+"");    //粉丝数
-            mySpace_userName.setText(UserUtil.USER_NAME);       //用户名
-            UserUtil.RECENT_USER_ID = UserUtil.USER_ID;         //用户ID(不可见,作为参数使用
-            if (!UserUtil.USER_IMG.equals("")){                 //用户头像
-                String URL = ConfigUtil.BASE_HEAD_URL+UserUtil.USER_IMG;
-                RequestOptions requestOptions = new RequestOptions().centerCrop();
-                Glide.with(getBaseContext())
-                        .load(URL)
-                        .apply(requestOptions)
-                        .into(mySpace_userImg);
-            }
-            if(!UserUtil.USER_SPACE_BACKGROUND.equals("")){     //用户背景图
-                String URL = ConfigUtil.BASE_HEAD_URL+UserUtil.USER_SPACE_BACKGROUND;
-                RequestOptions requestOptions = new RequestOptions().centerCrop();
-                Glide.with(getBaseContext())
-                        .load(URL)
-                        .apply(requestOptions)
-                        .into(mySpace_background);
-            }
+            mySpace_add.setVisibility(View.VISIBLE);
+            mySpace_follow.setVisibility(View.INVISIBLE);
+            mySpace_userFans.setText(UserUtil.USER_FANS+"");
+            mySpace_userName.setText(UserUtil.USER_NAME);
+            String URL = ConfigUtil.BASE_HEAD_URL+UserUtil.USER_IMG;
+            RequestOptions requestOptions = new RequestOptions().centerCrop();
+            Glide.with(getBaseContext())
+                    .load(URL)
+                    .apply(requestOptions)
+                    .into(mySpace_userImg);
         }
     }
 
@@ -230,9 +213,40 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
      * 添加新文集方法
      */
     private void addSet(){
-        Intent intent = new Intent(this, AddGroupActivity.class);
-        startActivityForResult(intent,5);
+        /*Intent intent = new Intent(this,AddGroupActivity.class);
+        startActivityForResult(intent,5);*/
+        final String[] groupName = new String[1];
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(MySpaceActivity.this,R.layout.dialog_addgroup,null);
+        final EditText name = view.findViewById(R.id.mySpace_dialog_name);
+        builder.setCancelable(true);
+        builder.setView(view);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                groupName[0] = name.getText().toString();
+                addArticleGroup(UserUtil.RECENT_USER_ID,groupName[0]);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
+
+    /**
+     * 新建文集方法
+     * @param userID    当前人ID
+     * @param groupName 新建文集名
+     */
+    private void addArticleGroup(int userID,String groupName) {
+        mySpacePresenter.addGroups(userID,groupName);
+    }
+
 
     /**
      *  添加文集数据回调方法
@@ -246,7 +260,6 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
     @Override
     public void addGroupSuccessful(Set set) {
         EventBus.getDefault().postSticky(set);
-        Toast.makeText(this, "偶然：添加成功", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -269,7 +282,7 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
 
     @Override
     public void addFollowSuccessful() {
-        mySpace_follow.setBackgroundResource(R.drawable.followed_mypace);
+        mySpace_follow.setText("已关注");
         Toast.makeText(this, "偶然：关注成功", Toast.LENGTH_SHORT).show();
     }
 
@@ -288,39 +301,24 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
         Toast.makeText(this, "偶然：获取空间信息失败", Toast.LENGTH_SHORT).show();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void getOwnerInfoSuccessful(User userInfo) {
         if (userInfo != null){
-            mySpace_userFans.setText(userInfo.getFennum()+"");
+            mySpace_userFans.setText(userInfo.getFennum());
             mySpace_userName.setText(userInfo.getName());
-            if (userInfo.getPicname() != null ){
-                if(!userInfo.getPicname().equals("")){
-                    String URL = ConfigUtil.BASE_HEAD_URL+userInfo.getPicname();
-                    RequestOptions requestOptions = new RequestOptions().centerCrop();
-                    Glide.with(getBaseContext())
-                            .load(URL)
-                            .apply(requestOptions)
-                            .into(mySpace_userImg);
-                }
-            }
-            if (userInfo.getBackgroundpic2()!=null){
-                if(!userInfo.getBackgroundpic2().equals("")){
-                    String URL = ConfigUtil.BASE_BACKGROUND_URL+userInfo.getBackgroundpic2();
-                    RequestOptions requestOptions = new RequestOptions().centerCrop();
-                    Glide.with(getBaseContext())
-                            .load(URL)
-                            .apply(requestOptions)
-                            .into(mySpace_background);
-                }
-            }
+            String URL = ConfigUtil.BASE_HEAD_URL+userInfo.getPicname();
             if (userInfo.isFollow()){
-                mySpace_follow.setBackgroundResource(R.drawable.follow_mys);
-                mySpace_follow.setClickable(true);
-            }else{
-                mySpace_follow.setBackgroundResource(R.drawable.followed_mypace);
+                mySpace_follow.setText("已关注");
                 mySpace_follow.setClickable(false);
+            }else{
+                mySpace_follow.setText("关注+");
+                mySpace_follow.setClickable(true);
             }
+            RequestOptions requestOptions = new RequestOptions().centerCrop();
+            Glide.with(getBaseContext())
+                    .load(URL)
+                    .apply(requestOptions)
+                    .into(mySpace_userImg);
         }
     }
 }

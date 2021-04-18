@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.shoujiedemo.R;
@@ -40,7 +39,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(homeFragment);
         froundFragment = new FroundFragment(viewPager2,this);
         fragments.add(froundFragment);
-        fragments.add(new MessageFragment(viewPager2));
+        fragments.add(new MessageFragment());
         fragments.add(new OwnerFragment());
         //绑定Fragment
 
@@ -58,17 +57,11 @@ public class MainActivity extends BaseActivity {
                 super.onPageSelected(position);
                 //滑动页面时底部按钮改变
                 navigationView.getMenu().getItem(position).setChecked(true);
-                if(position<=1 || position == 2){
-                    viewPager2.setUserInputEnabled(false);
-                }else{
+                if(position > 1){
                     viewPager2.setUserInputEnabled(true);
+                }else{
+                    viewPager2.setUserInputEnabled(false);
                 }
-               /* if (position == 2){
-                    viewPager2.setUserInputEnabled(false);
-                }else{
-                    viewPager2.setUserInputEnabled(true);
-                }*/
-
                 if(position <= 2){
                     StatusBarUtil.setStatusBarDarkTheme(MainActivity.this,true);
                 }else{

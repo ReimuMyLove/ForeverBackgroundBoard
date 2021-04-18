@@ -25,7 +25,7 @@
                 android:text="壁纸"
                 android:textSize="18sp"
                 android:padding="10dp"
-                android:textColor="@color/colorTitle" />
+                android:textColor="@color/dayLightTitle" />
 
             <View
                 android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:textSize="18sp"
                 android:padding="10dp"
                 android:text="头像"
-                android:textColor="@color/colorTitle" />
+                android:textColor="@color/dayLightTitle" />
 
             <View
                 android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@color/colorTitle"
+            android:textColor="@color/dayLightTitle"
             android:text="取消"
             android:background="@drawable/mycenter_userimgfunction_border"
             android:padding="10dp"

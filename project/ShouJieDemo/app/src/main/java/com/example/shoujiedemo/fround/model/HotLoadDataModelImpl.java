@@ -3,8 +3,6 @@ package com.example.shoujiedemo.fround.model;
 import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
-import com.example.shoujiedemo.fround.presenter.FroundLoadDataPresenterLisenter;
-import com.example.shoujiedemo.fround.presenter.FroundOperationPresenterListener;
 import com.example.shoujiedemo.fround.presenter.HotLoadDataPresenterListener;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -90,9 +88,7 @@ public class HotLoadDataModelImpl implements FroundHotDataModel{
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String jsons = responseBody.string();
-                            Log.e("hotJosons",jsons);
                             if(jsons !=null && !jsons.equals("")) {
-                                Log.e("hotJosons",jsons);
                                 listener.onSearchDataSuccess(jsons);
                             }else {
                                 listener.onSearchDataError();

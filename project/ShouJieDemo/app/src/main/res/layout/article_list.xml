@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/ouran"/>
+                android:background="@drawable/bg04"/>
             <TextView
                 android:id="@+id/article_title"
                 android:layout_width="match_parent"
@@ -81,51 +81,38 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/below"/>
             <androidx.cardview.widget.CardView
-                android:id="@+id/article_menu"
+                android:id="@+id/article_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:clickable="true"
-                app:cardCornerRadius="5dip"
+                app:cardCornerRadius="10dip"
                 android:visibility="invisible"
                 android:background="@drawable/mycenter_userimgfunction_border"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:focusable="true">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="90dp"
-                        android:layout_height="25dp"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/article_delete"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="删除"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="12sp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="删除"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/dayLightText"
+                        android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginStart="0dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/rubbishbin" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="90dp"
-                        android:layout_height="25dp"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/mySpace_changeBackGround"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="更换封面"
-                            android:textColor="@color/colorTitle"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/rubbishbin" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

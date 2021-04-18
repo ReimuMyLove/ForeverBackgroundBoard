@@ -3,7 +3,6 @@ package com.example.shoujiedemo.myCenter.setting.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +19,8 @@ import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.Sa
 import com.example.shoujiedemo.myCenter.setting.view.inter.SettingView;
 import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.SwitchButton;
+
+import static androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode;
 
 public class SettingActivity extends BaseActivity implements SettingView{
     View
@@ -50,7 +51,6 @@ public class SettingActivity extends BaseActivity implements SettingView{
         //绑定Presenter
         settingPresenter = new SettingPresenter();
         //计算当前Cookie大小并显示在页面中
-        isNightMode();
         GetCookieSize();
     }
 
@@ -81,7 +81,6 @@ public class SettingActivity extends BaseActivity implements SettingView{
         myCenter_setting_about.setOnClickListener(listener);
         myCenter_setting_logout.setOnClickListener(listener);
         myCenter_setting_return.setOnClickListener(listener);
-        myCenter_setting_nightModeSwitch.setOnClickListener(listener);
     }
 
     /**
@@ -89,25 +88,12 @@ public class SettingActivity extends BaseActivity implements SettingView{
      */
     @Override
     public void NightModeChange() {
-        int isNightMode = AppCompatDelegate.getDefaultNightMode();
-        Log.e("夜间模式",isNightMode+"");
+        if(myCenter_setting_nightModeSwitch.isChecked()){
+            setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         myCenter_setting_nightModeSwitch.startAnimate();
-        if(isNightMode == AppCompatDelegate.MODE_NIGHT_NO){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else{
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        Log.e("夜间模式",isNightMode+"");
-    }
-
-    public void isNightMode(){
-        int isNightMode = AppCompatDelegate.getDefaultNightMode();
-        if(isNightMode == AppCompatDelegate.MODE_NIGHT_YES ||
-                isNightMode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM){
-            myCenter_setting_nightModeSwitch.setChecked(true);
-        }else{
-            myCenter_setting_nightModeSwitch.setChecked(false);
-        }
     }
 
     /**
@@ -137,7 +123,6 @@ public class SettingActivity extends BaseActivity implements SettingView{
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.myCenter_setting_nightModeSwitch:
-                    Log.e("夜间模式",AppCompatDelegate.getDefaultNightMode()+"");
                     NightModeChange();
                     break;
                 case R.id.myCenter_setting_safe:

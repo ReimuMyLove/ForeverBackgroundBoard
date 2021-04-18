@@ -1,14 +1,15 @@
 package com.example.shoujiedemo.myCenter.myCenter.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,32 +18,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.bean.ImgChangeEvent;
+import com.example.shoujiedemo.myCenter.myCenter.presenter.OwnerPresenter;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.HelpCenterActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyAgreementActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyFollowActivity;
-import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyCommentActivity;
+import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.StoringActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.UserInfoActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.UserImgPopupWindow;
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.myCenter.setting.view.activity.SettingActivity;
 import com.example.shoujiedemo.util.CircleImageView;
-import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.TrancircleImageView;
 import com.example.shoujiedemo.util.UserUtil;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 个人页面
  */
 public class OwnerFragment extends Fragment {
-    private static int eventBus = 1;
     TrancircleImageView
             myCenter_userImg_background;    //获取头像背景三角
     CircleImageView
@@ -66,6 +59,7 @@ public class OwnerFragment extends Fragment {
             myCenter_card       ;           //获取选项卡片
     Button
             myCenter_setting_intent;        //获取设置跳转按钮
+    OwnerPresenter ownerPresenter  ;        //获取Presenter
     UserImgPopupWindow
             userImgPopupWindow;             //获取PopupWindow
     View view;
@@ -73,11 +67,6 @@ public class OwnerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -89,29 +78,13 @@ public class OwnerFragment extends Fragment {
         FindView(view);
         /* 设置监听器 */
         SetListener();
+        /* 设置Presenter */
+        ownerPresenter = new OwnerPresenter();
         /* 配置控件长宽高 */
         SetViewHW();
         //设置粉丝数、用户名
         myCenter_userName.setText(UserUtil.USER_NAME);
-        myCenter_userFans.setText("粉丝数："+UserUtil.USER_FANS);
-        if(!UserUtil.USER_IMG.equals("")){
-            RequestOptions requestOptions = new RequestOptions()
-                    .placeholder(R.drawable.iv_default)
-                    .fallback(R.drawable.ouran_default)
-                    .centerCrop();
-            Glide.with(this)
-                    .load(ConfigUtil.BASE_HEAD_URL+UserUtil.USER_IMG)
-                    .apply(requestOptions)
-                    .into(myCenter_userImg);
-        }
-        if(!UserUtil.USER_CENTER_BACKGROUND.equals("")){     //用户背景图
-            String URL = ConfigUtil.BASE_HEAD_URL+UserUtil.USER_CENTER_BACKGROUND;
-            RequestOptions requestOptions = new RequestOptions().centerCrop();
-            Glide.with(view.getContext())
-                    .load(URL)
-                    .apply(requestOptions)
-                    .into(myCenter_userBackground);
-        }
+        myCenter_userFans.setText("粉丝数:" + UserUtil.USER_FANS);
         userImgPopupWindow = new UserImgPopupWindow(view.getContext());
         return view;
     }
@@ -239,6 +212,7 @@ public class OwnerFragment extends Fragment {
 
     public void MySpaceIntent() {
         Intent intent = new Intent(this.getContext(), MySpaceActivity.class);
+        UserUtil.RECENT_USER_ID = UserUtil.USER_ID;
         startActivity(intent);
     }
 
@@ -248,7 +222,7 @@ public class OwnerFragment extends Fragment {
     }
 
     public void StoringIntent() {
-        Intent intent = new Intent(this.getContext(), MyCommentActivity.class);
+        Intent intent = new Intent(this.getContext(), StoringActivity.class);
         startActivity(intent);
     }
 
@@ -272,40 +246,5 @@ public class OwnerFragment extends Fragment {
      */
     private void UserImg(View view){
         userImgPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void updateUserImg(ImgChangeEvent imgChangeEvent){
-        int imgNumber = imgChangeEvent.getImgChangeID();
-        if(imgNumber == 1){
-            if(!UserUtil.USER_CENTER_BACKGROUND.equals("")){     //用户背景图
-                String URL = ConfigUtil.BASE_HEAD_URL+UserUtil.USER_CENTER_BACKGROUND;
-                RequestOptions requestOptions = new RequestOptions()
-                        .placeholder(R.drawable.iv_default)
-                        .fallback(R.drawable.ouran_default)
-                        .centerCrop();
-                Glide.with(view.getContext())
-                        .load(URL)
-                        .apply(requestOptions)
-                        .into(myCenter_userBackground);
-            }
-        }else if(imgNumber == 2){
-            if(!UserUtil.USER_IMG.equals("")){
-                RequestOptions requestOptions = new RequestOptions()
-                        .placeholder(R.drawable.iv_default)
-                        .fallback(R.drawable.ouran_default)
-                        .centerCrop();
-                Glide.with(this)
-                        .load(ConfigUtil.BASE_HEAD_URL+UserUtil.USER_IMG)
-                        .apply(requestOptions)
-                        .into(myCenter_userImg);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

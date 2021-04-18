@@ -25,7 +25,4 @@ public interface MyFollowOperatePresenter {
     void loadSet(int userId);//加载文集
 
     void deleteComment(int commentId);//删除评论
-
-    void deleteContent(int id);//删除
-
 }

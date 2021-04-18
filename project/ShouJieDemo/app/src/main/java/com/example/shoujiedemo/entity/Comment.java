@@ -10,7 +10,6 @@ public class Comment {
     private String text;
     private String time;
     private User user;
-    private Content content;
 
     public Comment(){
 
@@ -78,14 +77,6 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
     }
 
     @Override

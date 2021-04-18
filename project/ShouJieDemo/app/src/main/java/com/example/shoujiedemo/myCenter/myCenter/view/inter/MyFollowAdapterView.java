@@ -5,8 +5,4 @@ public interface MyFollowAdapterView {
     void cancelFailed();
 
     void cancelSuccessful(int followerID);
-
-    void addSuccessful(int followerID);
-
-    void addFailed();
 }

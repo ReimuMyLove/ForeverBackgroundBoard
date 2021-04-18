@@ -6,50 +6,30 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.activity.MusicActivity;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
-import com.example.shoujiedemo.bean.MusicEvent;
 import com.example.shoujiedemo.bean.SearchEvent;
-import com.example.shoujiedemo.entity.Music;
-import com.example.shoujiedemo.entity.User;
-import com.example.shoujiedemo.fround.service.NetPlayMusicService;
-import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.upload.activity.AriticleUploadActivity;
 import com.example.shoujiedemo.upload.activity.HeartUploadActivity;
-import com.example.shoujiedemo.upload.activity.MusicUploadActivity;
 import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
-import com.example.shoujiedemo.util.MusicPlayUtil;
 import com.example.shoujiedemo.util.ToastUtils;
 import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,22 +54,10 @@ public class FroundFragment extends Fragment{
     private MindFragment mindFragment;
     private PoemFragment poemFragment;
     private MusicFragment musicFragment;
-    private Button btnSearch;//搜索按钮
-    private EditText edSearch;//搜索框
-    private View alreadyMusicView;//音乐布局
-    private Button btnAlreadyPlay;//播放
-    private ImageView alreayMusicCover;//音乐封面
-    private TextView alreayMusicSinger;//歌手
-    private TextView alreayMusicName;//名字
-    private Button getBtnAlreadyDismiss;//关闭
-    private Animation animation;
-    private Music music;
-    private User user;
+    private Button btnSearch;
+    private EditText edSearch;
 
 
-    public FroundFragment(){
-
-    }
 
 
     public FroundFragment(ViewPager2 viewPager2,Context context) {
@@ -99,11 +67,6 @@ public class FroundFragment extends Fragment{
 
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,87 +77,11 @@ public class FroundFragment extends Fragment{
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.e("FroundFragment","onDestroy");
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e("FroundFragment","onStop");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e("FroundFragment","onStart");
-        if(!MusicPlayUtil.IS_PAUSE && !MusicPlayUtil.IS_STOP){
-            animation = AnimationUtils.loadAnimation(context, R.anim.song_cover_rotate);
-            LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-            animation.setInterpolator(lin);
-            alreayMusicCover.startAnimation(animation);
-        }
-    }
-
     public void initView(View view){
         froundViewPager2 = view.findViewById(R.id.fround_view);
         froudnTab = view.findViewById(R.id.fround_topTab);
         btnSearch = view.findViewById(R.id.btn_search);
         edSearch = view.findViewById(R.id.ed_search);
-        alreadyMusicView = view.findViewById(R.id.already_music_view);
-        btnAlreadyPlay = view.findViewById(R.id.already_music_view_btn_play);
-        alreayMusicCover = view.findViewById(R.id.already_music_view_cover);
-        alreayMusicSinger = view.findViewById(R.id.already_music_view_tv_singer);
-        alreayMusicName = view.findViewById(R.id.already_music_view_tv_songName);
-        getBtnAlreadyDismiss = view.findViewById(R.id.already_music_view_dismiss);
-
-        alreadyMusicView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(context,MusicActivity.class);
-                Bundle bundle = new Bundle();
-                music.setStart(1);
-                bundle.putSerializable("music",music);
-                bundle.putSerializable("user",user);
-                Log.e("user",user.toString());
-                intent.putExtra("bundle",bundle);
-                startActivity(intent);
-
-            }
-        });
-
-        btnAlreadyPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(MusicPlayUtil.IS_PAUSE){
-                    MusicEvent event = new MusicEvent();
-                    event.setTag(3);
-                    EventBus.getDefault().postSticky(event);
-                }else{
-                    MusicEvent event = new MusicEvent();
-                    event.setTag(1);
-                    EventBus.getDefault().postSticky(event);
-
-                }
-            }
-        });
-
-        getBtnAlreadyDismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alreadyMusicView.setVisibility(View.GONE);
-                //isPause = false;
-                if(MusicPlayUtil.IS_PAUSE){
-                    MusicEvent event = new MusicEvent();
-                    event.setTag(2);
-                    EventBus.getDefault().postSticky(event);
-                }
-            }
-        });
 
         MultiChoicesCircleButton.Item item1 = new MultiChoicesCircleButton.Item("文章", getResources().getDrawable(R.drawable.article), 15);
 
@@ -202,7 +89,7 @@ public class FroundFragment extends Fragment{
 
         MultiChoicesCircleButton.Item item3 = new MultiChoicesCircleButton.Item("感悟", getResources().getDrawable(R.drawable.heart), 115);
 
-        MultiChoicesCircleButton.Item item4 = new MultiChoicesCircleButton.Item("音乐", getResources().getDrawable(R.drawable.music), 165);
+        MultiChoicesCircleButton.Item item4 = new MultiChoicesCircleButton.Item("音乐", getResources().getDrawable(R.drawable.heart), 165);
 
 
         List<MultiChoicesCircleButton.Item> buttonItems = new ArrayList<>();
@@ -222,22 +109,22 @@ public class FroundFragment extends Fragment{
                         Intent intent0=new Intent();
                         intent0.setClass(getContext(), AriticleUploadActivity.class);
                         startActivity(intent0);
+                        /*getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                     case 1:
                         Intent intent1=new Intent();
                         intent1.setClass(getContext(), PoemUploadActivity.class);
                         startActivity(intent1);
-
+                       /* getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                     case 2:
                         Intent intent2=new Intent();
                         intent2.setClass(getContext(), HeartUploadActivity.class);
                         startActivity(intent2);
-                        break;
-                    case 3:
-                        Intent intent3=new Intent();
-                        intent3.setClass(getContext(), MusicUploadActivity.class);
-                        startActivity(intent3);
+                        /*getActivity().overridePendingTransition(R.anim.activity_start_animal,
+                                R.anim.activity_end_animal);*/
                         break;
                 }
             }
@@ -321,29 +208,6 @@ public class FroundFragment extends Fragment{
             }
         });
 
-        edSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                    SearchEvent event = new SearchEvent();
-                    event.setPosition(-1);
-                    event.setTag(edSearch.getText().toString());
-                    EventBus.getDefault().postSticky(event);
-
-
-            }
-        });
-
-
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -383,48 +247,5 @@ public class FroundFragment extends Fragment{
         });
 
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED,sticky = true)
-    public void onMainPlay(Music music1){
-        music = music1;
-        if(music.getTag() == 1) {
-            if(!MusicPlayUtil.IS_STOP) {
-                RequestOptions requestOptions = new RequestOptions()
-                        .placeholder(R.drawable.iv_default)
-                        .fallback(R.drawable.ouran_default)
-                        .centerCrop();
-                if (music.getPic() != null) {
-                    Glide.with(context)
-                            .load(music.getPic())
-                            .apply(requestOptions)
-                            .into(alreayMusicCover);
-                }
-
-                if (!MusicPlayUtil.IS_PAUSE) {
-                    animation = AnimationUtils.loadAnimation(context, R.anim.song_cover_rotate);
-                    LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
-                    animation.setInterpolator(lin);
-                    alreayMusicCover.startAnimation(animation);
-                    alreayMusicName.setText(music.getName());
-                    alreayMusicSinger.setText(music.getSinger());
-                    btnAlreadyPlay.setBackgroundResource(R.drawable.pause);
-                    alreadyMusicView.setVisibility(View.VISIBLE);
-                } else {
-                    alreayMusicCover.clearAnimation();
-                    btnAlreadyPlay.setBackgroundResource(R.drawable.play);
-                }
-            }else{
-                alreayMusicCover.clearAnimation();
-                btnAlreadyPlay.setBackgroundResource(R.drawable.play);
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void getUser(User user){
-        this.user = user;
-    }
-
-
 
 }

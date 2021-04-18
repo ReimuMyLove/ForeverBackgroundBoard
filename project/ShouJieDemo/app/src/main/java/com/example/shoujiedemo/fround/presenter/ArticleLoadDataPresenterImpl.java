@@ -154,6 +154,7 @@ public class ArticleLoadDataPresenterImpl implements FroundLoadDataPresenter,Fro
             JSONArray collectArray = jsonArray.getJSONArray("collectdate");
             collect = collectArray.toString();
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -211,7 +212,7 @@ public class ArticleLoadDataPresenterImpl implements FroundLoadDataPresenter,Fro
             content1.setTime(time);
         }
         if(contents != null){
-            view.showSearchList(contents);
+            view.showContentListData(contents);
         }
     }
 
