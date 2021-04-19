@@ -46,31 +46,27 @@ public class LoginModelImpl implements LoginModel{
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String userInfo = responseBody.string();
-                            if(!userInfo.equals("false")){
-                                Gson gson = new Gson();
-                                User user;
-                                user = gson.fromJson(userInfo,User.class);
-                                UserUtil.USER_NAME = user.getName();
-                                UserUtil.USER_ID = user.getId();
-                                UserUtil.USER_FANS = user.getFennum();
-                                UserUtil.RECENT_USER_ID = user.getId();
-                                UserUtil.USER_AGE = user.getAge();
-                                UserUtil.USER_SEX = user.getSex();
-                                UserUtil.USER_SIGN = user.getSign();
-                                if (user.getPicname()!=null){
-                                    UserUtil.USER_IMG = user.getPicname();
-                                }
-                                if (user.getBackgroundpic1()!=null){
-                                    UserUtil.USER_CENTER_BACKGROUND = user.getBackgroundpic1();
-                                }
-                                if (user.getBackgroundpic2()!=null){
-                                    UserUtil.USER_SPACE_BACKGROUND = user.getBackgroundpic2();
-                                }
-                                userInfoSet(user,context);
-                                listener.OnLoginSuccessful();
-                            }else{
-                                listener.OnLoginFailed();
+                            Gson gson = new Gson();
+                            User user;
+                            user = gson.fromJson(userInfo,User.class);
+                            UserUtil.USER_NAME = user.getName();
+                            UserUtil.USER_ID = user.getId();
+                            UserUtil.USER_FANS = user.getFennum();
+                            UserUtil.RECENT_USER_ID = user.getId();
+                            UserUtil.USER_AGE = user.getAge();
+                            UserUtil.USER_SEX = user.getSex();
+                            UserUtil.USER_SIGN = user.getSign();
+                            if (user.getPicname()!=null){
+                                UserUtil.USER_IMG = user.getPicname();
                             }
+                            if (user.getBackgroundpic1()!=null){
+                                UserUtil.USER_CENTER_BACKGROUND = user.getBackgroundpic1();
+                            }
+                            if (user.getBackgroundpic2()!=null){
+                                UserUtil.USER_SPACE_BACKGROUND = user.getBackgroundpic2();
+                            }
+                            userInfoSet(user,context);
+                            listener.OnLoginSuccessful();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

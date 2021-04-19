@@ -137,7 +137,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             btnFollow.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 
@@ -220,7 +220,7 @@ public class HeartViewHodler  extends RecyclerView.ViewHolder implements Content
             tag0.setText("");
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 

@@ -57,9 +57,11 @@ public class SetAdapter extends BaseAdapter {
 
 
         title.setText(setList.get(i).getName());
-        Glide.with(context)
-                .load(ConfigUtil.BASE_WENJI_URL + setList.get(i).getPic())
-                .into(img);
+        if(setList.get(i).getPic() != null) {
+            Glide.with(context)
+                    .load(ConfigUtil.BASE_WENJI_URL + setList.get(i).getPic())
+                    .into(img);
+        }
 
         if(setList.get(i).isSelect())
             view.setBackgroundColor(0x30CFCFCF);

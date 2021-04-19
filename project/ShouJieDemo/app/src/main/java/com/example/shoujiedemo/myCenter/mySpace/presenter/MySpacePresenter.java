@@ -190,7 +190,6 @@ public class MySpacePresenter implements MySpacePresenterListener{
      * @param groupID   文集ID
      */
     public void getGroupDetail(int groupID,int userId) {
-        Log.e("获取文集","第一步");
         myArticleModel.getGroupDetail(groupID,userId,this);
     }
 
@@ -267,7 +266,6 @@ public class MySpacePresenter implements MySpacePresenterListener{
             String time = content1.getTime().substring(5,16);
             content1.setTime(time);
         }
-        Log.e("获取文集",contents+"");
         myArticleView.getGroupDetailSuccessful(contents);
     }
 

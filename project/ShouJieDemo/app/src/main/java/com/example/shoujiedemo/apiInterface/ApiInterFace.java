@@ -177,8 +177,8 @@ public interface ApiInterFace {
     /**
      * 关注
      */
-    @POST("addFollow")
-    Observable<ResponseBody> addFollow(@Query("userid") int userID,@Query("followerid") int followID);
+    @POST("addfollow")
+    Observable<ResponseBody> addFollow(@Query("userid") int userID,@Query("followid") int followID);
 
     /**
      * 上传图片
@@ -210,7 +210,7 @@ public interface ApiInterFace {
      * 获取空间主人信息
      */
     @GET("find")
-    Observable<ResponseBody> getOwnerInfo(@Query("id") int userID);
+    Observable<ResponseBody> getOwnerInfo(@Query("userid") int userID);
 
     /**
      * 加载音乐
@@ -233,7 +233,7 @@ public interface ApiInterFace {
     @GET("minuslike")
     Observable<ResponseBody> disLikeMusic(@Query("userid") int userId,@Query("musicid") int contentid);
 
-    /**
+    /**\
      * 收藏
      * @return
      */

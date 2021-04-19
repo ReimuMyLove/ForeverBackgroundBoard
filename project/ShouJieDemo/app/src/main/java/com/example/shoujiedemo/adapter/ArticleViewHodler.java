@@ -154,7 +154,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             tag0.setText("");
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 
@@ -212,7 +212,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         tag2.setText(contents.get(position).getTag());
         set.setText("["+contents.get(position).getWenji() + "]");
 
-
         if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
             btnPull.setVisibility(View.GONE);
         else
@@ -224,7 +223,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             btnFollow.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 
@@ -549,6 +548,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         btnCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("setId",set1.getId() + "");
                 presenter.confirmCollect(set1.getId(),contents.get(position).getId());
                 //Toast.makeText(context,"" + set1.getName(),Toast.LENGTH_SHORT).show();
                 alert.dismiss();
