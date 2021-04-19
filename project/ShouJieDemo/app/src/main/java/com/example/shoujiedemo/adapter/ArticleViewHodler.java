@@ -10,7 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,9 +36,11 @@ import com.example.shoujiedemo.entity.Content;
 import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.activity.ArticleActivity;
+import com.example.shoujiedemo.home.follow.adapter.FollowContentAdapter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
 
@@ -60,8 +66,6 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     View lnReport;
     TextView unLike;
     TextView tag ;
-    Button share;
-    TextView shareNum;
     Button collected;
     TextView collectionNum;
     Button comment;
@@ -86,6 +90,12 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
     private AlertDialog.Builder builder = null;
     private SetAdapter setAdapter;
     private Set set1;
+    private View confirmDelete;
+    private Button btnDelete;
+    private Button dismissDelete;
+    private ImageView loading;
+    private Animation animation;
+    private RecyclerView.Adapter adapter;
 
 
     private List<Content> contents = new ArrayList<>();
@@ -97,10 +107,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
 
 
 
-    public ArticleViewHodler(@NonNull View itemView, Context context,List<Content> contents) {
+    public ArticleViewHodler(@NonNull View itemView, Context context, List<Content> contents, RecyclerView.Adapter adapter) {
         super(itemView);
         this.context = context;
         this.contents = contents;
+        this.adapter = adapter;
         builder = new AlertDialog.Builder(context);
         presenter = new MyFollowOperatePresenterImpl(this);
         initView();
@@ -122,13 +133,15 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         btnFollow = itemView.findViewById(R.id.follow_article_btn_follow);
         btnPull = itemView.findViewById(R.id.follow_article_btn_pull);
         lnReport = itemView.findViewById(R.id.follow_article_ln_report);
-        unLike = itemView.findViewById(R.id.follow_article_tv_unLike);
         //tag = itemView.findViewById(R.id.follow_article_tv_tag);
-        share = itemView.findViewById(R.id.follow_article_btn_share);
-        shareNum = itemView.findViewById(R.id.follow_article_tv_share_num);
         collected = itemView.findViewById(R.id.follow_article_btn_collection);
         tag0 = itemView.findViewById(R.id.follow_artivle_tv_tag0);
         tag2 = itemView.findViewById(R.id.follow_article_tv_tag02);
+
+        if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
+            btnPull.setVisibility(View.GONE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
@@ -137,6 +150,13 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
+
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
 
         if (contents.get(position).isCollect())
@@ -167,6 +187,11 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         setList = setAlterView.findViewById(R.id.set_list);
         btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
+        confirmDelete = LayoutInflater.from(context).inflate(R.layout.confirm_delete_view,null,false);
+        btnDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_commit);
+        dismissDelete = confirmDelete.findViewById(R.id.delete_content_item_btn_dismiss);
+        loading = confirmDelete.findViewById(R.id.delete_content_loading);
+
         alert = builder.create();
 
         setMyOnClikListenser();
@@ -180,21 +205,33 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         articleWriterName.setText("文by" + contents.get(position).getWriter());
         likeNum.setText(contents.get(position).getLikes() + "");
         commentNum.setText(contents.get(position).getCheatnum() + "");
-        shareNum.setText(contents.get(position).getForwardnum() + "");
         collectionNum.setText(contents.get(position).getCollectnum() + "");
         user = contents.get(position).getUser();
         userName.setText(user.getName());
         fanNum.setText(user.getFennum() + "");
         tag2.setText(contents.get(position).getTag());
+        set.setText("["+contents.get(position).getWenji() + "]");
+
+
+        if(contents.get(position).getUser().getId() != UserUtil.USER_ID)
+            btnPull.setVisibility(View.GONE);
+        else
+            btnPull.setVisibility(View.VISIBLE);
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
         else
             btnFollow.setVisibility(View.VISIBLE);
 
+        if(contents.get(position).getTag() != null)
+            tag2.setText(contents.get(position).getTag());
+        else
+            tag2.setText("");
 
         if(contents.get(position).getIsoriginal() == 0)
             tag0.setText("#原创");
+        else
+            tag0.setText("");
 
         if(user.isFollow())
             btnFollow.setText("关注+");
@@ -246,6 +283,9 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         btnPull.setOnClickListener(myOnClikListener);
         btnFollow.setOnClickListener(myOnClikListener);
         artivleContent.setOnClickListener(myOnClikListener);
+        lnReport.setOnClickListener(myOnClikListener);
+        btnDelete.setOnClickListener(myOnClikListener);
+        dismissDelete.setOnClickListener(myOnClikListener);
     }
 
     class MyOnClikListener implements View.OnClickListener{
@@ -254,7 +294,8 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.follow_article_iv_head://点击头像进入用户空间
-                    Intent intent = new Intent(context, MusicActivity.class);
+                    Intent intent = new Intent(context, MySpaceActivity.class);
+                    intent.putExtra("user",user);
                     context.startActivity(intent);
                     break;
                 case R.id.follow_article_tv_set://点击文集进入用户空间
@@ -270,10 +311,24 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                     }
                     break;
                 case R.id.follow_article_ln_report:
-
+                    alert.show();
+                    Window window = alert.getWindow();
+                    window.setBackgroundDrawable(new BitmapDrawable());
+                    window.setContentView(confirmDelete);
+                    window.setLayout(700,500);
                     break;
-                case R.id.follow_article_btn_share:
-
+                case R.id.delete_content_item_btn_commit:
+                    loading.setVisibility(View.VISIBLE);
+                    animation = AnimationUtils.loadAnimation(context, R.anim.loading_music_anim_rotate);
+                    LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+                    animation.setInterpolator(lin);
+                    loading.startAnimation(animation);
+                    presenter.deleteContent(contents.get(position).getId());
+                    break;
+                case R.id.delete_content_item_btn_dismiss:
+                    popuMenu.setVisibility(View.GONE);
+                    isPull = false;
+                    alert.dismiss();
                     break;
                 case R.id.follow_article_btn_collection:
                     if(contents.get(position).isCollect()) {
@@ -415,7 +470,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
             Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(false);
         }else{
-            like.setBackgroundResource(R.drawable.likeunselect);
+            like.setBackgroundResource(R.drawable.likeselected);
             Toast.makeText(context, "取消点赞失败", Toast.LENGTH_SHORT).show();
             contents.get(position).setLike(true);
         }
@@ -447,14 +502,13 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
 
     @Override
     public void comment(Comment comment) {
-        Intent intent = new Intent(context, ArticleActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("articleTitle",contents.get(position).getTitle());
-        bundle.putString("articleText",contents.get(position).getText());
-        bundle.putString("articleDate",contents.get(position).getTime());
-        bundle.putString("articleWriterName",contents.get(position).getWriter());
-        intent.putExtra("bundle",bundle);
-        context.startActivity(intent);
+        Intent intent2 = new Intent(context, ArticleActivity.class);
+        Bundle bundle2 = new Bundle();
+        bundle2.putSerializable("article",contents.get(position));
+        bundle2.putSerializable("user",contents.get(position).getUser());
+        bundle2.putInt("position",position);
+        intent2.putExtra("bundle",bundle2);
+        context.startActivity(intent2);
     }
 
     @Override
@@ -495,7 +549,7 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
         btnCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.confirmCollect(UserUtil.USER_ID,contents.get(position).getId());
+                presenter.confirmCollect(set1.getId(),contents.get(position).getId());
                 //Toast.makeText(context,"" + set1.getName(),Toast.LENGTH_SHORT).show();
                 alert.dismiss();
             }
@@ -528,7 +582,22 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
 
     }
 
+    @Override
+    public void deleteContent() {
+        loading.clearAnimation();
+        alert.dismiss();
+        popuMenu.setVisibility(View.GONE);
+        isPull = false;
+        adapter.notifyDataSetChanged();
+        contents.remove(position);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void deleteError() {
+        Toast.makeText(context,"删除失败",Toast.LENGTH_SHORT).show();
+    }
 
 
 }

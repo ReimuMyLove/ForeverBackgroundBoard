@@ -3,29 +3,45 @@ package com.example.shoujiedemo.upload.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.adapter.SetAdapter;
+import com.example.shoujiedemo.bean.UploadBean;
 import com.example.shoujiedemo.entity.Content;
+import com.example.shoujiedemo.entity.Music;
+import com.example.shoujiedemo.entity.Set;
 import com.example.shoujiedemo.upload.presenter.UploadPresenter;
 import com.example.shoujiedemo.upload.presenter.UploadPresenterImpl;
 import com.example.shoujiedemo.upload.view.LoadView;
+import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.SwitchButton;
 import com.example.shoujiedemo.util.UserUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
+import java.util.List;
 
 public class AriticleUploadActivity extends AppCompatActivity implements LoadView {
     private UploadPresenter presenter;
@@ -38,6 +54,7 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
     private RadioButton radio2;
     private ImageView btn_gallery;
     private ImageView imageView;
+    private ImageView setCover;
     private Uri uri = null;
     private boolean flag = true;
     private static final int PHOTO_REQUEST_CAREMA = 1;// 拍照
@@ -46,11 +63,21 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";//临时文件名
     private File tempFile;
     private Bitmap bitmap;
+    private ListView setList;
+    private Button btnCollect;
+    private Button dismiss;
+    private View setAlterView;
+    private AlertDialog alert = null;
+    private AlertDialog.Builder builder = null;
+    private SetAdapter setAdapter;
+    private Set set1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ariticle_upload);
+        builder = new AlertDialog.Builder(this);
+        alert = builder.create();
         initData();
     }
 
@@ -99,6 +126,11 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
         title = findViewById(R.id.upload_ed_article_title);
         commit = findViewById(R.id.upload_btn_article_commit);
         tag = findViewById(R.id.custom_tag);
+        setCover = findViewById(R.id.iv_set_cover);
+        setAlterView = LayoutInflater.from(this).inflate(R.layout.collect_alterdialog_view,null,false);
+        setList = setAlterView.findViewById(R.id.set_list);
+        btnCollect = setAlterView.findViewById(R.id.item_btn_collect);
+        dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         setOnClikListener();
         presenter = new UploadPresenterImpl(AriticleUploadActivity.this);
     }
@@ -154,6 +186,7 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
 
     @Override
     public void skipSuccess() {
+        EventBus.getDefault().postSticky(new UploadBean(0));
         finish();
     }
 
@@ -162,11 +195,63 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
         Toast.makeText(this, "上传失败", Toast.LENGTH_LONG);
     }
 
+    @Override
+    public void skipSuccess(Music music) {
+
+    }
+
+    @Override
+    public void showSet(final List<Set> sets) {
+        setAdapter = new SetAdapter(sets,this);
+        setList.setAdapter(setAdapter);
+        btnCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestOptions requestOptions = new RequestOptions()
+                        .placeholder(R.drawable.iv_default)
+                        .fallback(R.drawable.ouran_default)
+                        .centerCrop();
+
+                Glide.with(getApplicationContext())
+                        .load(ConfigUtil.BASE_WENJI_URL + set1.getPic())
+                        .apply(requestOptions)
+                        .into(setCover);
+                alert.dismiss();
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        setList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                set1 = (Set) setAdapter.getItem(i);
+                for(int j = 0;j<sets.size();++j)
+                    sets.get(j).setSelect(false);
+                ((Set) setAdapter.getItem(i)).setSelect(true);
+                setAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+        alert.show();
+        Window window = alert.getWindow();
+        window.setBackgroundDrawable(new BitmapDrawable());
+        window.setContentView(setAlterView);
+        window.setLayout(800,1000);
+    }
+
     private void setOnClikListener() {
         MyOnclickLisenter myOnclickLisenter = new MyOnclickLisenter();
         imageView.setOnClickListener(myOnclickLisenter);
         radio1.setOnClickListener(myOnclickLisenter);
         commit.setOnClickListener(myOnclickLisenter);
+        setCover.setOnClickListener(myOnclickLisenter);
     }
 
     class MyOnclickLisenter implements View.OnClickListener {
@@ -181,7 +266,12 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
                     changeTag();
                     break;
                 case R.id.upload_article_cover:
-                    gallery(); }
+                    gallery();
+                    break;
+                case R.id.iv_set_cover:
+                    presenter.loadSet(UserUtil.USER_ID);
+                    break;
+            }
         }
     }
 
@@ -211,15 +301,15 @@ public class AriticleUploadActivity extends AppCompatActivity implements LoadVie
         content.setUserid(UserUtil.USER_ID);
         if (uri != null) {
             if (radio1.isChecked()) {
-                presenter.UploadData(content, 1, uri);
+                presenter.UploadData(content, 1, uri,set1.getId());
             }else {
-                presenter.UploadData(content, 0, uri);
+                presenter.UploadData(content, 0, uri,set1.getId());
             }
         } else {
             if (radio1.isChecked()) {
-                presenter.UploadData(content, 1);
+                presenter.UploadData(content, 1,set1.getId());
             }else {
-                presenter.UploadData(content, 0);
+                presenter.UploadData(content, 0,set1.getId());
             }
         }
         Log.e("", content.toString());

@@ -54,4 +54,13 @@ public abstract class BaseCollect<M extends BaseCollect<M>> extends Model<M> imp
 		return getInt("topicdetial");
 	}
 
+	public M setTime(java.util.Date time) {
+		set("time", time);
+		return (M)this;
+	}
+	
+	public java.util.Date getTime() {
+		return get("time");
+	}
+
 }

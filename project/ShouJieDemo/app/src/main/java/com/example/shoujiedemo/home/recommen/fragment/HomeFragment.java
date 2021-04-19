@@ -31,6 +31,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.example.shoujiedemo.R;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,5 +173,9 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

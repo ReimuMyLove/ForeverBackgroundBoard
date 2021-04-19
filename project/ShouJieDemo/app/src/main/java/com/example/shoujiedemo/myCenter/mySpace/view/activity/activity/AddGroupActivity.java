@@ -17,10 +17,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.bean.ImgChangeEvent;
+import com.example.shoujiedemo.myCenter.myCenter.presenter.ChangeImagePresenter;
+import com.example.shoujiedemo.myCenter.myCenter.presenter.ChangeImagePrsenterImpl;
+import com.example.shoujiedemo.myCenter.myCenter.view.inter.ChangeImageView;
+import com.example.shoujiedemo.util.UserUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
-public class AddGroupActivity extends AppCompatActivity {
+public class AddGroupActivity extends AppCompatActivity implements ChangeImageView {
     ImageView
             mySpace_addGroup_img;       //获取图片
     Button
@@ -38,11 +45,13 @@ public class AddGroupActivity extends AppCompatActivity {
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";//临时文件名
     private File tempFile;
     private Bitmap bitmap;
+    private ChangeImagePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+        presenter=new ChangeImagePrsenterImpl(this);
         //获取view控件
         FindView();
         //设置监听器
@@ -67,6 +76,19 @@ public class AddGroupActivity extends AppCompatActivity {
         mySpace_addGroup_img.setOnClickListener(listener);
         mySpace_addGroup_enter.setOnClickListener(listener);
         mySpace_addGroup_cancel.setOnClickListener(listener);
+    }
+
+    @Override
+    public void loadSuccess() {
+        ImgChangeEvent imgChangeEvent = new ImgChangeEvent();
+        imgChangeEvent.setImgChangeID(3);
+        EventBus.getDefault().postSticky(imgChangeEvent);
+        finish();
+    }
+
+    @Override
+    public void loadError() {
+
     }
 
     /**
@@ -96,10 +118,10 @@ public class AddGroupActivity extends AppCompatActivity {
     }
 
     private void updata() {
-        Intent intent = new Intent();
+
         String groupName = mySpace_addGroup_groupName.getText().toString();
-        intent.putExtra("groupName",groupName);
-        setResult(1,intent);
+        presenter.UploadWenji(uri, UserUtil.USER_ID,groupName);
+
     }
 
 

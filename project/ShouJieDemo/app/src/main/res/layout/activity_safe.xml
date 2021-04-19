@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dayLightBackground"
+        android:background="@color/colorBackground"
         android:orientation="vertical">
         <!-- 安全设置标题 -->
         <LinearLayout
@@ -34,11 +34,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/AccountAndSafe"
                 android:textSize="20sp"
-                android:textColor="@color/dayLightTitle"
+                android:textColor="@color/colorTitle"
                 android:gravity="center"/>
         </LinearLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
@@ -63,7 +62,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/changePassword"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
             <ImageView
@@ -74,7 +73,6 @@
                 android:src="@drawable/right" />
         </RelativeLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
@@ -99,7 +97,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/setSafeQuestion"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
             <ImageView
@@ -110,7 +108,6 @@
                 android:src="@drawable/right" />
         </RelativeLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
@@ -134,7 +131,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/setEmail"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
             <ImageView
@@ -145,7 +142,6 @@
                 android:src="@drawable/right" />
         </RelativeLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
@@ -170,7 +166,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="@string/destroyAccount"
-                android:textColor="@color/dayLightText"
+                android:textColor="@color/colorText"
                 android:textSize="15sp" />
 
             <ImageView
@@ -181,7 +177,6 @@
                 android:src="@drawable/right" />
         </RelativeLayout>
         <View
-            android:layout_alignParentBottom="true"
             android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>

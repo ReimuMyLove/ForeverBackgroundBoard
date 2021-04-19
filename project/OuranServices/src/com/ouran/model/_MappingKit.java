@@ -26,7 +26,7 @@ public class _MappingKit {
 		arp.addMapping("topic", "id", Topic.class);
 		arp.addMapping("topic_detial", "id", TopicDetial.class);
 		arp.addMapping("tuwen", "id", Tuwen.class);
-		arp.addMapping("types", "type", Types.class);
+		arp.addMapping("types", "id", Types.class);
 		arp.addMapping("user", "id", User.class);
 		arp.addMapping("wenji", "id", Wenji.class);
 		arp.addMapping("wenji_detail", "id", WenjiDetail.class);

@@ -344,4 +344,5 @@ public class RecommenFragment extends BaseFragment implements RecommenView {
             presenter.loadByTime(day);
         }
     }
+
 }

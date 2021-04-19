@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.shoujiedemo.Log.activity.LoginActivity;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.home.recommen.activity.MainActivity;
+import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.imgChange.UserBackGroundActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.imgChange.UserImgChangeActivity;
 import com.example.shoujiedemo.myCenter.setting.view.activity.SettingActivity;
 
@@ -118,6 +119,7 @@ public class UserImgPopupWindow extends PopupWindow {
     }
 
     private void WallpaperChange() {
-
+        Intent intent = new Intent(context, UserBackGroundActivity.class);
+        context.startActivity(intent);
     }
 }

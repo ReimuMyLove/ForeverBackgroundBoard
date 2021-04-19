@@ -68,8 +68,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     private TextView fanNum;
     private Button btnFollow;
     private TextView tag ;
-    private Button share;
-    private TextView shareNum;
     private Button collected;
     private TextView collectionNum;
     private Button comment;
@@ -150,8 +148,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 ViewWrapper viewWrapper = new ViewWrapper(edComment);
                                 ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
                                         550, 0);
-                                ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
-                                        550, 0);
                                 ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
                                         480, 0);
                                 ObjectAnimator animator3 = ObjectAnimator.ofFloat(like, "translationX",
@@ -163,7 +159,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 ObjectAnimator animator5 = ObjectAnimator.ofFloat(btnSendComment, "alpha", 1, 0.5f, 0.25f, 0)
                                         .setDuration(250);
                                 animator5.start();
-                                animatorSet.playTogether(animator, animator1, animator2, animator3);
+                                animatorSet.playTogether(animator, animator2, animator3);
                                 animatorSet.setDuration(250);
                                 animatorSet.start();
                                 edComment.setHint("");
@@ -175,7 +171,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
 
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
-                                        shareNum.setVisibility(View.VISIBLE);
                                         collectionNum.setVisibility(View.VISIBLE);
                                         commentNum.setVisibility(View.VISIBLE);
                                         likeNum.setVisibility(View.VISIBLE);
@@ -206,8 +201,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 ViewWrapper viewWrapper = new ViewWrapper(edComment);
                                 ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
                                         0, 550);
-                                ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
-                                        0, 550);
                                 ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
                                         0, 480);
                                 ObjectAnimator animator3 = ObjectAnimator.ofFloat(like, "translationX",
@@ -219,7 +212,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 ObjectAnimator animator5 = ObjectAnimator.ofFloat(btnSendComment, "alpha", 0, 0.5f, 1)
                                         .setDuration(250);
                                 animator5.start();
-                                animatorSet1.playTogether(animator, animator1, animator2, animator3);
+                                animatorSet1.playTogether(animator, animator2, animator3);
                                 animatorSet1.setDuration(250);
                                 animatorSet1.start();
                                 btnSendComment.setVisibility(View.VISIBLE);
@@ -227,7 +220,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                                 commentNum.setVisibility(View.INVISIBLE);
                                 //comment.setVisibility(View.INVISIBLE);
                                 likeNum.setVisibility(View.INVISIBLE);
-                                shareNum.setVisibility(View.INVISIBLE);
                                 collectionNum.setVisibility(View.INVISIBLE);
                                 btnSendComment.setVisibility(View.VISIBLE);
                                 animatorSet1.addListener(new Animator.AnimatorListener() {
@@ -268,7 +260,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         like.setOnClickListener(myOnClikListener);
         collected.setOnClickListener(myOnClikListener);
         btnFollow.setOnClickListener(myOnClikListener);
-        share.setOnClickListener(myOnClikListener);
         btnSendComment.setOnClickListener(myOnClikListener);
     }
 
@@ -310,12 +301,10 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         collectionNum = findViewById(R.id.follow_poem_details_tv_collection_num);
         comment = findViewById(R.id.follow_poem_details_btn_comment);
         commentNum = findViewById(R.id.follow_poem_details_tv_comment_num);
-        share  = findViewById(R.id.follow_poem_details_btn_share);
-        shareNum = findViewById(R.id.follow_poem_details_tv_share_num);
         followAnim = findViewById(R.id.follow_poem_details_iv_follow_anim);
         fanNum = findViewById(R.id.tv_fanNum_details_poem);
         btnFollow = findViewById(R.id.follow_poem_details_btn_follow);
-        if(isFollow){
+        if(user.isFollow()){
             btnFollow.setText("关注+");
         }else{
             btnFollow.setText("已关注");
@@ -326,7 +315,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         fanNum.setText(new StringBuilder().append(user.getFennum()));
         likeNum.setText(new StringBuilder().append(poem.getLikes()));
         collectionNum.setText(new StringBuilder().append(poem.getCollectnum()));
-        shareNum.setText(new StringBuilder().append(poem.getForwardnum()));
         commentNum.setText(new StringBuilder().append(poem.getCheatnum()));
         Log.e("userName",user.getName());
         userName.setText(user.getName());
@@ -370,9 +358,7 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         poem = (Content)bundle.getSerializable("poem");
-        isFollow = bundle.getBoolean("isFollow");
         user = (User)bundle.getSerializable("user");
-        position = bundle.getInt("position");
         presenter = new MyFollowOperatePresenterImpl(this);
     }
 
@@ -385,9 +371,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
 
                     break;
                 case R.id.follow_poem_tv_set://点击文集进入用户空间
-
-                    break;
-                case R.id.follow_poem_details_btn_share://分享
 
                     break;
                 case R.id.follow_poem_details_btn_collection://收藏
@@ -497,8 +480,6 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
             ViewWrapper viewWrapper = new ViewWrapper(edComment);
             ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
                     0, 550);
-            ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
-                    0, 550);
             ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
                     0, 480);
             ObjectAnimator animator3 = ObjectAnimator.ofFloat(like, "translationX",
@@ -511,14 +492,13 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
                     .setDuration(500);
             animator5.start();
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(animator, animator1, animator2, animator3);
+            animatorSet.playTogether(animator,  animator2, animator3);
             animatorSet.setDuration(500);
             animatorSet.start();
             animFinish = true;
             commentNum.setVisibility(View.INVISIBLE);
             //comment.setVisibility(View.INVISIBLE);
             likeNum.setVisibility(View.INVISIBLE);
-            shareNum.setVisibility(View.INVISIBLE);
             collectionNum.setVisibility(View.INVISIBLE);
             btnSendComment.setVisibility(View.VISIBLE);
             animatorSet.addListener(new Animator.AnimatorListener() {
@@ -699,9 +679,15 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
 
     @Override
     public void deleteComment() {
+        /*for(int i = 0;i<commentList.size();++i){
+            if(commentList.get(i).getId() == deleteComment.getId()){
+                commentList.remove(i);
+                break;
+            }
+        }*/
         for(Comment comment1 :commentList){
             if(comment1.getId() == deleteComment.getId()){
-                commentList.remove(deleteComment);
+                commentList.remove(comment1);
                 break;
             }
         }
@@ -760,6 +746,16 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     }
 
     @Override
+    public void deleteContent() {
+
+    }
+
+    @Override
+    public void deleteError() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         PreventKeyboardBlockUtil.getInstance(this).setBtnView(edComment).register();
@@ -795,5 +791,11 @@ public class PoemActivity extends AppCompatActivity implements ContentView {
     public void onDeleteMain(Comment comment){
         deleteComment = comment;
         presenter.deleteComment(comment.getId());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -54,4 +54,13 @@ public abstract class BaseWenjiDetail<M extends BaseWenjiDetail<M>> extends Mode
 		return getInt("music_id");
 	}
 
+	public M setTime(java.util.Date time) {
+		set("time", time);
+		return (M)this;
+	}
+	
+	public java.util.Date getTime() {
+		return get("time");
+	}
+
 }

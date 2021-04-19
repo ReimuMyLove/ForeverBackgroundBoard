@@ -3,30 +3,392 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".activity.MusicActivity">
-    <Button
-        android:id="@+id/play_music"
-        android:background="@drawable/play"
-        android:layout_width="50dp"
-        android:layout_below="@id/seekBar"
-        android:layout_height="50dp"/>
-    <Button
-        android:id="@+id/pause_music"
-        android:layout_toRightOf="@id/play_music"
-        android:background="@drawable/pause"
-        android:layout_width="50dp"
-        android:layout_below="@id/seekBar"
-        android:layout_height="50dp"/>
-    <Button
-        android:id="@+id/stop_music"
-        android:layout_toRightOf="@id/pause_music"
-        android:background="@drawable/play"
-        android:layout_width="50dp"
-        android:layout_below="@id/seekBar"
-        android:layout_height="50dp"/>
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/seekBar"
+    <com.example.shoujiedemo.bean.StatusBarHeightView
+        app:use_type="use_height"
+        android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/music_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/follow_music_scrollview"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.example.shoujiedemo.util.CircleImageView
+            android:id="@+id/iv_head_details_music"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/wangzuxian" />
+
+        <TextView
+            android:id="@+id/tv_userName_details_music"
+            android:text="王祖贤"
+            android:textColor="@color/articleLightBlack"
+            android:layout_toRightOf="@id/iv_head_details_music"
+            android:layout_alignTop="@id/iv_head_details_music"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_date_details_music"
+            android:textColor="@color/articleLightBlack"
+            android:layout_toRightOf="@id/tv_userName_details_music"
+            android:layout_alignBottom="@id/tv_userName_details_music"
+            android:layout_marginLeft="8dp"
+            android:textSize="12sp"
+            android:text="--月--日"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_fanNumLeft_details_music"
+            android:text="粉丝:"
+            android:textColor="@color/articleLightBlack"
+            android:layout_below="@id/tv_userName_details_music"
+            android:layout_toRightOf="@id/iv_head_details_music"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_fanNum_details_music"
+            android:text="--"
+            android:textColor="@color/articleLightBlack"
+            android:layout_below="@id/tv_userName_details_music"
+            android:layout_toRightOf="@id/tv_fanNumLeft_details_music"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/music_details_iv_anim"
+            android:layout_alignTop="@id/iv_head_details_music"
+            android:visibility="invisible"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/loading_anim"
+            />
+
+        <Button
+            android:id="@+id/music_details_btn_follow"
+            android:layout_width="55dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignTop="@id/iv_head_details_music"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/btn_circle_shape"
+            android:text="已关注" />
+
+            <TextView
+                android:id="@+id/music_text"
+                android:layout_below="@id/iv_head_details_music"
+                android:text="歌曲文案"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.example.shoujiedemo.util.CircleImageView
+            android:id="@+id/music_cover"
+            android:src="@drawable/wulai"
+            android:layout_below="@id/music_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"/>
+
+        <TextView
+            android:id="@+id/song_name"
+            android:text="无赖"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_below="@id/music_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/songer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/song_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="郑中基"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/play_music"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/play"
+            android:layout_width="30dp"
+            android:layout_below="@id/seekBar"
+            android:layout_height="30dp"/>
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekBar"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/songer"
+            android:layout_marginTop="40dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_current_time"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@id/seekBar"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/songer"
+                android:layout_marginTop="40dp"
+                android:text="0:00" />
+
+            <TextView
+                android:id="@+id/tv_total_time"
+                android:text="0:00"
+                android:layout_toRightOf="@id/seekBar"
+                android:layout_alignTop="@id/seekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:background="#60D3D3D3"
+                android:layout_marginBottom="-51dp"
+                android:layout_above="@id/ln_num"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"/>
+
+            <LinearLayout
+                android:id="@+id/ln_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/play_music"
+                android:layout_marginTop="50dp"
+                android:paddingTop="10dp"
+                android:background="#109C9C9C"
+                android:elevation="2dp"
+                android:paddingLeft="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="评论"
+                        android:textColor="#80000000" />
+
+                    <TextView
+                        android:id="@+id/follow_music_tv_comment_num2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#80000000"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="收藏"
+                        android:textColor="#80000000" />
+
+                    <TextView
+                        android:id="@+id/follow_music_tv_collection_num2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#80000000"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="点赞"
+                        android:textColor="#80000000" />
+
+                    <TextView
+                        android:id="@+id/follow_music_tv_fa_num2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#80000000"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/music_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ln_num"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="-2dp"
+        android:background="#25E8E8E8"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:fadeScrollbars="true"
+        android:listSelector="@android:color/transparent"
+        android:nestedScrollingEnabled="true"
+        android:paddingLeft="12dp"
+        android:paddingTop="25dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="20dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollingCache="false" />
+
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlClassicsSpinnerStyle="Translate"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <View
+        android:background="#60D3D3D3"
+        android:layout_above="@id/operation"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"/>
+
+    <RelativeLayout
+        android:id="@+id/operation"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="30dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/follow_music_details_btn_collection"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/collectionunselect" />
+
+        <TextView
+            android:id="@+id/follow_music_details_tv_collection_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_music_details_btn_collection"
+            android:text="102" />
+
+        <Button
+            android:id="@+id/follow_music_details_btn_like"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@id/follow_music_details_tv_collection_num"
+            android:background="@drawable/likeunselect" />
+
+        <TextView
+            android:id="@+id/follow_music_details_tv_like_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_music_details_btn_like"
+            android:text="102" />
+
+        <Button
+            android:id="@+id/follow_music_details_btn_comment"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@id/follow_music_details_tv_like_num"
+            android:background="@drawable/comment" />
+
+        <TextView
+            android:id="@+id/follow_music_details_tv_comment_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/follow_music_details_btn_comment"
+            android:text="102" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:textSize="13sp"
+        android:id="@+id/follow_music_ed_comment"
+        android:background="@drawable/ed_cirle_shape"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_width="1dp"
+        android:layout_height="24dp"/>
+
+    <Button
+        android:id="@+id/follow_music_btn_send_comment"
+        android:layout_width="48dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/follow_music_ed_comment"
+        android:background="@drawable/btn_circle_shape"
+        android:text="发送"
+        android:visibility="invisible" />
+
+
 </RelativeLayout>

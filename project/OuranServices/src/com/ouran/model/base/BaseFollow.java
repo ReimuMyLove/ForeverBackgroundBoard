@@ -27,4 +27,13 @@ public abstract class BaseFollow<M extends BaseFollow<M>> extends Model<M> imple
 		return getInt("followerid");
 	}
 
+	public M setTime(java.util.Date time) {
+		set("time", time);
+		return (M)this;
+	}
+	
+	public java.util.Date getTime() {
+		return get("time");
+	}
+
 }

@@ -194,8 +194,8 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
             }
          }
       }
-      for(Comment comment1:comments){
-          String time = comment1.getTime().substring(5,16);
+      for(Comment comment1:comments){ ;
+         String time = comment1.getTime().substring(5,16);
          comment1.setTime(time);
       }
 
@@ -234,7 +234,6 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
 
    @Override
    public void onDeleteCommentSuccess() {
-      Log.e("listener","success");
       contentView.deleteComment();
    }
 
@@ -242,6 +241,17 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    public void onDeleteCommentError() {
 
    }
+
+   @Override
+   public void onDeleteContentSuccess() {
+      contentView.deleteContent();
+   }
+
+   @Override
+   public void onDeleteContentError() {
+      contentView.deleteError();
+   }
+
 
    /**
     * 验证点赞
@@ -330,6 +340,13 @@ public class MyFollowOperatePresenterImpl implements MyFollowOperatePresenter,My
    public void deleteComment(int commentId) {
       model.deleteComment(this,commentId);
    }
+
+   @Override
+   public void deleteContent(int id) {
+      model.deleteContent(this,id);
+   }
+
+
 
 
 }

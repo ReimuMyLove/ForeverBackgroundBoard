@@ -63,4 +63,13 @@ public abstract class BaseLikes<M extends BaseLikes<M>> extends Model<M> impleme
 		return getInt("musicid");
 	}
 
+	public M setTime(java.util.Date time) {
+		set("time", time);
+		return (M)this;
+	}
+	
+	public java.util.Date getTime() {
+		return get("time");
+	}
+
 }

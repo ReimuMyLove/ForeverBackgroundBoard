@@ -14,7 +14,6 @@
     <TextView
         android:id="@+id/item_comment_tv_user_name"
         android:text="name"
-
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/item_comment_user_img"
         android:layout_width="wrap_content"
@@ -25,7 +24,7 @@
         android:textSize="15sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:text="评论内容评论内容评论内容评论内容"
+        android:layout_marginBottom="5dp"
         android:layout_below="@id/item_comment_tv_user_name"
         android:layout_toRightOf="@id/item_comment_user_img"
         android:layout_width="match_parent"
@@ -93,4 +92,11 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#F5F5F5"
+        android:layout_width="380dp"
+        android:layout_height="0.8dp"/>
 </RelativeLayout>
