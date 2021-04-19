@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -39,8 +38,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +64,10 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
             mySpace_add;                    //添加按钮
     MySpacePresenter
             mySpacePresenter;               //绑定Presenter
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myspace);
-        EventBus.getDefault().register(this);
         mySpacePresenter = new MySpacePresenter(this);
         //获取view控件
         FindView();
@@ -232,6 +227,27 @@ public class MySpaceActivity extends BaseActivity implements MySpaceView {
     private void addSet(){
         Intent intent = new Intent(this, AddGroupActivity.class);
         startActivityForResult(intent,5);
+        /*final String[] groupName = new String[1];
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(MySpaceActivity.this,R.layout.dialog_addgroup,null);
+        final EditText name = view.findViewById(R.id.mySpace_dialog_name);
+        builder.setCancelable(true);
+        builder.setView(view);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                groupName[0] = name.getText().toString();
+                addArticleGroup(UserUtil.RECENT_USER_ID,groupName[0]);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();*/
     }
 
     /**

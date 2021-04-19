@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.myCenter.myCenter.presenter.ChangeImagePresenterListener;
-import com.example.shoujiedemo.util.UserUtil;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
@@ -34,7 +33,6 @@ public class ChangeImageModelImpl implements ChangeImageModel{
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        assert file != null;
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
         final Retrofit retrofit = new Retrofit.Builder()
@@ -43,6 +41,7 @@ public class ChangeImageModelImpl implements ChangeImageModel{
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加Rxjava适配器，绑定RxJava
                 .build();
         ApiInterFace apiInterface = retrofit.create(ApiInterFace.class);
+        Log.e("wrk", file + "" + body);
         Observable<ResponseBody> observable = apiInterface.changeuserimage(userid,body);
 
         try {
@@ -58,12 +57,14 @@ public class ChangeImageModelImpl implements ChangeImageModel{
                         @Override
                         public void onNext(ResponseBody responseBody) {
                             try {
+                                //Log.e("Song",responseBody.string());
                                 String jsons = responseBody.string();
                                 if (jsons != null && !jsons.equals("")) {
-                                    UserUtil.USER_IMG = jsons;
                                     listener.loadSuccess();
+                                    Log.i("success", jsons + "");
                                 } else {
                                     listener.loadError();
+                                    Log.i("error", "无数据");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -94,7 +95,6 @@ public class ChangeImageModelImpl implements ChangeImageModel{
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        assert file != null;
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
         final Retrofit retrofit = new Retrofit.Builder()
@@ -123,6 +123,7 @@ public class ChangeImageModelImpl implements ChangeImageModel{
                                 String jsons = responseBody.string();
                                 if (jsons != null && !jsons.equals("")) {
                                     listener.loadSuccess();
+                                    Log.i("success", jsons + "");
                                 } else {
                                     listener.loadError();
                                     Log.i("error", "无数据");
@@ -156,7 +157,6 @@ public class ChangeImageModelImpl implements ChangeImageModel{
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        assert file != null;
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
         final Retrofit retrofit = new Retrofit.Builder()
@@ -184,11 +184,11 @@ public class ChangeImageModelImpl implements ChangeImageModel{
                                 //Log.e("Song",responseBody.string());
                                 String jsons = responseBody.string();
                                 if (jsons != null && !jsons.equals("")) {
-                                    UserUtil.USER_SPACE_BACKGROUND = jsons;
-                                    UserUtil.USER_CENTER_BACKGROUND = jsons;
                                     listener.loadSuccess();
+                                    Log.i("success", jsons + "");
                                 } else {
                                     listener.loadError();
+                                    Log.i("error", "无数据");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

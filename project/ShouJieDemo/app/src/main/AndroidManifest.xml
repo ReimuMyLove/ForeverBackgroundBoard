@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shoujiedemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".activity.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,12 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme"
-        android:windowSoftInputMode="adjustResize|stateHidden"
-        tools:targetApi="q">
-        <activity android:name=".activity.StartActivity"
+        android:windowSoftInputMode="adjustResize|stateHidden">
+        <activity android:name=".activity.NightModeChangeMaskActivity"></activity>
+        <activity
+            android:name=".activity.StartActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/app_start" >
+            android:theme="@style/app_start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +32,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MusicActivity" />
-
         <activity android:name=".upload.activity.MusicUploadActivity" />
+        <activity android:name=".activity.MusicActivity" />
 
         <service
             android:name=".fround.service.NetPlayMusicService"
@@ -43,8 +44,7 @@
         <activity android:name=".activity.HeartActivity" />
         <activity android:name=".activity.PoemActivity" />
         <activity android:name=".activity.ArticleActivity" />
-        <activity android:name=".home.recommen.activity.MainActivity">
-        </activity>
+        <activity android:name=".home.recommen.activity.MainActivity"></activity>
         <activity android:name=".myCenter.setting.view.activity.SettingActivity" />
         <activity android:name=".myCenter.setting.view.activity.settingActivity.SafeActivity" />
         <activity android:name=".myCenter.setting.view.activity.settingActivity.FeedbackViewActivity" />

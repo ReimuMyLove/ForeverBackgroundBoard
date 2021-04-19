@@ -127,7 +127,6 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
      * 取消关注方法
      */
     private void cancelFollow(int userID){
-        Log.e("取消关注","开始");
         myFollowPresenter.cancelFollower(userID);
     }
 
@@ -150,12 +149,12 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
                 viewHolder.loadingDrawable.stop();
                 viewHolder.anim.setVisibility(View.INVISIBLE);
                 viewHolder.myFollow_cancel.setVisibility(View.VISIBLE);
+                notifyDataSetChanged();
                 MsgEvent msgEvent = new MsgEvent();
                 msgEvent.setId(followerID);
                 msgEvent.setType("follow");
                 msgEvent.setValue(true);
                 EventBus.getDefault().postSticky(msgEvent);
-                notifyDataSetChanged();
                 Toast.makeText(mContext,"偶然：取消关注成功",Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -183,12 +182,12 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
                 viewHolder.loadingDrawable.stop();
                 viewHolder.anim.setVisibility(View.INVISIBLE);
                 viewHolder.myFollow_cancel.setVisibility(View.VISIBLE);
+                notifyDataSetChanged();
                 MsgEvent msgEvent = new MsgEvent();
                 msgEvent.setId(followerID);
                 msgEvent.setType("follow");
                 msgEvent.setValue(false);
                 EventBus.getDefault().postSticky(msgEvent);
-                notifyDataSetChanged();
                 Toast.makeText(mContext,"偶然：添加关注成功",Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -205,9 +204,9 @@ public class MyFollowAdapter extends RecyclerView.Adapter<MyFollowAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView
-                myFollow_userName,      //关注人用户名
-                myFollow_userSign,      //关注人签名
-                MyFollow_userFans;      //关注人粉丝数
+        myFollow_userName,      //关注人用户名
+        myFollow_userSign,      //关注人签名
+        MyFollow_userFans;      //关注人粉丝数
         Button
                 myFollow_cancel;        //取消关注
         CircleImageView

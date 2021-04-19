@@ -17,13 +17,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shoujiedemo.R;
-import com.example.shoujiedemo.bean.ImgChangeEvent;
 import com.example.shoujiedemo.myCenter.myCenter.presenter.ChangeImagePresenter;
 import com.example.shoujiedemo.myCenter.myCenter.presenter.ChangeImagePrsenterImpl;
 import com.example.shoujiedemo.myCenter.myCenter.view.inter.ChangeImageView;
 import com.example.shoujiedemo.util.UserUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -80,10 +77,7 @@ public class AddGroupActivity extends AppCompatActivity implements ChangeImageVi
 
     @Override
     public void loadSuccess() {
-        ImgChangeEvent imgChangeEvent = new ImgChangeEvent();
-        imgChangeEvent.setImgChangeID(3);
-        EventBus.getDefault().postSticky(imgChangeEvent);
-        finish();
+
     }
 
     @Override

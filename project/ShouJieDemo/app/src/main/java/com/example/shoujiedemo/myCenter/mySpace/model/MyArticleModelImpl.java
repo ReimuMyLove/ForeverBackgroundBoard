@@ -40,12 +40,10 @@ public class MyArticleModelImpl implements MyArticleModel{
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String jsons = responseBody.string();
-                            Log.e("获取文集",jsons);
-                            if (jsons.equals("")){
-                                Log.e("获取文集","获取失败");
+                            Log.e("jsons",jsons);
+                            if (jsons != null && !jsons.equals("")){
                                 listener.getGroupDetailFailed();
                             }else {
-                                Log.e("获取文集","获取成功");
                                 listener.getGroupDetailSuccessful(jsons);
                             }
                         } catch (IOException e) {

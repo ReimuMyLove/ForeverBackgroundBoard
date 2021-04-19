@@ -8,20 +8,35 @@
 
     <!---->
     <color name="TabandBottomWhite">#fff</color>
+    <color name="darkTabandBottomWhite">#000</color>
     <color name="TitleTextBlack">#000</color>
+    <color name="darkTitleTextBlack">#000</color>
+    <color name="darkarTicleLightBlack">#60000000</color>
     <color name="articleLightBlack">#90000000</color>
+    <color name="darkArticleLightBlack">#000000</color>
     <color name="itemBackGroundColorWhite">#fff</color>
+    <color name="darkItemBackGroundColorWhite">#fff</color>
+    <color name="BackGroundColorWhite">#000</color>
+    <color name="darkBackGroundColorWhite">#000</color>
     <!-- 设置页面的背景颜色和字体颜色 -->
 
     <!-- 肖帅 2020.11.26 -->
 
     <color name="colorBackground">#B3EFEFEF</color>
+    <color name="darkColorBackground">#000</color>
     <color name="centerBackGround">#fff</color>
+    <color name="darkCenterBackGround">#000</color>
     <color name="colorActivity">#DEDEDE</color>
+    <color name="darkColorActivity">#000</color>
     <color name="colorText">#101010</color>
+    <color name="darkColorText">#000</color>
     <color name="colorTitle">#757575</color>
+    <color name="darkColorTitle">#000</color>
     <color name="mySpaceRecycler">#DDDDDD</color>
+    <color name="darkMySpaceRecycler">#000</color>
     <color name="colorWhiteBack">#DDDDDD</color>
+    <color name="darkColorWhiteBack">#000</color>
     <color name="colorAllWhite">#FFFFFF</color>
+    <color name="darkColorAllWhite">#000</color>
 
 </resources>

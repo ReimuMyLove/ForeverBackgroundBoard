@@ -146,7 +146,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             tag0.setText("");
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 
@@ -198,7 +198,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
        user = contents.get(position).getUser();
        userName.setText(user.getName());
        fanNum.setText(user.getFennum() + "");
-        set.setText("["+contents.get(position).getWenji() + "]");
+       set.setText("["+contents.get(position).getWenji() + "]");
 
         if(contents.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
@@ -217,7 +217,7 @@ public class PoemViewHodler  extends RecyclerView.ViewHolder implements ContentV
             tag0.setText("");
 
         if(contents.get(position).getTag() != null)
-            tag2.setText(contents.get(position).getTag());
+            tag2.setText("#" + contents.get(position).getTag());
         else
             tag2.setText("");
 

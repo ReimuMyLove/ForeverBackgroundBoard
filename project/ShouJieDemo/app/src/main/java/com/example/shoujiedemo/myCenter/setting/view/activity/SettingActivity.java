@@ -2,6 +2,7 @@ package com.example.shoujiedemo.myCenter.setting.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.Fe
 import com.example.shoujiedemo.myCenter.setting.view.activity.settingActivity.SafeActivity;
 import com.example.shoujiedemo.myCenter.setting.view.inter.SettingView;
 import com.example.shoujiedemo.util.BaseActivity;
+import com.example.shoujiedemo.util.SharedPreUtil;
 import com.example.shoujiedemo.util.SwitchButton;
+import com.example.shoujiedemo.util.ThemeResUtil;
 
 public class SettingActivity extends BaseActivity implements SettingView{
     View
@@ -40,8 +43,22 @@ public class SettingActivity extends BaseActivity implements SettingView{
             cookiesClear = new CookiesClear();//获取CookieClear数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreUtil.getInstance().load();
+        Log.e("dark",SharedPreUtil.getInstance().darkmodel + "");
+        if(SharedPreUtil.getInstance().darkmodel) {
+            setTheme(R.style.AppThemeDark);
+            changeTheme(SharedPreUtil.getInstance().darkmodel);
+            //ThemeResUtil.setModel(true); // APP首页才需要这句，其它跳转activity不需要再次设置
+            Log.e("darkddddddddddddddd",SharedPreUtil.getInstance().darkmodel + "");
+        }
+        else {
+            //changeTheme(SharedPreUtil.getInstance().darkmodel);
+            setTheme(R.style.TranslucentTheme);
+            //ThemeResUtil.setModel(false); // APP首页才需要这句，其它跳转activity不需要再次设置
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
         context = this.getBaseContext();
         //获取控件
         FindView();
@@ -50,7 +67,7 @@ public class SettingActivity extends BaseActivity implements SettingView{
         //绑定Presenter
         settingPresenter = new SettingPresenter();
         //计算当前Cookie大小并显示在页面中
-        isNightMode();
+        //isNightMode();
         GetCookieSize();
     }
 
@@ -89,15 +106,18 @@ public class SettingActivity extends BaseActivity implements SettingView{
      */
     @Override
     public void NightModeChange() {
-        int isNightMode = AppCompatDelegate.getDefaultNightMode();
+        //SharedPreUtil.getInstance().darkmodel = true;
+        changeModel(true);
+        Log.e("","changeModel(true)");
+        /*int isNightMode = AppCompatDelegate.getDefaultNightMode();
         Log.e("夜间模式",isNightMode+"");
         myCenter_setting_nightModeSwitch.startAnimate();
         if(isNightMode == AppCompatDelegate.MODE_NIGHT_NO){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else{
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+           // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        Log.e("夜间模式",isNightMode+"");
+        Log.e("夜间模式",isNightMode+"");*/
     }
 
     public void isNightMode(){
@@ -137,7 +157,7 @@ public class SettingActivity extends BaseActivity implements SettingView{
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.myCenter_setting_nightModeSwitch:
-                    Log.e("夜间模式",AppCompatDelegate.getDefaultNightMode()+"");
+                    //Log.e("夜间模式",AppCompatDelegate.getDefaultNightMode()+"");
                     NightModeChange();
                     break;
                 case R.id.myCenter_setting_safe:
@@ -181,5 +201,30 @@ public class SettingActivity extends BaseActivity implements SettingView{
     public void Feedback() {
         Intent intent = new Intent(this, FeedbackViewActivity.class);
         startActivity(intent);
+    }
+
+    public void changeTheme(boolean darkmodel) {
+        ThemeResUtil.setModel(darkmodel);
+        //getWindow().getDecorView().setBackgroundColor(ThemeResUtil.getColorPrimary());
+        getWindow().getDecorView().setBackgroundColor(ThemeResUtil.getColorPrimaryDark());
+
+        // setTheme(R.style.AppThemeDark);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //mTintManager.setStatusBarTintEnabled(false);
+            getWindow().setStatusBarColor(ThemeResUtil.getColorPrimaryDark());
+
+        }
+        else {
+            //mTintManager.setStatusBarTintEnabled(true);
+            //mTintManager.setTintColor(ThemeResUtil.getColorPrimaryDark());
+        }
+    }
+
+
+    public void changeModel(boolean darkmodel) {
+        SharedPreUtil.getInstance().load();
+        SharedPreUtil.getInstance().darkmodel = darkmodel;
+        SharedPreUtil.getInstance().save();
+        changeTheme(darkmodel);
     }
 }

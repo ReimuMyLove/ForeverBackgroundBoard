@@ -193,7 +193,6 @@ public class MusicViewHodler  extends RecyclerView.ViewHolder implements Content
         songName.setText(musicList.get(position).getName());
         date.setText(musicList.get(position).getTime());
 
-
         if(musicList.get(position).getUser().getId() == UserUtil.USER_ID)
             btnFollow.setVisibility(View.INVISIBLE);
         else

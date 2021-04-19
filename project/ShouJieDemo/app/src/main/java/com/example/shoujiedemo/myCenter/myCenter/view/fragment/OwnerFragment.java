@@ -76,7 +76,10 @@ public class OwnerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EventBus.getDefault().register(this);
+        //eventBus = 2;
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -307,5 +310,6 @@ public class OwnerFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        //eventBus =1;
     }
 }
