@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
     </androidx.viewpager2.widget.ViewPager2>
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:background="@color/TabandBottomWhite"
+        android:background="@color/color1"
         app:menu="@menu/bottom_items"
         android:theme="@style/myBottomNavigationStyle"
         app:itemIconTint="@drawable/bottom_selector"

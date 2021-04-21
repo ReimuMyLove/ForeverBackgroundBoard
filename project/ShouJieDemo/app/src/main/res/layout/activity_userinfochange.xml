@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:text="性别："
                 android:textSize="20sp"/>
             <RadioGroup
@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:tag="0"
+                    android:textColor="@color/color4"
                     android:text="男"/>
                 <RadioButton
                     android:id="@+id/userInfoChange_woman"
@@ -40,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:tag="1"
+                    android:textColor="@color/color4"
                     android:text="女"/>
             </RadioGroup>
         </LinearLayout>
@@ -55,13 +57,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="年龄："
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="20sp"/>
             <EditText
                 android:id="@+id/userInfoChange_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:inputType="number"
                 android:maxLength="2"
                 style="@null"
@@ -79,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个性签名："
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="20sp"/>
             <EditText
                 android:id="@+id/userInfoChange_sign"
@@ -89,7 +91,7 @@
                 android:paddingEnd="20dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:gravity="top"
                 android:inputType="text"
                 android:background="@drawable/userinfochange_form_border"

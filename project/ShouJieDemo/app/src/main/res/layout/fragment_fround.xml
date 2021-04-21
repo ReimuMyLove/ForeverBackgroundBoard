@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/color1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <RelativeLayout
@@ -29,7 +29,7 @@
             android:paddingLeft="10dp"
             android:hint="搜索"
             android:layout_toRightOf="@id/btn_search"
-            android:background="#f7f7f7"
+            android:background="@color/color22"
             android:layout_centerInParent="true"
             android:gravity="left"
             android:textSize="15sp"
@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <com.google.android.material.tabs.TabLayout
-        android:background="@color/TabandBottomWhite"
+        android:background="@color/color1"
         android:layout_gravity="center_horizontal"
         android:id="@+id/fround_topTab"
         app:tabIndicatorFullWidth="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="#BEBEBE"
-        app:tabTextColor="#000000"
+        app:tabIndicatorColor="@color/color17"
+        app:tabTextColor="@color/color15"
         app:tabRippleColor="@android:color/transparent"
         app:tabIndicatorHeight="2dp"
         app:tabPaddingStart="33dp"
@@ -107,7 +107,7 @@
             android:textStyle="italic"
             android:layout_marginLeft="20dp"
             android:textSize="16sp"
-            android:textColor="#000"
+            android:textColor="@color/color15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -118,7 +118,7 @@
             android:layout_marginLeft="20dp"
             android:layout_below="@id/already_music_view_tv_songName"
             android:textStyle="italic"
-            android:textColor="#000"
+            android:textColor="@color/color15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -135,10 +135,10 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="@color/color1">
     <View
         android:elevation="2dp"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
 

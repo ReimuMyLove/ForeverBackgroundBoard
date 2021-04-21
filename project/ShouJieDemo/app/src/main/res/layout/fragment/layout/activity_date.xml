@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="#fff"
+    android:background="@color/color1"
     android:layout_height="match_parent"
     tools:context=".home.recommen.activity.DateActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.Toolbar
@@ -24,13 +24,13 @@
         <TextView
             android:gravity="left"
             android:text="选择时间"
-            android:textColor="#000"
+            android:textColor="@color/color15"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView

@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
@@ -33,7 +34,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="40dp"
             android:gravity="center"
-            android:text="从相册选取"/>
+            android:text="从相册选取"
+            android:textColor="@color/color4"/>
         <Button
             android:background="@drawable/collect_circle"
             android:id="@+id/myCenter_userImgChange_photo"
@@ -44,6 +46,7 @@
             android:paddingRight="35dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="40dp"
+            android:textColor="@color/color4"
             android:text="确认"/>
     </RelativeLayout>
 </RelativeLayout>

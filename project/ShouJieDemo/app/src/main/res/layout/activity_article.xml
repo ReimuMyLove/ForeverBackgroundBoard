@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/color1"
     android:paddingTop="60dp"
     tools:context=".activity.ArticleActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -30,7 +30,7 @@
 
                 <TextView
                     android:id="@+id/tv_title_details_article"
-                    android:textColor="@color/TitleTextBlack"
+                    android:textColor="@color/color4"
                     android:textSize="30sp"
                     android:text="绿毛水怪"
                     android:layout_marginLeft="15dp"
@@ -54,7 +54,7 @@
                     android:id="@+id/tv_set_details_article"
                     android:textSize="16sp"
                     android:text="[文集]"
-                    android:textColor="#ADD8E6"
+                    android:textColor="@color/color8"
                     android:layout_toRightOf="@id/title_right"
                     android:layout_alignBottom="@id/tv_title_details_article"
                     android:layout_marginBottom="3.5dp"
@@ -64,7 +64,7 @@
                 <TextView
                     android:id="@+id/tv_userName_details_article"
                     android:text="王祖贤"
-                    android:textColor="@color/articleLightBlack"
+                    android:textColor="@color/color9"
                     android:layout_toRightOf="@id/iv_head_details_article"
                     android:layout_alignTop="@id/iv_head_details_article"
                     android:layout_marginTop="2dp"
@@ -75,7 +75,7 @@
                 <TextView
                     android:id="@+id/tv_fanNumLeft_details_article"
                     android:text="粉丝:"
-                    android:textColor="@color/articleLightBlack"
+                    android:textColor="@color/color9"
                     android:layout_below="@id/tv_userName_details_article"
                     android:layout_toRightOf="@id/iv_head_details_article"
                     android:layout_marginLeft="5dp"
@@ -87,7 +87,7 @@
                 <TextView
                     android:id="@+id/tv_fanNum_details_article"
                     android:text="--"
-                    android:textColor="@color/articleLightBlack"
+                    android:textColor="@color/color9"
                     android:layout_below="@id/tv_userName_details_article"
                     android:layout_toRightOf="@id/tv_fanNumLeft_details_article"
                     android:layout_marginLeft="0dp"
@@ -98,7 +98,7 @@
 
                 <TextView
                     android:id="@+id/tv_date_details_article"
-                    android:textColor="@color/articleLightBlack"
+                    android:textColor="@color/color9"
                     android:layout_toRightOf="@id/tv_userName_details_article"
                     android:layout_alignBottom="@id/tv_userName_details_article"
                     android:layout_marginLeft="8dp"
@@ -155,7 +155,7 @@
                     android:id="@+id/tv_content_details_article"
                     android:layout_marginTop="30dp"
                     android:layout_marginRight="15dp"
-                    android:textColor="@color/articleLightBlack"
+                    android:textColor="@color/color9"
                     android:textSize="17sp"
                     android:lineHeight="30dp"
                     android:layout_below="@id/iv_cover_article_details"
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"/>
 
             <View
-                android:background="#60D3D3D3"
+                android:background="@color/color3"
                 android:layout_marginBottom="-11dp"
                 android:layout_above="@id/ln_num"
                 android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                 android:gravity="center_horizontal"
                 android:paddingBottom="8dp"
                 android:paddingTop="10dp"
-                android:background="#109C9C9C"
+                android:background="@color/color10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -211,7 +211,7 @@
                     <TextView
                         android:text="评论"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -220,7 +220,7 @@
                         android:text="0"
                         android:textSize="12sp"
                         android:id="@+id/follow_article_tv_comment_num2"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -233,7 +233,7 @@
                     <TextView
                         android:text="转发"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -242,7 +242,7 @@
                         android:text="0"
                         android:id="@+id/follow_article_tv_share_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -255,7 +255,7 @@
                     <TextView
                         android:text="收藏"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -264,7 +264,7 @@
                         android:text="0"
                         android:id="@+id/follow_article_tv_collection_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -276,7 +276,7 @@
                     <TextView
                         android:text="点赞"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -285,7 +285,7 @@
                         android:text="0"
                         android:id="@+id/follow_article_tv_fa_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -293,7 +293,7 @@
             </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:background="#25E8E8E8"
+                    android:background="@color/color12"
                     android:id="@+id/follow_article_comment_list"
                     android:layout_below="@id/ln_num"
                     android:layout_width="match_parent"
@@ -323,7 +323,7 @@
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
-        android:background="#60D3D3D3"
+        android:background="@color/color6"
         android:layout_above="@id/operation"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>
@@ -333,7 +333,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="@color/color1"
         android:paddingLeft="50dp"
         android:paddingTop="8dp"
         android:paddingBottom="10dp">

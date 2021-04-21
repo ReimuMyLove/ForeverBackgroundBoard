@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorBackground">
+        android:background="@color/color2">
         <!-- 设置邮箱标题 -->
         <LinearLayout
             android:id="@+id/myCenter_setting_setEmail_title"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/setEmail"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:gravity="center"/>
         </LinearLayout>
 

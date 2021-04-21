@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/color1"
     android:paddingTop="30dp"
     tools:context=".activity.ArticleActivity">
     <androidx.core.widget.NestedScrollView
@@ -18,7 +18,7 @@
             tools:context=".activity.ArticleActivity">
             <TextView
                 android:id="@+id/tv_title_details_article"
-                android:textColor="@color/TitleTextBlack"
+                android:textColor="@color/color3"
                 android:textSize="30sp"
                 android:text="绿毛水怪"
                 android:layout_marginLeft="15dp"
@@ -42,7 +42,7 @@
                 android:id="@+id/tv_set_details_article"
                 android:textSize="16sp"
                 android:text="[文集]"
-                android:textColor="#ADD8E6"
+                android:textColor="@color/color8"
                 android:layout_toRightOf="@id/title_right"
                 android:layout_alignBottom="@id/tv_title_details_article"
                 android:layout_marginBottom="3.5dp"
@@ -52,7 +52,7 @@
             <TextView
                 android:id="@+id/tv_userName_details_article"
                 android:text="王祖贤"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/iv_head_details_article"
                 android:layout_alignTop="@id/iv_head_details_article"
                 android:layout_marginTop="2dp"
@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/tv_fanNumLeft_details_article"
                 android:text="粉丝:"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_article"
                 android:layout_toRightOf="@id/iv_head_details_article"
                 android:layout_marginLeft="5dp"
@@ -75,7 +75,7 @@
             <TextView
                 android:id="@+id/tv_fanNum_details_article"
                 android:text="--"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_article"
                 android:layout_toRightOf="@id/tv_fanNumLeft_details_article"
                 android:layout_marginLeft="0dp"
@@ -86,7 +86,7 @@
 
             <TextView
                 android:id="@+id/tv_date_details_article"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/tv_userName_details_article"
                 android:layout_alignBottom="@id/tv_userName_details_article"
                 android:layout_marginLeft="8dp"
@@ -143,7 +143,7 @@
                 android:id="@+id/tv_content_details_article"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:textSize="17sp"
                 android:lineHeight="30dp"
                 android:layout_below="@id/iv_cover_article_details"

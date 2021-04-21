@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="@color/color2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.example.shoujiedemo.util.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <!-- 设置标题 -->
@@ -18,7 +18,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="#fff">
+        android:background="@color/color1">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -34,11 +34,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/personalInfo"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle" />
+                android:textColor="@color/color3" />
         </LinearLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <LinearLayout
@@ -62,12 +62,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorBackground">
+        android:background="@color/color2">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginTop="20dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
@@ -81,7 +81,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="ID"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/myCenter_PersonalInfo_ID"
@@ -91,12 +91,12 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="1"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 
@@ -109,7 +109,7 @@
             android:clickable="true"
             android:paddingStart="10dp"
             android:paddingEnd="20dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:focusable="true">
             <TextView
                 android:layout_width="50dp"
@@ -118,7 +118,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:text="昵称"
                 tools:ignore="RelativeOverlap" />
             <TextView
@@ -129,18 +129,18 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="梁朝伟"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
@@ -155,7 +155,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="性别"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp"
                 tools:ignore="RelativeOverlap" />
             <TextView
@@ -166,19 +166,19 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="女"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <RelativeLayout
             android:id="@+id/myCenter_setting_clearCookie"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -192,7 +192,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:text="年龄"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/myCenter_PersonalInfo_userAge"
@@ -202,12 +202,12 @@
                 android:gravity="start"
                 android:layout_centerVertical="true"
                 android:text="16"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:textSize="15sp"/>
         </RelativeLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <!-- 关于 -->
@@ -220,7 +220,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="20dp"
             android:layout_marginTop="30dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:focusable="true">
             <TextView
                 android:layout_width="wrap_content"
@@ -229,13 +229,13 @@
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
                 android:text="个性签名"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
         <View
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <TextView
@@ -246,7 +246,7 @@
             android:paddingEnd="10dp"
             android:textSize="15sp"
             android:text="@string/userSign"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/color4" />
 
     </LinearLayout>
 </LinearLayout>

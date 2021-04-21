@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/confirm_top"
-        android:textColor="#000"
+        android:textColor="@color/color15"
         android:textSize="16sp"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="15dp"
@@ -20,7 +20,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:id="@+id/btn_bottom"
-        android:background="#fff"
+        android:background="@color/color1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
 
         <Button
             android:text="取消"
-            android:background="#fff"
+            android:background="@color/color1"
             android:id="@+id/delete_content_item_btn_dismiss"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -36,13 +36,13 @@
 
         <View
             android:layout_above="@id/btn_bottom"
-            android:background="#F5F5F5"
+            android:background="@color/color6"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
 
         <Button
             android:text="确定"
-            android:background="#fff"
+            android:background="@color/color1"
             android:id="@+id/delete_content_item_btn_commit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 
     <View
         android:layout_above="@id/btn_bottom"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 

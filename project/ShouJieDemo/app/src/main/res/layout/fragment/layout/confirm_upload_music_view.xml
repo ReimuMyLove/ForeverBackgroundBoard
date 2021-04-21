@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#F5F5F5"
+    android:background="@color/color6"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:elevation="2dp"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:elevation="4dp"
-            android:textColor="#000"
+            android:textColor="@color/color15"
             android:text="复制分享链接"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -33,7 +33,7 @@
     <EditText
         android:id="@+id/upload_song_ed_link"
         android:hint="分享"
-        android:background="#fff"
+        android:background="@color/color1"
         android:padding="2dp"
         android:gravity="top"
         android:textSize="14sp"
@@ -46,21 +46,23 @@
         android:padding="10dp"
         android:orientation="horizontal"
         android:id="@+id/btn_bottom"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_below="@id/upload_song_ed_link"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <Button
             android:text="取消"
-            android:background="#fff"
+            android:textColor="@color/color4"
+            android:background="@color/color1"
             android:id="@+id/upload_song_item_btn_dismiss"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
     <Button
         android:text="上传"
-        android:background="#fff"
+        android:background="@color/color1"
+        android:textColor="@color/color4"
         android:id="@+id/upload_song_item_btn_commit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

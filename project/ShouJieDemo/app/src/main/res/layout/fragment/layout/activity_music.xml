@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="#fff"
+    android:background="@color/color1"
     android:layout_height="match_parent"
     tools:context=".activity.MusicActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/tv_userName_details_music"
             android:text="王祖贤"
-            android:textColor="@color/articleLightBlack"
+            android:textColor="@color/color9"
             android:layout_toRightOf="@id/iv_head_details_music"
             android:layout_alignTop="@id/iv_head_details_music"
             android:layout_marginTop="2dp"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/tv_date_details_music"
-            android:textColor="@color/articleLightBlack"
+            android:textColor="@color/color9"
             android:layout_toRightOf="@id/tv_userName_details_music"
             android:layout_alignBottom="@id/tv_userName_details_music"
             android:layout_marginLeft="8dp"
@@ -59,7 +59,7 @@
         <TextView
             android:id="@+id/tv_fanNumLeft_details_music"
             android:text="粉丝:"
-            android:textColor="@color/articleLightBlack"
+            android:textColor="@color/color9"
             android:layout_below="@id/tv_userName_details_music"
             android:layout_toRightOf="@id/iv_head_details_music"
             android:layout_marginLeft="5dp"
@@ -71,7 +71,7 @@
         <TextView
             android:id="@+id/tv_fanNum_details_music"
             android:text="--"
-            android:textColor="@color/articleLightBlack"
+            android:textColor="@color/color9"
             android:layout_below="@id/tv_userName_details_music"
             android:layout_toRightOf="@id/tv_fanNumLeft_details_music"
             android:layout_marginLeft="0dp"
@@ -127,7 +127,7 @@
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
-            android:textColor="#000"
+            android:textColor="@color/color15"
             android:layout_below="@id/music_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -140,7 +140,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="郑中基"
-                android:textColor="#000"
+                android:textColor="@color/color15"
                 android:textSize="14sp" />
 
         <Button
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"/>
 
             <View
-                android:background="#60D3D3D3"
+                android:background="@color/color18"
                 android:layout_marginBottom="-51dp"
                 android:layout_above="@id/ln_num"
                 android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                 android:layout_below="@id/play_music"
                 android:layout_marginTop="50dp"
                 android:paddingTop="10dp"
-                android:background="#109C9C9C"
+                android:background="@color/color10"
                 android:elevation="2dp"
                 android:paddingLeft="15dp"
                 android:orientation="horizontal"
@@ -209,14 +209,14 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="评论"
-                        android:textColor="#80000000" />
+                        android:textColor="@color/color11" />
 
                     <TextView
                         android:id="@+id/follow_music_tv_comment_num2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -233,14 +233,14 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="收藏"
-                        android:textColor="#80000000" />
+                        android:textColor="@color/color11" />
 
                     <TextView
                         android:id="@+id/follow_music_tv_collection_num2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -255,14 +255,14 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="点赞"
-                        android:textColor="#80000000" />
+                        android:textColor="@color/color11" />
 
                     <TextView
                         android:id="@+id/follow_music_tv_fa_num2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -278,7 +278,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="-2dp"
-        android:background="#25E8E8E8"
+        android:background="@color/color12"
         android:cacheColorHint="@android:color/transparent"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
@@ -305,14 +305,14 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
-        android:background="#60D3D3D3"
+        android:background="@color/color18"
         android:layout_above="@id/operation"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>
 
     <RelativeLayout
         android:id="@+id/operation"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_alignParentBottom="true"
         android:paddingLeft="30dp"
         android:paddingTop="8dp"

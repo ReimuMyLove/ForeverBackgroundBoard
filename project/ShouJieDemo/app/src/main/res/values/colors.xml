@@ -6,7 +6,7 @@
     <color name="itemChecked">#000000</color>
     <color name="itemCheckedFalse">#DCDCDC</color>
 
-    <!---->
+    <!-- 颜色色号 -->
     <color name="TabandBottomWhite">#fff</color>
     <color name="darkTabandBottomWhite">#000</color>
     <color name="TitleTextBlack">#000</color>
@@ -39,4 +39,31 @@
     <color name="colorAllWhite">#FFFFFF</color>
     <color name="darkColorAllWhite">#000</color>
 
+
+    <!-- 整理色号 -->
+    <color name="color1">#FFFFFF</color>
+    <color name="color2">#B3EFEFEF</color>
+    <color name="color3">#757575</color>
+    <color name="color4">#101010</color>
+    <color name="color5">#D6D6D6</color>
+    <color name="color6">#F5F5F5</color>
+    <color name="color7">#95000000</color>
+    <color name="color8">#ADD8E6</color>
+    <color name="color9">#90000000</color>
+    <color name="color10">#109C9C9C</color>
+    <color name="color11">#80000000</color>
+    <color name="color12">#25E8E8E8</color>
+    <color name="color13">#f7f7f7</color>
+    <color name="color14">#1399CB</color>
+    <color name="color15">#000</color>
+    <color name="color16">#FF9800</color>
+    <color name="color17">#bebebe</color>
+    <color name="color18">#60D3D3D3</color>
+    <color name="color19">#F1F1F1</color>
+    <color name="color20">#DDDDDD</color>
+    <color name="color21">#DEDEDE</color>
+    <color name="color22">#f7f7f7</color>
+    <color name="color23">#000</color>
+    <color name="color24">#000</color>
+    <color name="color25">#000</color>
 </resources>

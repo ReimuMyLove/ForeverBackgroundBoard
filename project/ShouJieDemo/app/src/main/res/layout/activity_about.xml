@@ -6,20 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorBackground">
+        android:background="@color/color2">
         <!-- 关于标题 -->
         <LinearLayout
             android:id="@+id/myCenter_setting_about_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <Button
@@ -33,11 +33,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:gravity="center"/>
         </LinearLayout>
         <View
-            android:background="#D6D6D6"
+            android:background="@color/color5"
             android:layout_width="match_parent"
             android:layout_height="0.1dp"/>
         <LinearLayout
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#fff">
+            android:background="@color/color1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,10 +75,10 @@
                     android:gravity="center_vertical"
                     android:textSize="15sp"
                     android:text="@string/producer"
-                    android:textColor="@color/colorText"/>
+                    android:textColor="@color/color4"/>
             </LinearLayout>
             <View
-                android:background="#D6D6D6"
+                android:background="@color/color5"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"/>
             <LinearLayout
@@ -93,10 +93,10 @@
                     android:gravity="center_vertical"
                     android:textSize="15sp"
                     android:text="@string/groupLeader"
-                    android:textColor="@color/colorText"/>
+                    android:textColor="@color/color4"/>
             </LinearLayout>
             <View
-                android:background="#D6D6D6"
+                android:background="@color/color5"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"/>
             <LinearLayout
@@ -111,7 +111,7 @@
                     android:gravity="center_vertical"
                     android:textSize="15sp"
                     android:text="@string/groupMember"
-                    android:textColor="@color/colorText"/>
+                    android:textColor="@color/color4"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

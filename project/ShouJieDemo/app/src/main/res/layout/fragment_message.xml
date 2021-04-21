@@ -9,7 +9,7 @@
     tools:context=".home.recommen.fragment.HomeFragment">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <RelativeLayout

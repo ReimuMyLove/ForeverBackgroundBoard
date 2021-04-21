@@ -6,7 +6,7 @@
     <com.example.shoujiedemo.bean.StatusBarHeightView
         android:id="@+id/use_height"
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -23,10 +23,10 @@
         android:text="文章"
         android:paddingTop="20dp"
         android:gravity="center_horizontal"
-        android:background="#fff"
+        android:background="@color/color1"
         android:id="@+id/upload_article_top"
         android:layout_marginTop="20dp"
-        android:textColor="#95000000"
+        android:textColor="@color/color7"
         android:textSize="23sp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
@@ -45,7 +45,7 @@
     <EditText
         android:id="@+id/upload_ed_article_title"
         android:layout_marginTop="20dp"
-        android:background="#fff"
+        android:background="@color/color1"
         android:hint="标题(可无)"
         android:gravity="center"
         android:paddingTop="15dp"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:background="#fff"
+        android:background="@color/color1"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
         android:hint="诗歌内容"
@@ -68,14 +68,14 @@
         android:layout_height="180dp"/>
     <View
         android:layout_below="@id/upload_ed_article_title"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_centerInParent="true"
         android:layout_width="280dp"
         android:layout_height="1dp"/>
 
     <EditText
         android:id="@+id/upload_ed_article_writer"
-        android:background="#fff"
+        android:background="@color/color1"
         android:hint="出处/作者(可无)"
         android:gravity="center"
         android:paddingTop="15dp"
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"/>
     <View
         android:layout_below="@id/ed_article_content"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_centerInParent="true"
         android:layout_width="280dp"
         android:layout_height="1dp"/>
@@ -108,7 +108,7 @@
         android:id="@+id/select_tags"
         android:layout_marginTop="20dp"
         android:layout_below="@id/upload_ed_article_writer"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
@@ -137,15 +137,15 @@
             android:layout_marginRight="5dp"
             android:id="@+id/custom_tag"
             android:layout_alignParentRight="true"
-            android:background="#fff"
+            android:background="@color/color1"
             android:hint="自定义"
             android:layout_width="55dp"
             android:layout_height="26dp"/>
 
-    </RelativeLayout>>
+    </RelativeLayout>
     <View
         android:layout_below="@id/select_tags"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
@@ -153,7 +153,7 @@
     <RelativeLayout
         android:id="@+id/isOriginal_bottom"
         android:layout_below="@id/select_tags"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
@@ -178,7 +178,7 @@
 
     <RelativeLayout
         android:layout_below="@id/isOriginal_bottom"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
@@ -206,14 +206,14 @@
 
     <View
         android:layout_below="@id/select_tags"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
     <View
         android:layout_below="@id/upload_ed_article_writer"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>

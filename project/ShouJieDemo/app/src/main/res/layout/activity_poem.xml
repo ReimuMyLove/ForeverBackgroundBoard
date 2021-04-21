@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="60dp"
-    android:background="#fff"
+    android:background="@color/color1"
     tools:context=".activity.ArticleActivity">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -28,7 +28,7 @@
             <TextView
                 android:id="@+id/tv_userName_details_poem"
                 android:text="--"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/iv_head_details_poem"
                 android:layout_alignTop="@id/iv_head_details_poem"
                 android:layout_marginTop="2dp"
@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/tv_fanNumLeft_details_poem"
                 android:text="粉丝:"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_poem"
                 android:layout_toRightOf="@id/iv_head_details_poem"
                 android:layout_marginLeft="5dp"
@@ -52,7 +52,7 @@
             <TextView
                 android:id="@+id/tv_fanNum_details_poem"
                 android:text="--"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_poem"
                 android:layout_toRightOf="@id/tv_fanNumLeft_details_poem"
                 android:layout_marginLeft="0dp"
@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/tv_date_details_poem"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/tv_userName_details_poem"
                 android:layout_alignBottom="@id/tv_userName_details_poem"
                 android:layout_marginLeft="8dp"
@@ -105,7 +105,7 @@
                 android:text="已关注" />
             <TextView
                 android:id="@+id/tv_title_details_poem"
-                android:textColor="@color/TitleTextBlack"
+                android:textColor="@color/color15"
                 android:textSize="25sp"
                 android:text="偶然"
                 android:gravity="center_horizontal"
@@ -135,7 +135,7 @@
                     android:id="@+id/tv_set_details_poem"
                     android:textSize="16sp"
                     android:text="[文集]"
-                    android:textColor="#ADD8E6"
+                    android:textColor="@color/color8"
                     android:layout_toRightOf="@id/title_right"
                     android:layout_marginBottom="3.5dp"
                     android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
 
             <TextView
                 android:id="@+id/tv_writer_details_poem"
-                android:textColor="@color/TitleTextBlack"
+                android:textColor="@color/color15"
                 android:text="徐志摩"
                 android:textSize="19sp"
                 android:gravity="center_horizontal"
@@ -167,7 +167,7 @@
                 android:layout_marginBottom="60dp"
                 android:layout_marginTop="15dp"
                 android:id="@+id/tv_content_details_poem"
-                android:textColor="#000"
+                android:textColor="@color/color15"
                 android:textSize="16sp"
                 android:lineHeight="27dp"
                 android:layout_below="@id/tv_writer_details_poem"
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"/>
 
             <View
-                android:background="#60D3D3D3"
+                android:background="@color/color18"
                 android:layout_marginBottom="-11dp"
                 android:layout_above="@id/ln_num"
                 android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                 android:gravity="center_horizontal"
                 android:paddingBottom="8dp"
                 android:paddingTop="10dp"
-                android:background="#109C9C9C"
+                android:background="@color/color10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -202,7 +202,7 @@
                     <TextView
                         android:text="评论"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -211,7 +211,7 @@
                         android:text="0"
                         android:textSize="12sp"
                         android:id="@+id/follow_poem_tv_comment_num2"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -224,7 +224,7 @@
                     <TextView
                         android:text="转发"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -233,7 +233,7 @@
                         android:text="0"
                         android:id="@+id/follow_poem_tv_share_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -246,7 +246,7 @@
                     <TextView
                         android:text="收藏"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -255,7 +255,7 @@
                         android:text="0"
                         android:id="@+id/follow_poem_tv_collection_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -267,7 +267,7 @@
                     <TextView
                         android:text="点赞"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -276,7 +276,7 @@
                         android:text="0"
                         android:id="@+id/follow_poem_tv_fa_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -284,14 +284,14 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:background="#25E8E8E8"
+                android:background="@color/color12"
                 android:id="@+id/follow_poem_comment_list"
                 android:layout_below="@id/ln_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cacheColorHint="@android:color/transparent"
                 android:clipToPadding="false"
-                android:divider="#bebebe"
+                android:divider="@color/color17"
                 android:dividerHeight="15dp"
                 android:fadeScrollbars="true"
                 android:listSelector="@android:color/transparent"
@@ -315,14 +315,14 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
-        android:background="#60D3D3D3"
+        android:background="@color/color18"
         android:layout_above="@id/operation"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>
 
     <RelativeLayout
         android:id="@+id/operation"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_alignParentBottom="true"
         android:paddingLeft="50dp"
         android:paddingTop="8dp"

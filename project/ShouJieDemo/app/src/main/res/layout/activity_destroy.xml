@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#fff">
+    android:background="@color/color1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#fff">
+        android:background="@color/color1">
         <com.example.shoujiedemo.util.StatusBarHeightView
             app:use_type="use_height"
-            android:background="#fff"
+            android:background="@color/color1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <!-- 销毁账户标题 -->
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:background="#fff"
+            android:background="@color/color1"
             android:gravity="center_vertical">
             <Button
                 android:id="@+id/destroyAccount_return"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/destroyAccount"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:gravity="center"/>
         </LinearLayout>
         <View
@@ -46,7 +46,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginStart="20dp"
             android:textSize="20dp"
-            android:textColor="@color/colorTitle"
+            android:textColor="@color/color3"
             android:text="开启确认注销按钮"/>
         <com.example.shoujiedemo.util.SwitchButton
             android:id="@+id/destroyAccount_switch"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:background="#fff"
+            android:background="@color/color1"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -66,14 +66,14 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:text="警告："/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:textColor="@color/colorText"
+                android:textColor="@color/color4"
                 android:text="@string/destroyAccountWarning"/>
             <TextView
                 android:id="@+id/destroyAccount_userID"
@@ -82,7 +82,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:textSize="20sp"
                 android:text="用户ID:"/>
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:textSize="20sp"
-                android:textColor="@color/colorTitle"
+                android:textColor="@color/color3"
                 android:text="用户名:"/>
         </LinearLayout>
     </LinearLayout>

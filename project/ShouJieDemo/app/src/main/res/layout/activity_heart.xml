@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="60dp"
-    android:background="#fff">
+    android:background="@color/color1">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -26,7 +26,7 @@
             <TextView
                 android:id="@+id/tv_userName_details_heart"
                 android:text="--"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/iv_head_details_heart"
                 android:layout_alignTop="@id/iv_head_details_heart"
                 android:layout_marginTop="2dp"
@@ -38,7 +38,7 @@
             <TextView
                 android:id="@+id/tv_fanNumLeft_details_heart"
                 android:text="粉丝:"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_heart"
                 android:layout_toRightOf="@id/iv_head_details_heart"
                 android:layout_marginLeft="5dp"
@@ -50,7 +50,7 @@
             <TextView
                 android:id="@+id/tv_fanNum_details_heart"
                 android:text="--"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_below="@id/tv_userName_details_heart"
                 android:layout_toRightOf="@id/tv_fanNumLeft_details_heart"
                 android:layout_marginLeft="0dp"
@@ -61,7 +61,7 @@
 
             <TextView
                 android:id="@+id/tv_date_details_heart"
-                android:textColor="@color/articleLightBlack"
+                android:textColor="@color/color9"
                 android:layout_toRightOf="@id/tv_userName_details_heart"
                 android:layout_alignBottom="@id/tv_userName_details_heart"
                 android:layout_marginLeft="8dp"
@@ -105,7 +105,7 @@
                     android:id="@+id/tv_set_details_heart"
                     android:textSize="10sp"
                     android:text="[文集]"
-                    android:textColor="#ADD8E6"
+                    android:textColor="@color/color8"
                     android:layout_marginLeft="2dp"
                     android:layout_alignBottom="@id/tv_date_details_heart"
                     android:layout_toRightOf="@id/tv_date_details_heart"
@@ -127,7 +127,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_below="@id/iv_head_details_heart"
                 android:id="@+id/tv_content_details_heart"
-                android:textColor="#95000000"
+                android:textColor="@color/color7"
                 android:textSize="15sp"
                 android:lineHeight="30dp"
                 android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
                 android:paddingTop="10dp"
-                android:background="#109C9C9C"
+                android:background="@color/color10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -153,7 +153,7 @@
                     <TextView
                         android:text="评论"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -162,7 +162,7 @@
                         android:text="0"
                         android:textSize="12sp"
                         android:id="@+id/follow_heart_tv_comment_num2"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -176,7 +176,7 @@
                     <TextView
                         android:text="收藏"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -185,7 +185,7 @@
                         android:text="0"
                         android:id="@+id/follow_heart_tv_collection_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -197,7 +197,7 @@
                     <TextView
                         android:text="点赞"
                         android:layout_marginTop="15dp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -206,7 +206,7 @@
                         android:text="0"
                         android:id="@+id/follow_heart_tv_fa_num2"
                         android:textSize="12sp"
-                        android:textColor="#80000000"
+                        android:textColor="@color/color11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -214,14 +214,14 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:background="#25E8E8E8"
+                android:background="@color/color12"
                 android:layout_below="@id/ln_num"
                 android:id="@+id/follow_heart_comment_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cacheColorHint="@android:color/transparent"
                 android:clipToPadding="false"
-                android:divider="#bebebe"
+                android:divider="@color/color17"
                 android:dividerHeight="15dp"
                 android:fadeScrollbars="true"
                 android:listSelector="@android:color/transparent"
@@ -244,14 +244,14 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
-        android:background="#60D3D3D3"
+        android:background="@color/color18"
         android:layout_above="@id/operation"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"/>
 
     <RelativeLayout
         android:id="@+id/operation"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_alignParentBottom="true"
         android:paddingLeft="50dp"
         android:paddingTop="8dp"

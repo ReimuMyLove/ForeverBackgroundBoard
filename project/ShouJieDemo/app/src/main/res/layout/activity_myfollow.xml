@@ -7,12 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <LinearLayout
         android:orientation="horizontal"
-        android:background="#fff"
+        android:background="@color/color1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -23,8 +23,8 @@
         <TextView
             android:text="关注列表"
             android:textSize="20sp"
-            android:textColor="#90000000"
-            android:background="#fff"
+            android:textColor="@color/color9"
+            android:background="@color/color1"
             android:layout_marginLeft="8dp"
             android:paddingBottom="15dp"
             android:layout_width="match_parent"
@@ -32,14 +32,14 @@
     </LinearLayout>
     <View
         android:layout_alignParentBottom="true"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myFollow_articleRec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorActivity">
+        android:background="@color/color21">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
