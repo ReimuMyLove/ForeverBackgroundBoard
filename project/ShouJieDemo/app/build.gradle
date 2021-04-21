@@ -1,11 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.example.shoujiedemo"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -22,6 +26,8 @@ android {
         main {
             res.srcDirs =
                     [
+                            'src/main/res-book/layout',
+                            'src/main/res-book',
                             'src/main/res/layout/fragment',
                             'src/main/res/layout/mainActivity',
                             'src/main/res/layout/myCenter/setting/activity',
@@ -47,6 +53,13 @@ android {
 }
 
 dependencies {
+    //room持久化
+    def room_version = "2.2.6"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-guava:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
     //MultiChoicesCircleButton
     implementation 'com.gjiazhe:MultiChoicesCircleButton:1.0'
     //gif
@@ -84,5 +97,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
 }
+

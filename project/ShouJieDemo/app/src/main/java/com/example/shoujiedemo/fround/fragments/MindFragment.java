@@ -125,6 +125,14 @@ public class MindFragment extends Fragment implements HeartView {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(isRefresh && heartList.size() == 0){
+            presenter.confirmInitContent(2, 1, UserUtil.USER_ID);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);

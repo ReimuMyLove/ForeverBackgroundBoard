@@ -1,20 +1,37 @@
 package com.example.shoujiedemo.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class User implements Serializable {
 
+    @PrimaryKey
     private int id;
+    @ColumnInfo(name="name")
     private String name;
+    @ColumnInfo(name="password")
     private String password;
+    @ColumnInfo(name="picname")
     private String picname;
+    @ColumnInfo(name="age")
     private int age;
+    @ColumnInfo(name="sex")
     private String sex;
+    @ColumnInfo(name="sign")
     private String sign;
+    @ColumnInfo(name="fennum")
     private int fennum;
+    @ColumnInfo(name="follownum")
     private int follownum;
+    @ColumnInfo(name="is_follw")
     private boolean isFollow;
+    @ColumnInfo(name="backgroundpic1")
     private String backgroundpic1;      //个人中心的背景图
+    @ColumnInfo(name="backgroundpic2")
     private String backgroundpic2;      //我的空间背景图
 
     public User(){

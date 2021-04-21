@@ -3,6 +3,9 @@ package com.example.shoujiedemo.Log.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.example.shoujiedemo.Log.dao.UserDao;
+import com.example.shoujiedemo.Log.database.UserDataBase;
 import com.example.shoujiedemo.Log.presenter.LoginPresenterListener;
 import com.example.shoujiedemo.apiInterface.ApiInterFace;
 import com.example.shoujiedemo.entity.User;
@@ -91,29 +94,12 @@ public class LoginModelImpl implements LoginModel{
      * @param context 当前上下文
      */
     private void userInfoSet(User user, Context context){
-        /**
-         * 登录前清空当前用户数据表中的全部内容 以填写新的内容
-         */
-        DBHelper helper = new DBHelper(context);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String sql = "delete from UserInfo";
-        db.execSQL(sql);
-        /**
-         * 内容清空完成 开始写入新的用户信息
-         */
-        int ID = user.getId();
-        String name = user.getName();
-        String password = user.getPassword();
-        String picname = user.getPicname();
-        int age = user.getAge();
-        String sex = user.getSex();
-        String sign = user.getSign();
-        int fennum = user.getFennum();
-        int follownum = user.getFollownum();
-        //编写sql语句
-        String sql1 =
-                MessageFormat.format("insert into userInfo(userID,userName,userPassword,userSex,picName,userAge,userFans,userFollow,userSign)values(''{0}'',''{1}'',''{2}'',''{3}'',''{4}'',''{5}'',''{6}'',''{7}'',''{8}'')", ID, name, password, sex, picname, age, fennum, follownum, sign);
-        db.execSQL(sql);
-        db.close();
+        new Thread(){
+            @Override
+            public void run() {
+                UserDao userDao = UserDataBase.getInstance(context).getUserDao();
+                userDao.insertUser(user);
+            }
+        }.start();
     }
 }

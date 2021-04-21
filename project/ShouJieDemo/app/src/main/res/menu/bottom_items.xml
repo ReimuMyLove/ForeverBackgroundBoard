@@ -14,10 +14,10 @@
         android:title="发现"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_message"
+        android:id="@+id/item_book"
         android:enabled="true"
-        android:icon="@drawable/message"
-        android:title="信息"
+        android:icon="@drawable/book"
+        android:title="书城"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_owner"

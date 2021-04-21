@@ -43,6 +43,7 @@ import com.example.shoujiedemo.upload.activity.MusicUploadActivity;
 import com.example.shoujiedemo.upload.activity.PoemUploadActivity;
 import com.example.shoujiedemo.util.MusicPlayUtil;
 import com.example.shoujiedemo.util.ToastUtils;
+import com.example.shoujiedemo.util.UserUtil;
 import com.gjiazhe.multichoicescirclebutton.MultiChoicesCircleButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -113,6 +114,8 @@ public class FroundFragment extends Fragment{
         initView(view);
         return view;
     }
+
+
 
     @Override
     public void onDestroy() {

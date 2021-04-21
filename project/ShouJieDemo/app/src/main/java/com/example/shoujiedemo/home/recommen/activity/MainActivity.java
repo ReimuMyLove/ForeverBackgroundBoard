@@ -1,25 +1,22 @@
+
 package com.example.shoujiedemo.home.recommen.activity;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.adapter.MyFragmentPagerAdapter;
+import com.example.shoujiedemo.kotlinbook.fragment.BookStoreFragment;
 import com.example.shoujiedemo.fround.fragments.FroundFragment;
 import com.example.shoujiedemo.home.recommen.fragment.HomeFragment;
-import com.example.shoujiedemo.message.activity.MessageFragment;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.OwnerFragment;
 import com.example.shoujiedemo.util.BaseActivity;
-import com.example.shoujiedemo.util.SharedPreUtil;
 import com.example.shoujiedemo.util.StatusBarUtil;
 import com.example.shoujiedemo.util.SystemBarTintManager;
-import com.example.shoujiedemo.util.ThemeResUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -30,25 +27,11 @@ public class MainActivity extends BaseActivity {
     private ViewPager2 viewPager2;
     private HomeFragment homeFragment;
     private FroundFragment froundFragment;
-
-    boolean currentDarkModel = false; //当前是否为夜间模式
     SystemBarTintManager mTintManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreUtil.getInstance().load();
-        if(SharedPreUtil.getInstance().darkmodel) {
-            setTheme(R.style.AppThemeDark);
-            ThemeResUtil.setModel(true); // APP首页才需要这句，其它跳转activity不需要再次设置
-        }
-        else {
-            setTheme(R.style.TranslucentTheme);
-            ThemeResUtil.setModel(false); // APP首页才需要这句，其它跳转activity不需要再次设置
-        }
-
-        currentDarkModel = SharedPreUtil.getInstance().darkmodel;
 
         mTintManager = new SystemBarTintManager(this);
 
@@ -63,7 +46,8 @@ public class MainActivity extends BaseActivity {
         fragments.add(homeFragment);
         froundFragment = new FroundFragment(viewPager2,this);
         fragments.add(froundFragment);
-        fragments.add(new MessageFragment(viewPager2));
+        fragments.add(new BookStoreFragment());
+        //fragments.add(new MessageFragment(viewPager2));
         fragments.add(new OwnerFragment());
         //绑定Fragment
 
@@ -123,7 +107,7 @@ public class MainActivity extends BaseActivity {
                 case R.id.item_fround:
                     viewPager2.setCurrentItem(1,false);
                     break;
-                case R.id.item_message:
+                case R.id.item_book:
                     viewPager2.setCurrentItem(2,false);
                     break;
                 case R.id.item_owner:
@@ -135,47 +119,15 @@ public class MainActivity extends BaseActivity {
 
     };
 
-    public void changeTheme(boolean darkmodel) {
-        ThemeResUtil.setModel(darkmodel);
-        getWindow().getDecorView().setBackgroundColor(ThemeResUtil.getColorPrimary());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //mTintManager.setStatusBarTintEnabled(false);
-            getWindow().setStatusBarColor(ThemeResUtil.getColorPrimaryDark());
-        }
-        else {
-            //mTintManager.setStatusBarTintEnabled(true);
-            //mTintManager.setTintColor(ThemeResUtil.getColorPrimaryDark());
-        }
-    }
 
 
-    public void changeModel(boolean darkmodel) {
-        SharedPreUtil.getInstance().load();
-        SharedPreUtil.getInstance().darkmodel = darkmodel;
-        SharedPreUtil.getInstance().save();
-
-        changeTheme(darkmodel);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        handleThemeOnResume();
     }
 
-    public void handleThemeOnResume() {
-        SharedPreUtil.getInstance().load();
-
-        if (SharedPreUtil.getInstance().darkmodel && !currentDarkModel) {
-            currentDarkModel = true;
-            changeTheme(true);
-        } else if (!SharedPreUtil.getInstance().darkmodel && currentDarkModel) {
-            currentDarkModel = false;
-            changeTheme(false);
-        }
-    }
 
 
 }

@@ -1,11 +1,14 @@
 package com.example.shoujiedemo.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Transition;
+import androidx.transition.TransitionInflater;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -14,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -124,6 +128,9 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
         builder = new AlertDialog.Builder(this);
         EventBus.getDefault().register(this);
 
@@ -361,7 +368,6 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         dismiss = setAlterView.findViewById(R.id.set_btn_dismss);
         alert = builder.create();
 
-
     }
 
     public void initData(){
@@ -403,62 +409,14 @@ public class ArticleActivity extends AppCompatActivity implements ContentView, A
         Log.i("text.getBottom()",screenHeight + "");
         Log.i("txtHeight",txtheight + "");
 
-        /*if(screenHeight >= txtheight){
-            ViewWrapper viewWrapper = new ViewWrapper(edComment);
-            ObjectAnimator animator = ObjectAnimator.ofInt(viewWrapper, "trueWidth",
-                    0, 550);
-            ObjectAnimator animator1 = ObjectAnimator.ofFloat(share, "translationX",
-                    0, 550);
-            ObjectAnimator animator2 = ObjectAnimator.ofFloat(collected, "translationX",
-                    0, 480);
-            ObjectAnimator animator3 = ObjectAnimator.ofFloat(like, "translationX",
-                    0, 400);
-            ObjectAnimator animtor4 = ObjectAnimator.ofFloat(comment, "alpha",
-                    1, 0.5f, 0)
-                    .setDuration(300);
-            animtor4.start();
-            ObjectAnimator animator5 = ObjectAnimator.ofFloat(btnSendComment, "alpha", 0, 0.5f, 1)
-                    .setDuration(500);
-            animator5.start();
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(animator, animator1, animator2, animator3);
-            animatorSet.setDuration(600);
-            animatorSet.start();
-            //btnSendComment.setVisibility(View.VISIBLE);
-            animFinish = true;
-            commentNum.setVisibility(View.INVISIBLE);
-            //comment.setVisibility(View.INVISIBLE);
-            likeNum.setVisibility(View.INVISIBLE);
-            shareNum.setVisibility(View.INVISIBLE);
-            collectionNum.setVisibility(View.INVISIBLE);
-            btnSendComment.setVisibility(View.VISIBLE);
-            animatorSet.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    edComment.setHint("写回复:");
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
-        }*/
     }
 
     @Override
     public void loadContent(String article) {
         text.setText(article);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startPostponedEnterTransition();
+        }
     }
 
     class MyOnClikListener implements View.OnClickListener{

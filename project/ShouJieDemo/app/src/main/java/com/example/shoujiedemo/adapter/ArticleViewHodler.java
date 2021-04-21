@@ -1,6 +1,7 @@
 package com.example.shoujiedemo.adapter;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +43,7 @@ import com.example.shoujiedemo.home.follow.adapter.FollowContentAdapter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenter;
 import com.example.shoujiedemo.home.follow.presenter.MyFollowOperatePresenterImpl;
 import com.example.shoujiedemo.home.follow.view.ContentView;
+import com.example.shoujiedemo.home.recommen.activity.MainActivity;
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
 import com.example.shoujiedemo.util.ConfigUtil;
 import com.example.shoujiedemo.util.UserUtil;
@@ -393,11 +397,12 @@ public class ArticleViewHodler extends RecyclerView.ViewHolder implements Conten
                 case R.id.follow_article_rn_content:
                     Intent intent2 = new Intent(context, ArticleActivity.class);
                     Bundle bundle2 = new Bundle();
+                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,articleCover,"").toBundle();
                     bundle2.putSerializable("article",contents.get(position));
                     bundle2.putSerializable("user",contents.get(position).getUser());
                     bundle2.putInt("position",position);
                     intent2.putExtra("bundle",bundle2);
-                    context.startActivity(intent2);
+                    context.startActivity(intent2,bundle);
                     break;
             }
         }
