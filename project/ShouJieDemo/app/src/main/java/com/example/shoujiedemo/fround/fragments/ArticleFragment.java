@@ -77,6 +77,15 @@ public class ArticleFragment extends Fragment implements ArticleView {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(isRefresh && articleList.size() == 0){
+            presenter.confirmInitContent(0, 1, UserUtil.USER_ID);
+        }
+        Log.i("Article","onPase");
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         Log.e("Article","onStop");
@@ -144,8 +153,8 @@ public class ArticleFragment extends Fragment implements ArticleView {
         if(articleList.size() < 10 || articleList == null) {
             if(refreshTag == 0) {
                 this.articleList = articles;
-                articleAdapter = new ArticleAdapter(articleList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                articleAdapter = new ArticleAdapter(articleList,getActivity());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(articleAdapter);
                 refreshTag = 1;
             }else{
@@ -189,8 +198,8 @@ public class ArticleFragment extends Fragment implements ArticleView {
         if(searchList.size() < 10 || searchList == null) {
             if(searchTag == 0) {
                 this.searchList = contents;
-                searchAdapter = new ArticleAdapter(searchList, getContext());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                searchAdapter = new ArticleAdapter(searchList, getActivity());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(searchAdapter);
                 searchTag = 1;
             }else{

@@ -127,6 +127,14 @@ public class PoemFragment extends Fragment implements PoemView {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(isRefresh && poemList.size() == 0){
+            presenter.confirmInitContent(3, 1, UserUtil.USER_ID);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);

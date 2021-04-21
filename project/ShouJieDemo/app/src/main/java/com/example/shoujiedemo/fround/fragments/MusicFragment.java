@@ -122,6 +122,14 @@ public class MusicFragment extends Fragment implements MusicView {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(isRefresh && musicList.size() == 0){
+            presenter.confirmInitContent(1, UserUtil.USER_ID);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);

@@ -9,8 +9,12 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="AppThemeDark" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="app_start"  parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>//取消Actionbar
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>//设置全屏
+        <item name="android:windowBackground">@drawable/start</item>//设置背景
+    </style>    <style name="AppThemeDark" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- toolbar（actionbar）颜色 -->
         <item name="colorPrimary">@color/darkTabandBottomWhite</item>
         <!-- 状态栏颜色 -->

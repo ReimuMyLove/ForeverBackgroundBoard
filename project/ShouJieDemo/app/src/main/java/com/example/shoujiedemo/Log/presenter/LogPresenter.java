@@ -34,6 +34,7 @@ public class LogPresenter implements LoginPresenterListener,LoginInterface, Regi
     //登录校验方法
     @Override
     public void confirmLogin(String name, String password, Context context) {
+
         loginModel.login(name,password,context,this);
     }
 

@@ -81,6 +81,7 @@ public class HotFragment extends Fragment implements HotView {
         Log.e("Hot","onCreate");
     }
 
+
     @Override
     public void onStop() {
         super.onStop();
@@ -102,7 +103,9 @@ public class HotFragment extends Fragment implements HotView {
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("Hot","onPause");
+        if(isRefresh && contentList.size() == 0){
+            presenter.confirmInitContent(1, UserUtil.USER_ID);
+        }
     }
 
     @Override

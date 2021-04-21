@@ -13,11 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.shoujiedemo.Log.dao.UserDao;
+import com.example.shoujiedemo.Log.database.UserDataBase;
 import com.example.shoujiedemo.R;
 import com.example.shoujiedemo.Log.presenter.LogPresenter;
+import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.recommen.activity.MainActivity;
 import com.example.shoujiedemo.util.BaseActivity;
 import com.example.shoujiedemo.util.DBHelper;
+import com.example.shoujiedemo.util.UserUtil;
+
+import java.util.List;
 
 public class LoginActivity extends BaseActivity implements LoginView {
     private EditText
@@ -38,12 +44,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //isLogin();
         //获取view控件
         FindView();
         //设置监听器
         SetListener();
-        context = getBaseContext();         //获取当前上下文
-        logPresenter = new LogPresenter(this);  //实例化LogPresenter
+        context = LoginActivity.this;         //获取当前上下文
+        logPresenter = new LogPresenter(LoginActivity.this);  //实例化LogPresenter
     }
 
     /**
@@ -119,4 +126,5 @@ public class LoginActivity extends BaseActivity implements LoginView {
         String password = login_userPassword.getText().toString();
         logPresenter.confirmLogin(name,password,getBaseContext());
     }
+
 }

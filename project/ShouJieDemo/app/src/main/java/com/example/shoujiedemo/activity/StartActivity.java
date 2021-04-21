@@ -5,50 +5,79 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.shoujiedemo.Log.activity.LoginActivity;
+import com.example.shoujiedemo.Log.dao.UserDao;
+import com.example.shoujiedemo.Log.database.UserDataBase;
 import com.example.shoujiedemo.R;
+import com.example.shoujiedemo.entity.User;
 import com.example.shoujiedemo.home.recommen.activity.MainActivity;
 import com.example.shoujiedemo.util.SharedPreUtil;
 import com.example.shoujiedemo.util.SystemBarTintManager;
 import com.example.shoujiedemo.util.ThemeResUtil;
+import com.example.shoujiedemo.util.UserUtil;
+
+import java.util.List;
 
 public class StartActivity extends AppCompatActivity {
 
-    private static final long SPLASH_DELAY_MILLIS = 1500;
-    boolean currentDarkModel = false; //当前是否为夜间模式
     SystemBarTintManager mTintManager;
+    private int START_ACTIVITY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreUtil.getInstance().load();
-        if(SharedPreUtil.getInstance().darkmodel) {
-            setTheme(R.style.AppThemeDark);
-            ThemeResUtil.setModel(true); // APP首页才需要这句，其它跳转activity不需要再次设置
-        }
-        else {
-            setTheme(R.style.TranslucentTheme);
-            ThemeResUtil.setModel(false); // APP首页才需要这句，其它跳转activity不需要再次设置
-        }
-
-        currentDarkModel = SharedPreUtil.getInstance().darkmodel;
-
         mTintManager = new SystemBarTintManager(this);
 
+        goHome();
 
-// 使用Handler的postDelayed方法，3秒后执行跳转到MainActivity
-        new Handler().postDelayed(new Runnable() {
+        new Thread(){
+            @Override
             public void run() {
-                goHome();
+                try {
+                    sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(START_ACTIVITY == 1) {
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(StartActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                finish();
             }
-        }, SPLASH_DELAY_MILLIS);
+        }.start();
+
     }
 
-    private void goHome() {
-        Intent intent=null;
-        intent = new Intent(StartActivity.this, LoginActivity.class);
-        StartActivity.this.startActivity(intent);
-        StartActivity.this.finish();
+    private void goHome(){
+        new Thread(){
+            @Override
+            public void run() {
+                UserDao userDao = UserDataBase.getInstance(getApplicationContext()).getUserDao();
+                List<User> userList = userDao.queryUser();
+                if(userList.size() != 0){
+                    UserUtil.USER_ID = userList.get(0).getId();
+                    UserUtil.USER_IMG = userList.get(0).getPicname();
+                    UserUtil.USER_AGE = userList.get(0).getAge();
+                    UserUtil.USER_FANS = userList.get(0).getFennum();
+                    UserUtil.USER_CENTER_BACKGROUND = userList.get(0).getBackgroundpic1();
+                    UserUtil.USER_SPACE_BACKGROUND = userList.get(0).getBackgroundpic2();
+                    UserUtil.USER_NAME = userList.get(0).getName();
+                    UserUtil.USER_SEX = userList.get(0).getSex();
+                    UserUtil.USER_SIGN = userList.get(0).getSign();
+                    UserUtil.USER_FOLLOW = userList.get(0).getFollownum();
+                    START_ACTIVITY = 1;
+                }else{
+                    START_ACTIVITY = 0;
+                }
+            }
+        }.start();
     }
+
+
+
 }
