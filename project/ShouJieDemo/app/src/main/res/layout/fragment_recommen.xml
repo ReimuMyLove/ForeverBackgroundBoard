@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#25D3D3D3"
+    android:background="@color/color23"
     android:id="@+id/fragment_recommen"
     tools:context=".home.recommen.fragment.RecommenFragment">
         <androidx.cardview.widget.CardView

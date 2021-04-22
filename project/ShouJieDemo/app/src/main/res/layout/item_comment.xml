@@ -79,7 +79,7 @@
                     android:id="@+id/comment_tv_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
+                    android:textColor="@color/color4"
                     android:text="删除" />
 
                 <ImageView
@@ -96,7 +96,7 @@
     <View
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_width="380dp"
         android:layout_height="0.8dp"/>
 </RelativeLayout>

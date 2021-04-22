@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
+        android:background="@color/color1"
         android:orientation="vertical">
         <ImageView
             android:layout_marginLeft="18dp"
@@ -28,14 +28,14 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginTop="15dp"
-            android:textColor="#000"
+            android:textColor="@color/color4"
             android:textSize="28sp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
-            android:background="#D3D3D3" />
+            android:background="@color/color24" />
         <TextView
             android:id="@+id/details_writer"
             android:textSize="16sp"
@@ -54,7 +54,7 @@
                 android:lineSpacingExtra="20sp"
                 android:textSize="18sp"
                 android:lineHeight="30dp"
-                android:textColor="#000" />
+                android:textColor="@color/color4" />
 
     </LinearLayout>
 </ScrollView>

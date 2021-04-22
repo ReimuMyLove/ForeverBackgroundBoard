@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginBottom="15dp"
-    android:background="#25D3D3D3"
+    android:background="@color/color23"
     android:layout_marginTop="15dp"
     android:layout_centerInParent="true"
     android:paddingTop="10dp"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@id/follow_article_tv_user_name"
             android:text="[默认文集]"
-            android:textColor="#96CDCD"
+            android:textColor="@color/color27"
             android:textSize="13sp" />
 
 

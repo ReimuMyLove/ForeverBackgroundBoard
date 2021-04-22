@@ -4,7 +4,7 @@
     xmlns:mytext="http://schemas.android.com/tools"
     android:id="@+id/follow_rl_item"
     android:layout_centerInParent="true"
-    android:background="#25D3D3D3"
+    android:background="@color/color23"
     android:layout_marginBottom="15dp"
     android:layout_marginTop="15dp"
     android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@id/follow_poem_tv_user_name"
             android:text="[文集]"
-            android:textColor="#ADD8E6"
+            android:textColor="@color/color8"
             android:textSize="12sp" />
 
             <TextView
@@ -126,7 +126,7 @@
             <TextView
                 android:id="@+id/follow_poem_tv_title"
                 android:gravity="center_horizontal"
-                android:textColor="#000"
+                android:textColor="@color/color4"
                 android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -135,14 +135,14 @@
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
                 android:paddingBottom="15dp"
-                android:textColor="#000"
+                android:textColor="@color/color4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/follow_poem_tv_cotent"
                 android:paddingBottom="10dp"
                 android:lineHeight="22dp"
-                android:textColor="#000"
+                android:textColor="@color/color4"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -198,7 +198,7 @@
         <TextView
             android:id="@+id/follow_poem_tv_tag0"
             android:layout_below="@id/follow_poem_ln_content"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -208,14 +208,14 @@
             android:layout_below="@id/follow_poem_ln_content"
             android:layout_toRightOf="@id/follow_poem_tv_tag0"
             android:text="#诗"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/follow_poem_tv_tag02"
             android:layout_below="@id/follow_poem_ln_content"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_toRightOf="@id/follow_poem_tv_tag01"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -300,10 +300,6 @@
                         android:text="102" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
-
     </RelativeLayout>
-
 </RelativeLayout>

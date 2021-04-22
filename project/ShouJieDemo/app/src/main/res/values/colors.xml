@@ -63,7 +63,23 @@
     <color name="color20">#DDDDDD</color>
     <color name="color21">#DEDEDE</color>
     <color name="color22">#f7f7f7</color>
-    <color name="color23">#000</color>
-    <color name="color24">#000</color>
-    <color name="color25">#000</color>
+    <color name="color23">#25D3D3D3</color>
+    <color name="color24">#D3D3D3</color>
+    <color name="color25">#2c2c2c</color>
+    <color name="color26">#85000000</color>
+    <color name="color27">#96CDCD</color>
+    <color name="color28">#80008B8B</color>
+    <color name="color29">#10D3D3D3</color>
+    <color name="color30">#50D3D3D3</color>
+    <color name="color31">#B3B3B3</color>
+    <color name="color32"></color>
+    <color name="color33"></color>
+    <color name="color34"></color>
+    <color name="color35"></color>
+    <color name="color36"></color>
+    <color name="color37"></color>
+    <color name="color38"></color>
+    <color name="color39"></color>
+    <color name="color40"></color>
+    <color name="color41"></color>
 </resources>

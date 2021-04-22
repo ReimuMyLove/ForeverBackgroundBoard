@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:paddingTop="10dp"
-        android:background="@color/itemBackGroundColorWhite"
+        android:background="@color/color1"
         android:id="@+id/follow_rl_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -40,7 +40,7 @@
             android:layout_marginBottom="4dp"
             android:layout_toRightOf="@id/follow_heart_tv_user_name"
             android:text="[文集]"
-            android:textColor="#ADD8E6"
+            android:textColor="@color/color8"
             android:textSize="12sp" />
 
         <TextView
@@ -150,7 +150,7 @@
             <TextView
                 android:id="@+id/follow_heart_tv_cotent"
                 android:text="ssssssssss"
-                android:textColor="#95000000"
+                android:textColor="@color/color7"
                 android:layout_below="@id/follow_heart_iv_head"
                 android:layout_marginTop="40dp"
                 android:paddingBottom="20dp"
@@ -164,7 +164,7 @@
         <TextView
             android:id="@+id/follow_heart_tv_tag0"
             android:layout_below="@id/follow_heart_iv_cover"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -173,7 +173,7 @@
             android:id="@+id/follow_heart_tv_tag01"
             android:text="#感悟"
             android:layout_below="@id/follow_heart_iv_cover"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_toRightOf="@id/follow_heart_tv_tag0"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -183,7 +183,7 @@
             android:id="@+id/follow_heart_tv_tag02"
             android:layout_below="@id/follow_heart_iv_cover"
             android:layout_toRightOf="@id/follow_heart_tv_tag01"
-            android:textColor="#80008B8B"
+            android:textColor="@color/color28"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

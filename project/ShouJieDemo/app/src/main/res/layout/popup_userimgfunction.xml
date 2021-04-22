@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color1">
     <LinearLayout
         android:id="@+id/myCenter_userImg_pop"
         android:layout_width="match_parent"
@@ -25,12 +26,12 @@
                 android:text="壁纸"
                 android:textSize="18sp"
                 android:padding="10dp"
-                android:textColor="@color/colorTitle" />
+                android:textColor="@color/color3" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#D3D3D3" />
+                android:background="@color/color24" />
 
             <TextView
                 android:id="@+id/myCenter_userImg_img"
@@ -40,12 +41,12 @@
                 android:textSize="18sp"
                 android:padding="10dp"
                 android:text="头像"
-                android:textColor="@color/colorTitle" />
+                android:textColor="@color/color3" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#D3D3D3" />
+                android:background="@color/color24" />
 
             <TextView
                 android:id="@+id/myCenter_userImg_changeUser"
@@ -55,14 +56,14 @@
                 android:textSize="18sp"
                 android:text="切换账号"
                 android:padding="10dp"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/color3" />
         </LinearLayout>
         <TextView
             android:id="@+id/myCenter_userImg_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@color/colorTitle"
+            android:textColor="@color/color3"
             android:text="取消"
             android:background="@drawable/mycenter_userimgfunction_border"
             android:padding="10dp"

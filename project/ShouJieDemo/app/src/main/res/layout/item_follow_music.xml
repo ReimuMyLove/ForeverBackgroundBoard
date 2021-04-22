@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#10D3D3D3"
+    android:background="@color/color29"
     android:paddingTop="10dp"
     android:paddingBottom="15dp"
     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         android:id="@+id/item_music_text"
         android:layout_below="@id/follow_music_tv_fan"
         android:text="音乐文案"
-        android:textColor="#000"
+        android:textColor="@color/color4"
         android:layout_marginTop="15dp"
         android:layout_alignLeft="@id/item_music"
         android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:id="@+id/item_songName"
                 android:text="无赖"
                 android:layout_marginTop="15dp"
-                android:textColor="#000"
+                android:textColor="@color/color4"
                 android:textSize="15sp"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/item_music_cover"
@@ -102,7 +102,7 @@
                 android:id="@+id/item_music_songer"
                 android:text="郑中基"
                 android:layout_marginTop="20dp"
-                android:textColor="#000"
+                android:textColor="@color/color4"
                 android:layout_alignLeft="@id/item_songName"
                 android:layout_below="@id/item_songName"
                 android:layout_width="wrap_content"
@@ -276,7 +276,7 @@
 
     <View
         android:layout_alignParentBottom="true"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 </RelativeLayout>

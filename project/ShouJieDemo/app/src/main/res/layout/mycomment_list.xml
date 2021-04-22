@@ -6,12 +6,13 @@
     android:layout_margin="10dp"
     android:elevation="2dp"
     app:cardCornerRadius="10dip"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/colorAllWhite">
+        android:background="@color/color1">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +78,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
-            android:background="#B3B3B3" />
+            android:background="@color/color31" />
         <LinearLayout
             android:id="@+id/myComment_content"
             android:layout_width="match_parent"
@@ -85,14 +86,14 @@
             android:orientation="vertical"
             android:padding="10dp"
             android:gravity="bottom"
-            android:background="@color/colorAllWhite">
+            android:background="@color/color1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:background="@color/colorBackground">
+                android:background="@color/color2">
                 <com.example.shoujiedemo.util.CircleImageView
                     android:id="@+id/myComment_writerImg"
                     android:layout_width="20dp"
@@ -122,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="5dp"
-                android:background="@color/colorBackground">
+                android:background="@color/color2">
                 <ImageView
                     android:id="@+id/myComment_articleImg"
                     android:layout_width="200dp"
@@ -135,7 +136,7 @@
                 android:orientation="horizontal"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
-                android:background="@color/colorBackground">
+                android:background="@color/color2">
                 <TextView
                     android:id="@+id/myComment_articleTitle"
                     android:layout_width="match_parent"

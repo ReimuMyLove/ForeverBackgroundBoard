@@ -23,7 +23,7 @@
             android:id="@+id/item_month"
             android:text="12月"
             android:layout_toRightOf="@id/iv_month_left"
-            android:textColor="#2c2c2c"
+            android:textColor="@color/color25"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

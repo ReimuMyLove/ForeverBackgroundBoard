@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#fff"
+    android:background="@color/color1"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:textSize="18sp"
-                    android:textColor="#000"
+                    android:textColor="@color/color4"
                     android:text="用户名"/>
                 <TextView
                     android:layout_alignTop="@id/myFollow_userName"
@@ -96,7 +96,7 @@
     </RelativeLayout>
     <View
         android:layout_alignParentBottom="true"
-        android:background="#F5F5F5"
+        android:background="@color/color6"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 </RelativeLayout>

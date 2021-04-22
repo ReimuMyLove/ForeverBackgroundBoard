@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    android:background="#FFFFFF"
+    android:background="@color/color1"
     android:overScrollMode="never">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                                 android:layout_toEndOf="@id/iv_space_center"
                                 android:layout_centerVertical="true"
                                 android:text="我的空间"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -135,7 +135,7 @@
                                 android:layout_toEndOf="@id/iv_owner_center"
                                 android:text="个人中心"
                                 android:layout_marginStart="5dp"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -173,7 +173,7 @@
                                 android:layout_marginStart="5dp"
                                 android:layout_toEndOf="@id/iv_collect_center"
                                 android:text="我的评论"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -209,7 +209,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="帮助中心"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -244,7 +244,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="我的关注"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -279,7 +279,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="我的点赞"
-                                android:textColor="@color/colorText"
+                                android:textColor="@color/color4"
                                 android:textSize="16sp" />
 
                             <ImageView
