@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
                 super.onPageSelected(position);
                 //滑动页面时底部按钮改变
                 navigationView.getMenu().getItem(position).setChecked(true);
-                if(position<=1 || position == 2){
+                if(position<=1){
                     viewPager2.setUserInputEnabled(false);
                 }else{
                     viewPager2.setUserInputEnabled(true);

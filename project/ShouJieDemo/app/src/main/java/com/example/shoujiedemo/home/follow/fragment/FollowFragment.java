@@ -236,7 +236,14 @@ public class FollowFragment extends Fragment implements FollowView {
        }
    }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(isRefresh && contentList.size() == 0){
+            presenter.confirmInitContent(UserUtil.USER_ID,1);
+        }
+        Log.i("FollowFragmentPause","OnPause");
+    }
 
     @Override
     public void onDestroy() {

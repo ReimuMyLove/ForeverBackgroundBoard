@@ -120,6 +120,11 @@ public class FroundFragment extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
+        hotFragment.onDestroy();
+        musicFragment.onDestroy();
+        poemFragment.onDestroy();
+        articleFragment.onDestroy();
+        mindFragment.onDestroy();
         Log.e("FroundFragment","onDestroy");
         EventBus.getDefault().unregister(this);
     }
@@ -421,6 +426,16 @@ public class FroundFragment extends Fragment{
                 btnAlreadyPlay.setBackgroundResource(R.drawable.play);
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        hotFragment.onPause();
+        musicFragment.onPause();
+        poemFragment.onPause();
+        articleFragment.onPause();
+        mindFragment.onPause();
+        super.onPause();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)

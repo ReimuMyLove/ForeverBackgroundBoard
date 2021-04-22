@@ -174,8 +174,17 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        recommenFragment.onPause();
+        followFragment.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        recommenFragment.onDestroy();
+        followFragment.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 }
