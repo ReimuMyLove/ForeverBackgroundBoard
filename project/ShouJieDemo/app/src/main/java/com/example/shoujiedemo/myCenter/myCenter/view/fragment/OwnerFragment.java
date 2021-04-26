@@ -25,6 +25,8 @@ import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.HelpCent
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyAgreementActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyFollowActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyCommentActivity;
+import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyAddressActivity;
+import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.MyMassageActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.activity.UserInfoActivity;
 import com.example.shoujiedemo.myCenter.myCenter.view.fragment.popupWindow.UserImgPopupWindow;
 import com.example.shoujiedemo.myCenter.mySpace.view.activity.MySpaceActivity;
@@ -61,7 +63,9 @@ public class OwnerFragment extends Fragment {
             myCenter_Storing,               //获取收藏按钮
             myCenter_myFollow,              //获取我的关注按钮
             myCenter_myAgreement,           //获取我的点赞按钮
-            myCenter_helpCenter;            //获取帮助中心按钮
+            myCenter_helpCenter,            //获取帮助中心按钮
+            myCenter_myMassage,             //获取我的信息按钮
+            myCenter_myAddress;             //获取我的地址按钮
     CardView
             myCenter_card       ;           //获取选项卡片
     Button
@@ -140,6 +144,8 @@ public class OwnerFragment extends Fragment {
         myCenter_userName = view.findViewById(R.id.myCenter_userName);
         myCenter_userFans = view.findViewById(R.id.myCenter_userFans);
         myCenter_userInformation = view.findViewById(R.id.myCenter_userInformation);
+        myCenter_myMassage = view.findViewById(R.id.myCenter_myMassage);
+        myCenter_myAddress = view.findViewById(R.id.myCenter_myAddress);
     }
 
     /**
@@ -156,6 +162,8 @@ public class OwnerFragment extends Fragment {
         myCenter_myAgreement.setOnClickListener(listener);
         myCenter_helpCenter.setOnClickListener(listener);
         myCenter_userName.setOnClickListener(listener);
+        myCenter_myMassage.setOnClickListener(listener);
+        myCenter_myAddress.setOnClickListener(listener);
     }
 
     /**
@@ -189,6 +197,12 @@ public class OwnerFragment extends Fragment {
                     break;
                 case R.id.myCenter_userImg:
                     UserImg(view);
+                    break;
+                case R.id.myCenter_myMassage:
+                    myMassageIntent();
+                    break;
+                case R.id.myCenter_myAddress:
+                    myAddressIntent();
                     break;
             }
         }
@@ -268,6 +282,15 @@ public class OwnerFragment extends Fragment {
     private void HelpCenterIntent() {
         Intent intent = new Intent(this.getContext(), HelpCenterActivity.class);
         startActivity(intent);
+    }
+
+    private void myAddressIntent(){
+        Intent intent = new Intent(this.getContext(), MyAddressActivity.class);
+        startActivity(intent);
+    }
+
+    private void myMassageIntent(){
+        Intent intent = new Intent(this.getContext(), MyMassageActivity.class);
     }
 
     /**

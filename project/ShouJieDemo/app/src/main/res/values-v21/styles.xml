@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="TranslucentTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
         <item name="android:statusBarColor">@android:color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="app_start"  parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="app_start"  parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>//取消Actionbar
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>//设置全屏

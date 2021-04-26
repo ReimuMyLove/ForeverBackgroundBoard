@@ -42,7 +42,7 @@
 
     <!-- 整理色号 -->
     <color name="color1">#FFFFFF</color>
-    <color name="color2">#B3EFEFEF</color>
+    <color name="color2">#f5f6fa</color>
     <color name="color3">#757575</color>
     <color name="color4">#101010</color>
     <color name="color5">#D6D6D6</color>
@@ -72,7 +72,7 @@
     <color name="color29">#10D3D3D3</color>
     <color name="color30">#50D3D3D3</color>
     <color name="color31">#B3B3B3</color>
-    <color name="color32"></color>
+    <color name="color32">#03A9F4</color>
     <color name="color33"></color>
     <color name="color34"></color>
     <color name="color35"></color>

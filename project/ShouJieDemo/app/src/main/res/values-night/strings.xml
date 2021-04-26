@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">偶然</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- 销毁账号页面的警告信息 -->
+    <!-- 肖帅 2020.11.26 -->
+    <string name="destroyAccountWarning">
+        如果您选择注销账号，您在本应用上保存的一切用户信息都将被删除，但您曾经发表过的文章及评论、动态会留存。\n注销账号操作不可逆，请您再三斟酌。
+    </string>
+
+    <string name="myCenter">个人中心</string>
+    <string name="mySpace">我的空间</string>
+    <string name="store">收藏</string>
+    <string name="personalInfo">个人信息</string>
+    <string name="helpCenter">帮助中心</string>
+    <string name="myFollow">我的关注</string>
+    <string name="myAgreement">我的点赞</string>
+    <string name="changePassword">修改密码</string>
+    <string name="setSafeQuestion">设置安全问题</string>
+    <string name="setEmail">绑定邮箱</string>
+    <string name="destroyAccount">注销账号*</string>
+    <string name="AccountAndSafe">账号与安全</string>
+    <string name="feedback">帮助与反馈</string>
+    <string name="about">关于</string>
+    <string name="setSafeInfo">绑定安全信息</string>
+    <string name="setting">设置</string>
+    <string name="nightMode">夜间模式</string>
+    <string name="clearCookie">清理缓存</string>
+    <string name="logout">退出登录</string>
+    <string name="todo">TODO</string>
+    <string name="loginName">账户：</string>
+    <string name="loginPassword">密码：</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="userFans">粉丝数:2020</string>
+    <string name="userName">用户名</string>
+    <string name="userSign">如果有来生，要做一只鸟，飞越永恒，没有迷途的烦恼。如果有来生，要当一棵树，站成永恒，没有悲欢的姿势。</string>
+    <string name="stateNumber">版本号:1.0.1</string>
+    <string name="producer">制作者：永远的背景板小组</string>
+    <string name="groupLeader">组长：李炬宇</string>
+    <string name="groupMember">组员：王瑞康、肖帅、申玉周</string>
+    <string name="oldPassword">旧密码：</string>
+    <string name="newPassword">新密码：</string>
+    <string name="repeatPassword">重复新密码：</string>
+    <string name="enter">确认</string>
+</resources>

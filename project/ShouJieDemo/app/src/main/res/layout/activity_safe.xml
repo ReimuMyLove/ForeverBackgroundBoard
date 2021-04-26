@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/color2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.example.shoujiedemo.bean.StatusBarHeightView
         app:use_type="use_height"
@@ -46,7 +47,7 @@
         <RelativeLayout
             android:id="@+id/myCenter_setting_safe_changePassword"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="52dp"
             android:layout_marginTop="50dp"
             android:gravity="center_vertical"
             android:background="@color/color1"
@@ -81,7 +82,7 @@
         <RelativeLayout
             android:id="@+id/myCenter_setting_safe_setSafeQuestion"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="52dp"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
             android:background="@color/color1"
@@ -116,7 +117,7 @@
         <RelativeLayout
             android:id="@+id/myCenter_setting_safe_setEmail"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="52dp"
             android:gravity="center_vertical"
             android:background="@color/color1"
             android:clickable="true"
@@ -150,7 +151,7 @@
         <RelativeLayout
             android:id="@+id/myCenter_setting_safe_destroyAccount"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="52dp"
             android:layout_marginTop="30dp"
             android:gravity="center_vertical"
             android:background="@color/color1"

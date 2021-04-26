@@ -1,34 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@color/color2">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color2"
         android:orientation="vertical"
-        android:background="@color/color2">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
         <!-- 设置邮箱标题 -->
         <LinearLayout
             android:id="@+id/myCenter_setting_setEmail_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
+            android:background="@drawable/mycenter_setting_textview_border"
             android:gravity="center_vertical"
-            android:background="@drawable/mycenter_setting_textview_border">
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/myCenter_setting_setEmail_return"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/left"/>
+                android:background="@drawable/left" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/setEmail"
-                android:textSize="20sp"
                 android:textColor="@color/color3"
-                android:gravity="center"/>
+                android:textSize="20sp" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="30dp"
+            android:text="设置新邮箱"
+            android:textColor="@color/color4"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/setting_setEmail_original"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="40dp"
+            android:text="原邮箱："
+            android:textColor="@color/color4"
+            android:textSize="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30sp"
+                android:gravity="center_vertical"
+                android:text="新邮箱："
+                android:textColor="@color/color4"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/setting_setEmail_new"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:textColor="@color/color4"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="360dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="40dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/setting_setEmail_button"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/email_button"
+                android:text="确认"
+                android:textColor="@color/colorAllWhite"
+                android:textSize="20dp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

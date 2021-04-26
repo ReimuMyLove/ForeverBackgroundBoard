@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".activity.NightModeChangeMaskActivity"></activity>
+        <activity android:name=".activity.NightModeChangeMaskActivity" />
         <activity
             android:name=".activity.StartActivity"
             android:launchMode="singleTop"
@@ -33,7 +33,6 @@
         </activity>
         <activity android:name=".activity.MusicActivity" />
         <activity android:name=".upload.activity.MusicUploadActivity" />
-        <activity android:name=".activity.MusicActivity" />
 
         <service
             android:name=".fround.service.NetPlayMusicService"
@@ -70,6 +69,8 @@
         <activity android:name=".myCenter.myCenter.view.fragment.popupWindow.imgChange.UserBackGroundActivity" />
         <activity android:name=".myCenter.mySpace.view.activity.activity.AddGroupActivity" />
         <activity android:name=".myCenter.myCenter.view.fragment.activity.MyCommentActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.MyAddressActivity" />
+        <activity android:name=".myCenter.myCenter.view.fragment.activity.MyMassageActivity" />
     </application>
 
 </manifest>
