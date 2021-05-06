@@ -85,7 +85,11 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                 String name = register_name.getText().toString();
                 String password = register_password.getText().toString();
                 String repeatPassword = register_repeatPassword.getText().toString();
-                logPresenter.confirmRegister(name,password,repeatPassword);
+                if(name.equals("") || password.equals("") || repeatPassword.equals("")){
+                    Toast.makeText(context, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                }else{
+                    logPresenter.confirmRegister(name,password,repeatPassword);
+                }
             }
         }
     }
