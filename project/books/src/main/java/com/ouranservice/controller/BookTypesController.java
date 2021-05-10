@@ -1,5 +1,6 @@
 package com.ouranservice.controller;
 
+import com.ouranservice.entity.Book;
 import com.ouranservice.entity.BookTypes;
 import com.ouranservice.service.BookTypesService;
 import org.springframework.beans.factory.annotation.Autowired;

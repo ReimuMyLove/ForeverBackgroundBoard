@@ -92,23 +92,6 @@
     </select>
 
     <!-- 根据分类查询对应所有book -->
-    <select id="getBookByRequest" resultMap="briefInfo">
-        select * from
-            Book b
-            <if test="typeId != -1">
-                ,Book_To_Type btt
-            </if>
-        <where>
-            <if test="typeId != -1">
-                btt.type_id = #{typeId} and b.book_id = btt.book_id
-            </if>
-            <if test="area != null and area != ''">
-                and b.book_publish_area = #{area}
-            </if>
-            <if test="startTime != null and startTime != ''">
-                and b.book_publish_time between #{startTime} and #{endTime}
-            </if>
-        </where>
-    </select>
+
 
 </mapper>
