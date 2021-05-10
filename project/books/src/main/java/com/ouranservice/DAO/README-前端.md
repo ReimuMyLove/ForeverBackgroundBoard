@@ -33,9 +33,6 @@
 ###例: typeName=惊悚&area=&year=2021&month= 
 ?type=#{typeName}&area=#{area}&year=#{year}&month= #{month}
 
-
-
-
 ##type-1 查询分类
 ###作用:          
 根据 typeName 查询对应类型信息(包括此类型全部书籍的简略信息)
