@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouranservice.DAO.BookDAO">
+
+    <resultMap id="bookInfo" type="com.ouranservice.entity.Book">
+        <id property="bookId" column="book_Id"/>
+        <result property="bookName" column="book_Name"/>
+        <result property="bookWriter" column="book_Writer"/>
+        <result property="bookPublishTime" column="book_Publish_Time"/>
+        <result property="bookPic" column="book_Pic"/>
+        <result property="bookIntroduction" column="book_Introduction"/>
+        <result property="bookLikeCount" column="book_Like_Count"/>
+        <!-- 获取评论信息 -->
+        <collection property="bookComments"
+                    column="bookId=book_Id"
+                    ofType="com.ouranservice.entity.BookComment"
+                    select="com.ouranservice.DAO.BookCommentDAO.getCommentByBookId">
+            <id property="commentId"/>
+            <result property="bookId" column="bookId=book_Id"/>
+            <result property="userId" column="userId"/>
+            <result property="detail" column="detail"/>
+            <result property="commentLikeCount" column="commentLikeCount"/>
+        </collection>
+        <!-- 获取书籍类型信息 -->
+        <collection property="bookTypes"
+                    column="bookId=book_Id"
+                    ofType="com.ouranservice.entity.BookTypes"
+                    select="com.ouranservice.DAO.BookTypeDAO.getTypesByBookId">
+            <result property="typeId" column="typeId"/>
+            <result property="typeName" column="typeName"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据bookId获取书籍 -->
+    <select id="getBookById" resultMap="bookInfo">
+        select * from book where book_Id = #{bookId}
+    </select>
+
+    <!-- 根据typeId查询对应所有book -->
+    <select id="getBookByTypeId" resultType="com.ouranservice.entity.Book">
+        select
+            b.book_id,
+            b.book_name,
+            b.book_writer,
+            b.book_Publish_Time,
+            b.book_Pic,
+            b.book_Introduction,
+            b.book_Like_Count
+        from
+            Book_To_Type btt, Book b
+        where
+            btt.type_id = #{typeId} and b.book_id = btt.book_id
+
+    </select>
+
+</mapper>

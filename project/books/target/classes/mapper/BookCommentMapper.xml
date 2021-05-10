@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouranservice.DAO.BookCommentDAO">
+    <resultMap id="bookComment" type="com.ouranservice.entity.BookComment">
+        <id property="commentId" column="commentId"/>
+        <result property="bookId" column="bookId"/>
+        <result property="userId" column="userId"/>
+        <result property="detail" column="detail"/>
+        <result property="commentLikeCount" column="commentLikeCount"/>
+    </resultMap>
+
+    <!-- 查询全部评论 -->
+    <select id="getAllComment" resultType="com.ouranservice.entity.BookComment">
+        select * from Book_Comment
+    </select>
+
+    <!-- 根据bookId查询评论 -->
+    <select id="getCommentByBookId" resultType="com.ouranservice.entity.BookComment">
+        select * from Book_Comment where book_id = #{bookId}
+    </select>
+
+    <!-- 根据userId查询评论 -->
+    <select id="getCommentByUserId" resultType="com.ouranservice.entity.BookComment">
+        select * from Book_Comment where user_id = #{userId}
+    </select>
+
+    <!-- 添加评论 -->
+    <insert id="addComment">
+        insert into
+            Book_Comment
+        values
+            (#{commentId},#{bookId},#{userId},#{detail},#{commentLikeCount})
+    </insert>
+
+    <!-- 删除评论 -->
+    <delete id="deleteComment">
+        delete from Book_Comment where comment_id = #{commentId}
+    </delete>
+
+    <!-- 禁止修改评论 -->
+
+    <!-- 点赞 -->
+    <update id="commentLike">
+        update Book_Comment set comment_like_count = comment_like_count+1 where comment_id = #{commentId}
+    </update>
+</mapper>

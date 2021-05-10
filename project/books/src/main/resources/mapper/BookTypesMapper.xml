@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouranservice.DAO.BookTypeDAO">
+    
+    <resultMap id="typeInfo" type="com.ouranservice.entity.BookTypes">
+        <id property="typeId" column="type_Id"/>
+        <result property="typeName" column="type_Name"/>
+        <collection property="books"
+                    column="typeId=type_Id"
+                    ofType="com.ouranservice.entity.Book"
+                    select="com.ouranservice.DAO.BookDAO.getBookByTypeId">
+            <id property="bookId" column="bookId=book_Id"/>
+            <result property="bookName" column="book_Name"/>
+            <result property="bookWriter" column="book_Writer"/>
+            <result property="bookPublishTime" column="book_Publish_Time"/>
+            <result property="bookPic" column="bookPic"/>
+            <result property="bookIntroduction" column="book_Introduction"/>
+            <result property="bookLikeCount" column="book_Like_Count"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据bookId查询对应types -->
+    <select id="getTypesByBookId" resultType="com.ouranservice.entity.BookTypes">
+        select
+            btt.type_id, bts.type_name
+        from
+            Book_To_Type btt, Book_Types bts
+        where
+            btt.book_id = #{bookId} and btt.type_id = bts.type_id
+    </select>
+
+    <!-- 根据typeName查询对应typeId -->
+    <select id="getIdByName" resultType="com.ouranservice.entity.BookTypes">
+        select
+            type_id
+        from
+            Book_Types
+        where
+            type_Name = #{typeName}
+    </select>
+
+    <!-- 根据typeId查询对应type信息 -->
+    <select id="getTypeByTypeId" resultMap="typeInfo">
+        select * from Book_Types where type_id = #{typeId}
+    </select>
+
+</mapper>
