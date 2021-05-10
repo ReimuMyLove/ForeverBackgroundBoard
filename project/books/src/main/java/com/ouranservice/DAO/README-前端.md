@@ -24,6 +24,16 @@
 ###接口参数:
 无
 
+##book-4 筛选书籍
+###作用:
+根据筛选条件查询书籍
+###接口网址:
+/ouranbook/book/byRequest
+###接口参数: (所有参数必须写 即使没有数据也需要写参数头)
+###例: typeName=惊悚&area=&year=2021&month= 
+?type=#{typeName}&area=#{area}&year=#{year}&month= #{month}
+
+
 
 
 ##type-1 查询分类

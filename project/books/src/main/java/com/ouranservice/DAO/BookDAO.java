@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.ouranservice.entity.Book;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
@@ -16,6 +17,12 @@ public interface BookDAO {
 
 	//获取全部书籍				OK
 	Set<Book> getAllBooks();
+
+	//根据要求获取对应书籍信息
+	Set<Book> getBookByRequest(@Param("typeId") int typeId,
+							   @Param("area") String area,
+							   @Param("startTime") String startTime,
+							   @Param("endTime") String endTime);
 	
 	//book信息添加				OK
 	int addBook(Book book);
@@ -28,4 +35,5 @@ public interface BookDAO {
 
 	//根据typeId获取book信息		OK
 	Set<Book> getBookByTypeId(int typeId);
+
 }

@@ -2,6 +2,7 @@ package com.ouranservice.service;
 
 
 import com.ouranservice.DAO.BookDAO;
+import com.ouranservice.DAO.BookTypeDAO;
 import com.ouranservice.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import java.util.Set;
 @Service
 public class BookService {
 	final BookDAO bookDAO;
+	final BookTypeDAO bookTypeDAO;
 
 	@Autowired
-	public BookService(BookDAO bookDAO) {
+	public BookService(BookDAO bookDAO, BookTypeDAO bookTypeDAO) {
 		this.bookDAO = bookDAO;
+		this.bookTypeDAO = bookTypeDAO;
 	}
 
 	//获取简略信息
@@ -42,4 +45,7 @@ public class BookService {
 		return bookDAO.updateBook(book);
 	}
 
+    public Set<Book> getBookByRequest(int typeId, String area, String startTime, String endTime) {
+		return bookDAO.getBookByRequest(typeId,area,startTime,endTime);
+    }
 }
