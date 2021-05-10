@@ -4,14 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ouranservice.DAO.BookDAO">
 
-    <resultMap id="bookInfo" type="com.ouranservice.entity.Book">
-        <id property="bookId" column="book_Id"/>
-        <result property="bookName" column="book_Name"/>
-        <result property="bookWriter" column="book_Writer"/>
-        <result property="bookPublishTime" column="book_Publish_Time"/>
-        <result property="bookPic" column="book_Pic"/>
-        <result property="bookIntroduction" column="book_Introduction"/>
-        <result property="bookLikeCount" column="book_Like_Count"/>
+    <!-- 查看简略版本信息 -->
+    <resultMap id="briefInfo" type="com.ouranservice.entity.Book">
+        <id property="bookId" column="book_Id"/>                                <!-- Id -->
+        <result property="bookName" column="book_Name"/>                        <!-- 书名 -->
+        <result property="bookWriter" column="book_Writer"/>                    <!-- 作者 -->
+        <result property="bookPublishTime" column="book_Publish_Time"/>         <!-- 出版时间 -->
+        <result property="bookPublishArea" column="book_Publish_Area"/>         <!-- 出版区域 -->
+        <result property="bookPic" column="book_Pic"/>                          <!-- 封面 -->
+        <result property="bookIntroduction" column="book_Introduction"/>        <!-- 简介 -->
+        <result property="bookStar" column="book_Star"/>                        <!-- 评分 -->
+        <result property="bookDownAddress" column="book_Down_Address"/>         <!-- 下载地址 -->
+        <result property="bookLikeCount" column="book_Like_Count"/>             <!-- 点赞数 -->
+        <!-- 获取书籍类型信息 -->
+        <collection property="bookTypes"
+                    column="bookId=book_Id"
+                    ofType="com.ouranservice.entity.BookTypes"
+                    select="com.ouranservice.DAO.BookTypeDAO.getTypesByBookId">
+            <result property="typeId" column="typeId"/>
+            <result property="typeName" column="typeName"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查看详细版本信息 -->
+    <resultMap id="detailInfo" type="com.ouranservice.entity.Book">
+        <id property="bookId" column="book_Id"/>                                <!-- Id -->
+        <result property="bookName" column="book_Name"/>                        <!-- 书名 -->
+        <result property="bookWriter" column="book_Writer"/>                    <!-- 作者 -->
+        <result property="bookPublishTime" column="book_Publish_Time"/>         <!-- 出版时间 -->
+        <result property="bookPublishArea" column="book_Publish_Area"/>         <!-- 出版区域 -->
+        <result property="bookPic" column="book_Pic"/>                          <!-- 封面 -->
+        <result property="bookIntroduction" column="book_Introduction"/>        <!-- 简介 -->
+        <result property="bookStar" column="book_Star"/>                        <!-- 评分 -->
+        <result property="bookDownAddress" column="book_Down_Address"/>         <!-- 下载地址 -->
+        <result property="bookLikeCount" column="book_Like_Count"/>             <!-- 点赞数 -->
         <!-- 获取评论信息 -->
         <collection property="bookComments"
                     column="bookId=book_Id"
@@ -33,8 +59,18 @@
         </collection>
     </resultMap>
 
-    <!-- 根据bookId获取书籍 -->
-    <select id="getBookById" resultMap="bookInfo">
+    <!-- 查询全部书籍 -->
+    <select id="getAllBooks" resultMap="briefInfo">
+        select * from book
+    </select>
+
+    <!-- 根据bookId获取简略信息 -->
+    <select id="getBriefById" resultMap="briefInfo">
+        select * from book where book_Id = #{bookId}
+    </select>
+
+    <!-- 根据bookId获取详细信息 -->
+    <select id="getDetailById" resultMap="detailInfo">
         select * from book where book_Id = #{bookId}
     </select>
 
