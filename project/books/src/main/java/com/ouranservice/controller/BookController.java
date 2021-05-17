@@ -40,8 +40,12 @@ public class BookController {
 	//查询全部书籍
 	@GetMapping("/getAll")
 	@ResponseBody
-	public Set<Book> getAll(){
-		return bookService.getAll();
+	public Set<Book> getAll(@RequestParam("pageNumber")int pageNumber){
+		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
+		pageNumber -= 1 ;
+		//pageNumber * 10; 得到limit 开始查询行数
+		pageNumber *= 10;
+		return bookService.getAll(pageNumber);
 	}
 
 	//根据筛选类型条件查询书籍
@@ -50,7 +54,8 @@ public class BookController {
 	public Set<Book> getBookByRequest(@RequestParam("type")String type,
 									  @RequestParam("area")String area,
 									  @RequestParam("year")String year,
-									  @RequestParam("month")String month){
+									  @RequestParam("month")String month,
+									  @RequestParam("pageNumber")int pageNumber){
 		//type属性判空
 		int typeId = -1;
 		if (type!=null && !type.equals("")){
@@ -67,7 +72,14 @@ public class BookController {
 				endTime   = year+"-12-31";
 			}
 		}
-		return bookService.getBookByRequest(typeId, area,startTime,endTime);
+
+		//pageNumber 判断
+		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
+		pageNumber -= 1 ;
+		//pageNumber * 10; 得到limit 开始查询行数
+		pageNumber *= 10;
+
+		return bookService.getBookByRequest(typeId, area,startTime,endTime,pageNumber);
 	}
 
 	//添加书籍

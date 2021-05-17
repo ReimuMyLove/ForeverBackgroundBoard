@@ -15,14 +15,15 @@ public interface BookDAO {
 
 	Book getDetailById(int bookId);		//详细版
 
-	//获取全部书籍				OK
-	Set<Book> getAllBooks();
+	//获取全部书籍				OK		//简略版
+	Set<Book> getAllBooks(@Param("pageNumber")int pageNumber);
 
-	//根据要求获取对应书籍信息
+	//根据要求获取对应书籍信息		OK		//简略版
 	Set<Book> getBookByRequest(@Param("typeId") int typeId,
 							   @Param("area") String area,
 							   @Param("startTime") String startTime,
-							   @Param("endTime") String endTime);
+							   @Param("endTime") String endTime,
+							   @Param("pageNumber")int pageNumber);
 	
 	//book信息添加				OK
 	int addBook(Book book);

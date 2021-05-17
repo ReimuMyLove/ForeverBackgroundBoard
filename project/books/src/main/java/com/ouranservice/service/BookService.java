@@ -29,8 +29,8 @@ public class BookService {
 		return bookDAO.getDetailById(bookId);
 	}
 	//获取全部书籍
-    public Set<Book> getAll() {
-		return bookDAO.getAllBooks();
+    public Set<Book> getAll(int pageNumber) {
+		return bookDAO.getAllBooks(pageNumber);
     }
 	//添加书籍
 	public int addBook(Book book) {
@@ -45,7 +45,7 @@ public class BookService {
 		return bookDAO.updateBook(book);
 	}
 
-    public Set<Book> getBookByRequest(int typeId, String area, String startTime, String endTime) {
-		return bookDAO.getBookByRequest(typeId,area,startTime,endTime);
+    public Set<Book> getBookByRequest(int typeId, String area, String startTime, String endTime, int pageNumber) {
+		return bookDAO.getBookByRequest(typeId,area,startTime,endTime,pageNumber);
     }
 }

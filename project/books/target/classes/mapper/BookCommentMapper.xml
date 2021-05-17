@@ -18,12 +18,12 @@
 
     <!-- 根据bookId查询评论 -->
     <select id="getCommentByBookId" resultType="com.ouranservice.entity.BookComment">
-        select * from Book_Comment where book_id = #{bookId}
+        select * from Book_Comment where book_id = #{bookId} LIMIT #{pageNumber},10
     </select>
 
     <!-- 根据userId查询评论 -->
     <select id="getCommentByUserId" resultType="com.ouranservice.entity.BookComment">
-        select * from Book_Comment where user_id = #{userId}
+        select * from Book_Comment where user_id = #{userId} LIMIT #{pageNumber},10
     </select>
 
     <!-- 添加评论 -->

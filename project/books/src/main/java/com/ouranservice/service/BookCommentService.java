@@ -25,13 +25,13 @@ public class BookCommentService {
 	}
 
 	//根据bookId获取评论
-    public List<BookComment> getCommentByBookId(int bookId) {
-		return bookCommentDAO.getCommentByBookId(bookId);
+    public List<BookComment> getCommentByBookId(int bookId, int pageNumber) {
+		return bookCommentDAO.getCommentByBookId(bookId, pageNumber);
     }
 
     //根据userId获取评论
-	public List<BookComment> getCommentByUserId(int userId) {
-		return bookCommentDAO.getCommentByUserId(userId);
+	public List<BookComment> getCommentByUserId(int userId, int pageNumber) {
+		return bookCommentDAO.getCommentByUserId(userId, pageNumber);
 	}
 
 	//添加书评

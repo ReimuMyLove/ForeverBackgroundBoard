@@ -61,7 +61,7 @@
 
     <!-- 查询全部书籍 -->
     <select id="getAllBooks" resultMap="briefInfo">
-        select * from book
+        select * from book LIMIT #{pageNumber},10
     </select>
 
     <!-- 根据bookId获取简略信息 -->
@@ -109,6 +109,7 @@
                 and b.book_publish_time between #{startTime} and #{endTime}
             </if>
         </where>
+        LIMIT #{pageNumber},10
     </select>
 
 </mapper>

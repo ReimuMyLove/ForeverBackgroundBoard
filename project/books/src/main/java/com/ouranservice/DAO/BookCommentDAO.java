@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ouranservice.entity.BookComment;
 import org.apache.ibatis.annotations.Mapper;
-
+import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
@@ -14,10 +14,10 @@ public interface BookCommentDAO {
 	List<BookComment> getAllComment();
 
 	//根据书籍Id获取comment		OK
-	List<BookComment> getCommentByBookId(int bookId);
+	List<BookComment> getCommentByBookId(@Param("bookId")int bookId, @Param("pageNumber")int pageNumber);
 
 	//根据userId获取comment		OK
-	List<BookComment> getCommentByUserId(int userId);
+	List<BookComment> getCommentByUserId(@Param("userId")int userId, @Param("pageNumber")int pageNumber);
 
 	//添加comment				OK
 	int addComment(BookComment bookComment);

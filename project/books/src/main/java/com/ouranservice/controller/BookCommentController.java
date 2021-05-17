@@ -30,15 +30,25 @@ public class BookCommentController {
 	//根据BookId查询书评
 	@GetMapping("/byBookId")
 	@ResponseBody
-	public List<BookComment> getCommentByBookId(@RequestParam("bookId")int bookId){
-		return bookCommentService.getCommentByBookId(bookId);
+	public List<BookComment> getCommentByBookId(@RequestParam("bookId")int bookId,
+												@RequestParam("pageNumber") int pageNumber){
+		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
+		pageNumber -= 1 ;
+		//pageNumber * 10; 得到limit 开始查询行数
+		pageNumber *= 10;
+		return bookCommentService.getCommentByBookId(bookId,pageNumber);
 	}
 
 	//根据userId查询书评
 	@GetMapping("/byUserId")
 	@ResponseBody
-	public List<BookComment> getCommentByUserId(@RequestParam("userId")int userId){
-		return bookCommentService.getCommentByUserId(userId);
+	public List<BookComment> getCommentByUserId(@RequestParam("userId")int userId,
+												@RequestParam("pageNumber") int pageNumber){
+		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
+		pageNumber -= 1 ;
+		//pageNumber * 10; 得到limit 开始查询行数
+		pageNumber *= 10;
+		return bookCommentService.getCommentByUserId(userId, pageNumber);
 	}
 
 	//添加书评

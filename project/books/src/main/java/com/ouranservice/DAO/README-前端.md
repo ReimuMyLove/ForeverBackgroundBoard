@@ -26,7 +26,7 @@ Book.class
 ###接口网址:
 /ouranbook/book/getAll
 ###接口参数:
-无
+&pageNumber=#{pageNumber}
 ###返回数据:
 List<Book>
 
@@ -37,7 +37,11 @@ List<Book>
 /ouranbook/book/byRequest
 ###接口参数: (所有参数必须写 即使没有数据也需要写参数头)
 ###例: typeName=惊悚&area=&year=2021&month= 
-?type=#{typeName}&area=#{area}&year=#{year}&month= #{month}
+?type=#{typeName}
+&area=#{area}
+&year=#{year}
+&month=#{month}
+&pageNumber=#{pageNumber}
 ###返回数据:
 List<Book>
 
@@ -57,9 +61,9 @@ BookTypes.class
 ###接口网址:       
 /ouranbook/comment/byUserId
 ###接口参数:       
-?userId=#{userId}
+?userId=#{userId}&pageNumber=#{pageNumber}
 ###返回数据:
-BookComment.class
+Set<BookComment>
 
 ##comment-2 查看指定书评
 ###作用:
@@ -67,9 +71,9 @@ BookComment.class
 ###接口网址:
 /ouranbook/comment/byBookId
 ###接口参数:
-?bookId=#{bookId}
+?bookId=#{bookId}&pageNumber=#{pageNumber}
 ###返回数据:
-BookComment.class
+Set<BookComment>
 
 ##comment-3 点赞书评
 ###作用:    
