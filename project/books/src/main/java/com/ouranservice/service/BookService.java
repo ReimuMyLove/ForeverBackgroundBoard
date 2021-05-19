@@ -7,6 +7,7 @@ import com.ouranservice.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -29,7 +30,7 @@ public class BookService {
 		return bookDAO.getDetailById(bookId);
 	}
 	//获取全部书籍
-    public Set<Book> getAll(int pageNumber) {
+    public List<Book> getAll(int pageNumber) {
 		return bookDAO.getAllBooks(pageNumber);
     }
 	//添加书籍
@@ -45,7 +46,7 @@ public class BookService {
 		return bookDAO.updateBook(book);
 	}
 
-    public Set<Book> getBookByRequest(int typeId, String area, String startTime, String endTime, int pageNumber) {
+    public List<Book> getBookByRequest(int typeId, String area, String startTime, String endTime, int pageNumber) {
 		return bookDAO.getBookByRequest(typeId,area,startTime,endTime,pageNumber);
     }
 }

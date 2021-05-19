@@ -61,7 +61,7 @@
 
     <!-- 查询全部书籍 -->
     <select id="getAllBooks" resultMap="briefInfo">
-        select * from book LIMIT #{pageNumber},10
+        select * from book order by book_Star DESC,book_Id ASC LIMIT #{pageNumber},10;
     </select>
 
     <!-- 根据bookId获取简略信息 -->
@@ -88,6 +88,8 @@
             Book_To_Type btt, Book b
         where
             btt.type_id = #{typeId} and b.book_id = btt.book_id
+        order by
+            book_star DESC,book_Id ASC LIMIT #{pageNumber},10
 
     </select>
 
@@ -109,7 +111,8 @@
                 and b.book_publish_time between #{startTime} and #{endTime}
             </if>
         </where>
-        LIMIT #{pageNumber},10
+        order by
+            book_star DESC,book_Id ASC LIMIT #{pageNumber},10
     </select>
 
 </mapper>

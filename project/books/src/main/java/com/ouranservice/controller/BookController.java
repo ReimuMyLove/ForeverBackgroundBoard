@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,7 +41,7 @@ public class BookController {
 	//查询全部书籍
 	@GetMapping("/getAll")
 	@ResponseBody
-	public Set<Book> getAll(@RequestParam("pageNumber")int pageNumber){
+	public List<Book> getAll(@RequestParam("pageNumber")int pageNumber){
 		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
 		pageNumber -= 1 ;
 		//pageNumber * 10; 得到limit 开始查询行数
@@ -51,7 +52,7 @@ public class BookController {
 	//根据筛选类型条件查询书籍
 	@GetMapping("/byRequest")
 	@ResponseBody
-	public Set<Book> getBookByRequest(@RequestParam("type")String type,
+	public List<Book> getBookByRequest(@RequestParam("type")String type,
 									  @RequestParam("area")String area,
 									  @RequestParam("year")String year,
 									  @RequestParam("month")String month,
@@ -64,7 +65,7 @@ public class BookController {
 		//年月判空
 		String startTime = "",endTime = "";
 		if(year != null && !year.equals("")){		//判断年份是否为空
-			if (month!=null && !month.equals("")){	//判断月份是否为空 若不为空 则开始时间为当前年当前月1日,结束市价哪位当前年当前月31日
+			if (month!=null && !month.equals("")){	//判断月份是否为空 若不为空 则开始时间为当前年当前月1日,结束时间为当前年当前月31日
 				startTime = year+"-"+month+"-01";
 				endTime   = year+"-"+month+"-28";
 			}else{				//如果月份为空 则默认开始时间为当前年1月1日,结束时间为当前年12月31日

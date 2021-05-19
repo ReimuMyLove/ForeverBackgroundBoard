@@ -1,5 +1,6 @@
 package com.ouranservice.DAO;
 
+import java.util.List;
 import java.util.Set;
 
 import com.ouranservice.entity.Book;
@@ -16,10 +17,10 @@ public interface BookDAO {
 	Book getDetailById(int bookId);		//详细版
 
 	//获取全部书籍				OK		//简略版
-	Set<Book> getAllBooks(@Param("pageNumber")int pageNumber);
+	List<Book> getAllBooks(@Param("pageNumber")int pageNumber);
 
 	//根据要求获取对应书籍信息		OK		//简略版
-	Set<Book> getBookByRequest(@Param("typeId") int typeId,
+	List<Book> getBookByRequest(@Param("typeId") int typeId,
 							   @Param("area") String area,
 							   @Param("startTime") String startTime,
 							   @Param("endTime") String endTime,
@@ -35,6 +36,6 @@ public interface BookDAO {
 	int deleteBook(int bookId);
 
 	//根据typeId获取book信息		OK
-	Set<Book> getBookByTypeId(int typeId);
+	List<Book> getBookByTypeId(int typeId);
 
 }
