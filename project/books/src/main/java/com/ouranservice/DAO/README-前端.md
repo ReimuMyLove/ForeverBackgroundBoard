@@ -106,3 +106,33 @@ true/false
 ?commentId=#{commentId}
 ###返回数据:
 true/false
+
+##bookList-1 获取初始书单
+###作用:
+查询bookListId最大的5个书单
+###接口网址:
+/ouranbook/bookList/newList
+###接口参数:
+无
+###返回数据:
+List<BookList>(简略信息)
+
+##bookList-2 分页加载书单
+###作用:
+按照bookListId倒序分页查找全部书单
+###接口网址:
+/ouranbook/bookList/getAll
+###接口参数:
+?pageNumber=#{pageNumber}
+###返回数据:
+List<BookList>(简略信息)
+
+##bookList-3 获取书单具体信息
+###作用:
+根据bookListId查询详细信息
+###接口网址:
+/ouranbook/bookList/byId
+###接口参数:
+?bookListId=#{bookListId}
+###返回数据:
+bookList.class(详细信息)

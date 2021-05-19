@@ -17,17 +17,17 @@ public class BookListService {
     }
 
     //根据Id查询书单具体信息
-    BookList getBookListById(int bookListId){
+    public BookList getBookListById(int bookListId){
         return bookListDAO.getBookListById(bookListId);
     }
 
     //获取初始书单(5个)
-    List<BookList> getNewList(){
+    public List<BookList> getNewList(){
         return bookListDAO.getNewList();
     }
 
     //分页查询全部书单信息(按照ID倒序)
-    List<BookList> getAll(int pageNumber){
+    public List<BookList> getAll(int pageNumber){
         return bookListDAO.getAll(pageNumber);
     }
 }

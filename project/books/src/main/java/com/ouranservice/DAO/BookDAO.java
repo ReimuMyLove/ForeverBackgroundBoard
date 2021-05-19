@@ -38,4 +38,7 @@ public interface BookDAO {
 	//根据typeId获取book信息		OK
 	List<Book> getBookByTypeId(int typeId);
 
+	//根据BookListId获取book信息
+
+
 }

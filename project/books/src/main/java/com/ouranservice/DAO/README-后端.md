@@ -23,3 +23,13 @@
 /ouranbook/book/delete
 ###接口参数:
 ?book=#{book}
+
+##bookList-1 获取书籍信息
+###作用:
+根据bookListId获取对应的全部书籍信息
+###接口网址:
+无
+###接口参数:
+无
+###返回数据:
+List<Book>

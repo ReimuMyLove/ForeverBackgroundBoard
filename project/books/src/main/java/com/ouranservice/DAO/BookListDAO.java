@@ -1,5 +1,6 @@
 package com.ouranservice.DAO;
 
+import com.ouranservice.entity.Book;
 import com.ouranservice.entity.BookList;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,7 @@ public interface BookListDAO {
 
     //分页查询全部书单信息(按照ID倒序)
     List<BookList> getAll(int pageNumber);
+
+    //根据bookListId获取书单中的书籍信息
+    List<Book> getBookByBookListId(int bookListId);
 }
