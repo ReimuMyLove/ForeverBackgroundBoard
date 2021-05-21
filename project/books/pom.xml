@@ -102,5 +102,17 @@
                 <version>2.4.5</version>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <!-- 指定resources插件处理哪个目录下的资源文件 -->
+                <directory>src/main/WebContent</directory>
+                <!--注意此次必须要放在此目录下才能被访问到-->
+                <targetPath>META-INF/resources</targetPath>
+                <!-- 如果没有页面 就在target文件夹中查看是否存在文件 -->
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

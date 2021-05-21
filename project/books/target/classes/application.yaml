@@ -17,11 +17,11 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/ouran_db?useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: WRK990424
+    password:
   # mvc.view
   mvc:
     view:
-      prefix: /
+      prefix: /WEB-INF/JSP/
       suffix: .jsp
 
 

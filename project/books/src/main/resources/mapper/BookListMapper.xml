@@ -71,6 +71,6 @@
         where
             btl.book_List_Id = #{bookListId} and b.book_id = btl.book_id
         order by
-            book_star DESC,book_Id ASC
+            book_star DESC,b.book_Id ASC
     </select>
 </mapper>

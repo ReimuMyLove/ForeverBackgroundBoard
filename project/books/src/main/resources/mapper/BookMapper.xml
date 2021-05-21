@@ -89,7 +89,7 @@
         where
             btt.type_id = #{typeId} and b.book_id = btt.book_id
         order by
-            book_star DESC,book_Id ASC LIMIT #{pageNumber},10
+            book_star DESC,b.book_Id ASC LIMIT #{pageNumber},10
 
     </select>
 
@@ -112,7 +112,16 @@
             </if>
         </where>
         order by
-            book_star DESC,book_Id ASC LIMIT #{pageNumber},10
+            book_star DESC,b.book_Id ASC LIMIT #{pageNumber},10
+    </select>
+
+    <select id="getWeekly" resultMap="briefInfo">
+        select * from
+            Book
+        where
+            book_publish_time between #{startTime} and #{endTime}
+        order by
+            book_star DESC, book_Id ASC
     </select>
 
 </mapper>

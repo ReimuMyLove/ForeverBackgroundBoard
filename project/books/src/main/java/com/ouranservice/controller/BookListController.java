@@ -14,7 +14,7 @@ import java.util.List;
 @Controller("/bookList")
 @RequestMapping("/bookList")
 public class BookListController {
-    final BookListService bookListService;
+    private final BookListService bookListService;
 
     @Autowired
     public BookListController(BookListService bookListService) {

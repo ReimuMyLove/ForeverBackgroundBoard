@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/comment")
 public class BookCommentController {
 
-	final BookCommentService bookCommentService;
+	private final BookCommentService bookCommentService;
 
 	@Autowired
 	public BookCommentController(BookCommentService bookCommentService) {
@@ -32,7 +32,7 @@ public class BookCommentController {
 	@ResponseBody
 	public List<BookComment> getCommentByBookId(@RequestParam("bookId")int bookId,
 												@RequestParam("pageNumber") int pageNumber){
-		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10)
+		//pageNumber - 1 ; 得到limit语句实际页数(例如第一页是limit(0,10))
 		pageNumber -= 1 ;
 		//pageNumber * 10; 得到limit 开始查询行数
 		pageNumber *= 10;

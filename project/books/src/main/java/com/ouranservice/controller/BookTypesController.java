@@ -15,7 +15,7 @@ import java.util.Set;
 @RequestMapping("/types")
 public class BookTypesController {
 
-	final BookTypesService bookTypesService;
+	private final BookTypesService bookTypesService;
 
 	@Autowired
 	public BookTypesController(BookTypesService bookTypesService) {

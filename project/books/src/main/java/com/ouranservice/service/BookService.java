@@ -45,8 +45,13 @@ public class BookService {
 	public int updateBook(Book book) {
 		return bookDAO.updateBook(book);
 	}
-
+	//按分类分页查找
     public List<Book> getBookByRequest(int typeId, String area, String startTime, String endTime, int pageNumber) {
 		return bookDAO.getBookByRequest(typeId,area,startTime,endTime,pageNumber);
     }
+	//查询最近7天新出版书籍
+    public List<Book> getWeekly(String startTime,String endTime) {
+		return bookDAO.getWeekly(startTime,endTime);
+	}
+
 }

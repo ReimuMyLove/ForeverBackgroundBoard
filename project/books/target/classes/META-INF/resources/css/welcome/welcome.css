@@ -1,0 +1,50 @@
+
+/* 背景设置 */
+.body{
+    background-size:100% 100%;
+    background: url(../../background/background2.png) no-repeat fixed center;
+    background-size:cover;
+}
+
+/* 导航列表 */
+.login{
+    margin-left:35%;
+    margin-top:10%;
+    width:30%;
+    height:25vw;
+    border:none;
+    background-color: #009fff40;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px #111111;
+}
+
+.index{
+    width:20%;
+    height:30vw;
+    float:left;
+    font-size:40px;
+    color:white;
+    text-align: center;
+    line-height: 80px;
+    background-color:#111111;
+}
+
+li{
+
+}
+
+a{
+    text-decoration: none;
+    color:skyblue;
+}
+a:link{
+    color:skyblue;
+}
+
+a:visited{
+    color:skyblue;
+}
+
+a:hover{
+    color:deepskyblue;
+}

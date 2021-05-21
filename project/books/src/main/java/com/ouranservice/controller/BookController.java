@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,8 +17,8 @@ import java.util.Set;
 @RequestMapping("/book")
 public class BookController {
 
-	final BookService bookService;
-	final BookTypesService bookTypesService;
+	private final BookService bookService;
+	private final BookTypesService bookTypesService;
 
 	@Autowired
 	public BookController(BookService bookService, BookTypesService bookTypesService) {
@@ -83,6 +85,17 @@ public class BookController {
 		return bookService.getBookByRequest(typeId, area,startTime,endTime,pageNumber);
 	}
 
+	//查询最近一周出版的新书
+	@GetMapping("/weekly")
+	@ResponseBody
+	public List<Book> getWeekly(){
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String endTime = formatter.format(date);		//
+		String startTime = formatter.format(date.getTime() - 7*24*60*60*1000);
+		return bookService.getWeekly(startTime,endTime);
+	}
+
 	//添加书籍
 	@PostMapping("/add")
 	@ResponseBody
@@ -118,4 +131,5 @@ public class BookController {
 			return "ERROR";
 		}
 	}
+
 }
