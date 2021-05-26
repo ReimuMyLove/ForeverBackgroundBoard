@@ -10,13 +10,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OuranBook</title>
+    <title>OuranBook登录页面</title>
     <style></style>
     <link rel="stylesheet" type="text/css" href="../css/welcome/welcome.css"/>
 </head>
 <body class="body">
     <div class="login">
-        
+        <a href="main">麻了</a>
     </div>
 </body>
 </html>
