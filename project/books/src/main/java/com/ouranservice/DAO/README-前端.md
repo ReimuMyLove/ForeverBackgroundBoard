@@ -36,7 +36,7 @@ List<Book>
 ###接口网址:
 /ouranbook/book/byRequest
 ###接口参数: (所有参数必须写 即使没有数据也需要写参数头)
-###例: typeName=惊悚&area=&year=2021&month= 
+###例: type=惊悚&area=&year=2021&month=&pageNumber=1
 ?type=#{typeName}
 &area=#{area}
 &year=#{year}
@@ -44,16 +44,6 @@ List<Book>
 &pageNumber=#{pageNumber}
 ###返回数据:
 List<Book>
-
-##type-1 查询分类
-###作用:          
-根据 typeName 查询对应类型信息(包括此类型全部书籍的简略信息)
-###接口网址:       
-/ouranbook/types/byTypeName
-###接口参数:       
-?typeName=#{typeName}
-###返回数据:
-BookTypes.class
 
 ##comment-1 查看个人书评
 ###作用:          

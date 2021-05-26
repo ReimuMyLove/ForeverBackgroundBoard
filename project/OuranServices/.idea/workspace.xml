@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4a6fb085-9e37-45fa-aa20-14136afab588" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../books/src/main/java/com/ouranservice/DAO/README-前端.md" beforeDir="false" afterPath="$PROJECT_DIR$/../books/src/main/java/com/ouranservice/DAO/README-前端.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../books/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/OuranBook-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/OuranBook-1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/OuranBook-1.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/OuranBook-1.0.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/classes/META-INF/resources/PNG/login/life.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/classes/META-INF/resources/PNG/welcome/starsky.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/classes/META-INF/resources/background/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/classes/META-INF/resources/background/background2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/surefire-reports/TEST-com.ouranservice.controller.BooksApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/surefire-reports/TEST-com.ouranservice.controller.BooksApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../books/target/surefire-reports/com.ouranservice.controller.BooksApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../books/target/surefire-reports/com.ouranservice.controller.BooksApplicationTests.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1syapIR6REdRnj96JIFRDEUsn7d" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ShouJieDemo" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4a6fb085-9e37-45fa-aa20-14136afab588" name="Default Changelist" comment="" />
+      <created>1621847466485</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1621847466485</updated>
+      <workItem from="1621847467864" duration="612000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
