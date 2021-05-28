@@ -49,4 +49,11 @@
         select * from Book_Types where type_id = #{typeId}
     </select>
 
+    <select id="getAll" resultType="com.ouranservice.entity.BookTypes">
+        select
+            type_id, type_name
+        from
+            Book_Types
+    </select>
+
 </mapper>

@@ -73,4 +73,9 @@
         order by
             book_star DESC,b.book_Id ASC
     </select>
+
+    <select id="getNumber" resultType="java.lang.Integer">
+        select count(*) from
+            Book_List
+    </select>
 </mapper>

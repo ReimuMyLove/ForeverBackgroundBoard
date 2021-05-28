@@ -4,6 +4,7 @@ import com.ouranservice.entity.Book;
 import com.ouranservice.entity.BookTypes;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Set;
 
 @Mapper
@@ -17,4 +18,7 @@ public interface BookTypeDAO {
 
     //根据typeId查询对应type信息      OK
     BookTypes getTypeByTypeId(int typeId);
+
+    //获取全部类型信息
+    List<BookTypes> getAll();
 }

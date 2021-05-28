@@ -13,7 +13,10 @@
 
     <!-- 查询全部评论 -->
     <select id="getAllComment" resultType="com.ouranservice.entity.BookComment">
-        select * from Book_Comment
+        select * from
+            Book_Comment
+        order by
+            Comment_Id desc LIMIT #{pageNumber},50
     </select>
 
     <!-- 根据bookId查询评论 -->
@@ -45,4 +48,9 @@
     <update id="commentLike">
         update Book_Comment set comment_like_count = comment_like_count+1 where comment_id = #{commentId}
     </update>
+
+    <select id="getNumber" resultType="java.lang.Integer">
+        select count(*) from
+            Book_Comment
+    </select>
 </mapper>

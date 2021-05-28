@@ -41,7 +41,11 @@ public interface BookDAO {
     List<Book> getWeekly(@Param("startTime")String startTime,
 						 @Param("endTime")String endTime);
 
+    //获取书籍数量
+    int getNumber();
+
     //根据BookListId获取book信息
 
-
+	//获取表格中书籍Id最大值
+	int getMaxId();
 }

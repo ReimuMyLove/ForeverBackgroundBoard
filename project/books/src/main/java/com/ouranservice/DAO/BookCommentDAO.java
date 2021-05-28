@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 public interface BookCommentDAO {
 
 	//获取全部comment			OK
-	List<BookComment> getAllComment();
+	List<BookComment> getAllComment(int pageNumber);
 
 	//根据书籍Id获取comment		OK
 	List<BookComment> getCommentByBookId(@Param("bookId")int bookId, @Param("pageNumber")int pageNumber);
@@ -30,4 +30,7 @@ public interface BookCommentDAO {
 
 	//点赞						OK
 	int commentLike(int commentId);
+
+	//50条为一页
+    int getNumber();
 }

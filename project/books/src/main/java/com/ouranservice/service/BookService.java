@@ -6,6 +6,7 @@ import com.ouranservice.DAO.BookTypeDAO;
 import com.ouranservice.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Set;
@@ -54,4 +55,12 @@ public class BookService {
 		return bookDAO.getWeekly(startTime,endTime);
 	}
 
+    public int getNumber() {
+		return bookDAO.getNumber();
+    }
+
+    //获取书籍Id最大值
+	public int getMaxId(){
+		return bookDAO.getMaxId();
+	}
 }

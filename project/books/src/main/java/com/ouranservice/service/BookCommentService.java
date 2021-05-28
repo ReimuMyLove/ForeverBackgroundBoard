@@ -20,8 +20,8 @@ public class BookCommentService {
 
 
 	//获取全部评论
-	public List<BookComment> getAllComment() {
-		return bookCommentDAO.getAllComment();
+	public List<BookComment> getAllComment(int pageNumber) {
+		return bookCommentDAO.getAllComment(pageNumber);
 	}
 
 	//根据bookId获取评论
@@ -46,4 +46,8 @@ public class BookCommentService {
 	public int deleteComment(int commentId) {
 		return bookCommentDAO.deleteComment(commentId);
 	}
+
+    public int getNumber() {
+		return bookCommentDAO.getNumber();
+    }
 }

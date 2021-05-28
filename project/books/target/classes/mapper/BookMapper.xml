@@ -115,6 +115,7 @@
             book_star DESC,b.book_Id ASC LIMIT #{pageNumber},10
     </select>
 
+    <!-- 根据分类查询对应所有book -->
     <select id="getWeekly" resultMap="briefInfo">
         select * from
             Book
@@ -123,5 +124,16 @@
         order by
             book_star DESC, book_Id ASC
     </select>
+
+    <!-- 根据分类查询对应所有book -->
+    <select id="getNumber" resultType="java.lang.Integer">
+        select count(*) from Book
+    </select>
+
+    <!-- 根据分类查询对应所有book -->
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select MAX(Book_Id) from Book
+    </select>
+
 
 </mapper>

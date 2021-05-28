@@ -1,6 +1,7 @@
 package com.ouranservice.service;
 
 import com.ouranservice.DAO.BookListDAO;
+import com.ouranservice.entity.Book;
 import com.ouranservice.entity.BookList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class BookListService {
     //分页查询全部书单信息(按照ID倒序)
     public List<BookList> getAll(int pageNumber){
         return bookListDAO.getAll(pageNumber);
+    }
+
+    //获取当前书单数量
+    public int getNumber() {
+        return bookListDAO.getNumber();
     }
 }

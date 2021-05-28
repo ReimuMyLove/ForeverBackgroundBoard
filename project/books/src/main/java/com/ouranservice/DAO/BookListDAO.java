@@ -20,4 +20,7 @@ public interface BookListDAO {
 
     //根据bookListId获取书单中的书籍信息
     List<Book> getBookByBookListId(int bookListId);
+
+    //查询当前书单数量
+    int getNumber();
 }

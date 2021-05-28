@@ -51,7 +51,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="main">OuranBook-1.0</a>
+            <a class="navbar-brand" href="bookData?pageNumber=1">OuranBook-1.0</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -71,25 +71,25 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <h2>书籍</h2>
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="bookData">书籍展示<span class="sr-only">(current)</span></a></li>
-                <li><a href="bookManage">书籍管理</a></li>
-                <li><a href="bookAdd">上传信息</a></li>
+                <li><a href="bookData?pageNumber=1">书籍展示</a></li>
+                <li class="active"><a href="bookAdd">上传信息</a><span class="sr-only">(current)</span></li>
                 <li><a href="bookType">类型管理</a></li>
             </ul>
             <h2>书单</h2>
             <ul class="nav nav-sidebar">
-                <li><a href="bookListData">书单展示</a></li>
-                <li><a href="bookListManage">书单管理</a></li>
+                <li><a href="bookListData?pageNumber=1">书单展示</a></li>
                 <li><a href="bookListAdd">上传书单</a></li>
             </ul>
             <h2>评论</h2>
             <ul class="nav nav-sidebar">
-                <li><a href="bookCommentManage">评论管理</a></li>
+                <li><a href="bookCommentManage?pageNumber=1">评论管理</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1>添加书籍</h1>
+            <h1 class="page-header">全部书籍信息</h1>
+            <div class="row placeholders">
 
+            </div>
         </div>
     </div>
 </div>

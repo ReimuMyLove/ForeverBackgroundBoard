@@ -6,6 +6,7 @@ import com.ouranservice.entity.BookTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -33,4 +34,8 @@ public class BookTypesService {
 	public BookTypes getTypeByTypeId(int typeId) {
 		return bookTypeDAO.getTypeByTypeId(typeId);
 	}
+
+    public List<BookTypes> getAll() {
+		return bookTypeDAO.getAll();
+    }
 }

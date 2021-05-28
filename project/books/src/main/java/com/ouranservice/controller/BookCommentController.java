@@ -23,8 +23,8 @@ public class BookCommentController {
 	//查询全部书评
 	@GetMapping("/getAll")
 	@ResponseBody
-	public List<BookComment> getAllComment() {
-		return bookCommentService.getAllComment();
+	public List<BookComment> getAllComment(int pageNumber) {
+		return bookCommentService.getAllComment(pageNumber);
 	}
 
 	//根据BookId查询书评
