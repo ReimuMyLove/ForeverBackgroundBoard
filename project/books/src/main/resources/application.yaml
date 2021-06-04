@@ -23,7 +23,12 @@ spring:
     view:
       prefix: /WEB-INF/JSP/
       suffix: .jsp
-
+  # 配置虚拟访问地址
+  servlet:
+    multipart:
+      location: D:\JavaRealityTrain\book_pic\
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 # mybatis
 mybatis:

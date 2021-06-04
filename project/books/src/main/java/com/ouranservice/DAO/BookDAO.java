@@ -1,9 +1,9 @@
 package com.ouranservice.DAO;
 
 import java.util.List;
-import java.util.Set;
 
 import com.ouranservice.entity.Book;
+import com.ouranservice.entity.BookToType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,9 +26,6 @@ public interface BookDAO {
 							   @Param("endTime") String endTime,
 							   @Param("pageNumber")int pageNumber);
 	
-	//book信息添加				OK
-	int addBook(Book book);
-	
 	//book信息修改				OK
 	int updateBook(Book book);
 	
@@ -48,4 +45,15 @@ public interface BookDAO {
 
 	//获取表格中书籍Id最大值
 	int getMaxId();
+
+	//book信息添加				OK
+	int addBook(Book book);
+	//book信息回收
+    int recycle(Book book);
+	//bookType添加
+	int addBookType(BookToType bookToType);
+	//bookType回收
+    int recycleType(BookToType bookToType);
+
+	int deleteBookType(int bookId);
 }

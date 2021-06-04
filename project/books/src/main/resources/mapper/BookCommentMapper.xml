@@ -53,4 +53,18 @@
         select count(*) from
             Book_Comment
     </select>
+
+    <select id="getNumberById" resultType="java.lang.Integer">
+        select count(*) from
+            Book_Comment
+        where
+            book_Id = #{bookId}
+    </select>
+
+    <insert id="recycleComment">
+        insert into
+            Book_Recycle_Comment
+        values
+            (#{commentId},#{bookId},#{userId},#{detail},#{commentLikeCount})
+    </insert>
 </mapper>

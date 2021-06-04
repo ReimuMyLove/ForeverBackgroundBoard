@@ -1,6 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.ouranservice.entity.Book" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.ouranservice.util.StaticData" %><%--
   Created by IntelliJ IDEA.
   User: 筱邪丶
   Date: 2021/5/26
@@ -23,6 +25,7 @@
     <title>偶然书城后台管理系统</title>
     <link href="../css/bookPic.css" rel="stylesheet">
 
+
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/@bootcss/v3.bootcss.com@1.0.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -41,13 +44,33 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style type="text/css" rel="stylesheet">
+        a:link{
+            color: #2f2a2a;
+        }
+    </style>
+
 </head>
 <%
     @SuppressWarnings("unchecked")
-    List<Book> books = (ArrayList<Book>)request.getAttribute("books");
-    int pageNumber = (int)request.getAttribute("pageNumber");
+    List<Book> books = (ArrayList<Book>)request.getAttribute("books");  //书籍信息
+    int pageNumber = (int)request.getAttribute("pageNumber");           //当前页码
+    int maxNumber = (int)request.getAttribute("maxNumber");             //最大页码
+    int lastNumber = pageNumber-1;                                      //上一页
+    int nextNumber = pageNumber+1;                                      //下一页
+    if(pageNumber == 1){
+        lastNumber = 1;
+    }else if (pageNumber == maxNumber){
+        nextNumber = pageNumber;
+    }
+    String picPath = StaticData.BOOK_PIC_PATH;
     pageContext.setAttribute("books",books);
     pageContext.setAttribute("pageNumber",pageNumber);
+    pageContext.setAttribute("picPath",picPath);
+    pageContext.setAttribute("maxNumber",maxNumber);
+    pageContext.setAttribute("lastNumber",lastNumber);
+    pageContext.setAttribute("nextNumber",nextNumber);
 %>
 <body>
 
@@ -69,7 +92,9 @@
                 <li><a href="#">评论</a></li>
             </ul>
             <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search..." name="searchGoal">
+                <label>
+                    <input type="text" class="form-control" placeholder="Search..." name="searchGoal">
+                </label>
             </form>
         </div>
     </div>
@@ -97,17 +122,43 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">全部书籍信息</h1>
             <div class="row placeholders">
-                <div class="row placeholders">
-                    <div class="col-xs-6 col-sm-3 placeholder">
-                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                        <h4>Label</h4>
-                        <span class="text-muted">Something else</span>
-                    </div>
+                <div class="row placeholders" style="height: 650px;">
+                    <c:forEach items="${books}" var="book">
+                        <div class="col-xs-6 " style="width: 20%;">
+                            <div style="height: 200px;">
+                                <a href="bookManage?bookId=${book.bookId}&pageNumber=1">
+                                    <img src="${picPath}${book.bookPic}"
+                                         width="124"
+                                         height="200"
+                                         alt="${book.bookName}">
+                                </a>
+                            </div>
+                            <h5>No${book.bookId}</h5>
+                            <a href="bookManage?bookId=${book.bookId}&pageNumber=1"><h4>${book.bookName}</h4></a>
+                            <span class="text-muted">${book.bookPublishTime}</span>
+                            <h5>评分：${book.bookStar}
+                                <a href="bookRecycle?bookId=${book.bookId}">删除</a>
+                            </h5>
+                        </div>
+                    </c:forEach>
+                </div>
+                <form action="bookData" method="GET">
+                    <a href="bookData?pageNumber=${lastNumber}"><input type="button" name="lastPage" value="上一页"></a>
+                    　${pageNumber}/${maxNumber}页　
+                    <a href="bookData?pageNumber=${nextNumber}"><input type="button" name="nextPage" value="下一页"></a>　　
+                    <label>
+                        <input type="text"
+                               name="pageNumber"
+                               oninput = "value=value.replace(/[^\d]/g,'')"
+                               class="form-control"
+                               placeholder="跳转至..." style="width: 80px;height: 28px">
+                    </label>　
+                    <input type="submit" value="跳转">
+                </form>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

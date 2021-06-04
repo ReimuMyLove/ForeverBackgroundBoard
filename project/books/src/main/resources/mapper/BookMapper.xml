@@ -38,17 +38,6 @@
         <result property="bookStar" column="book_Star"/>                        <!-- 评分 -->
         <result property="bookDownAddress" column="book_Down_Address"/>         <!-- 下载地址 -->
         <result property="bookLikeCount" column="book_Like_Count"/>             <!-- 点赞数 -->
-        <!-- 获取评论信息 -->
-        <collection property="bookComments"
-                    column="bookId=book_Id"
-                    ofType="com.ouranservice.entity.BookComment"
-                    select="com.ouranservice.DAO.BookCommentDAO.getCommentByBookId">
-            <id property="commentId"/>
-            <result property="bookId" column="bookId=book_Id"/>
-            <result property="userId" column="userId"/>
-            <result property="detail" column="detail"/>
-            <result property="commentLikeCount" column="commentLikeCount"/>
-        </collection>
         <!-- 获取书籍类型信息 -->
         <collection property="bookTypes"
                     column="bookId=book_Id"
@@ -81,6 +70,7 @@
             b.book_name,
             b.book_writer,
             b.book_Publish_Time,
+            b.book_Publish_Area,
             b.book_Pic,
             b.book_Introduction,
             b.book_Like_Count
@@ -135,5 +125,62 @@
         select MAX(Book_Id) from Book
     </select>
 
+    <insert id="addBook">
+        insert into
+            Book(book_id,book_Name,Book_writer,book_publish_time,book_publish_area,book_pic,book_introduction,book_star,book_down_address)
+        values
+            (#{bookId},#{bookName},#{bookWriter},#{bookPublishTime},#{bookPublishArea},#{bookPic},#{bookIntroduction},#{bookStar},#{bookDownAddress})
+    </insert>
+
+    <insert id="addBookType">
+        insert into
+            Book_To_Type(id,book_Id,type_Id)
+        values
+            (#{Id},#{bookId},#{typeId})
+    </insert>
+
+    <delete id="deleteBookType">
+        delete from
+            Book_To_Type
+        where
+            Book_id = #{bookId}
+    </delete>
+
+    <insert id="recycle">
+        insert into
+            Book_Recycle(book_id,book_Name,Book_writer,book_publish_time,book_publish_area,book_pic,book_introduction,book_star,book_down_address)
+        values
+        (#{bookId},#{bookName},#{bookWriter},#{bookPublishTime},#{bookPublishArea},#{bookPic},#{bookIntroduction},#{bookStar},#{bookDownAddress})
+    </insert>
+
+    <insert id="recycleType">
+        insert into
+            Book_Recycle_Type(id,book_Id,type_Id)
+        values
+            (#{Id},#{bookId},#{typeId})
+    </insert>
+    
+    <delete id="deleteBook">
+            delete from
+                Book
+            where
+                Book_id = #{bookId}
+    </delete>
+
+    <update id="updateBook">
+        update
+            Book
+        set
+            book_name = #{bookName},
+            book_writer = #{bookWriter},
+            book_Publish_Time = #{bookPublishTime},
+            book_Publish_Area = #{bookPublishArea},
+            book_Pic = #{bookPic},
+            book_Introduction = #{bookIntroduction},
+            book_Star = #{bookStar},
+            book_Down_Address = #{bookDownAddress}
+        where
+            book_id = #{bookId}
+    </update>
 
 </mapper>

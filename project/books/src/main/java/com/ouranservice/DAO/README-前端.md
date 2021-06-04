@@ -2,7 +2,7 @@
 
 ##book-1 找书(简略)
 ###作用:         
-根据 bookId 查询对应书籍信息(不包括评论信息)
+根据 bookId 查询对应书籍简略信息(不包括评论信息)
 ###接口网址:      
 /ouranbook/book/briefById
 ###接口参数:      
@@ -12,7 +12,7 @@ Book.class
 
 ##book-2 找书(详细)
 ###作用:          
-根据 bookId 查询对应书籍信息(包括评论信息)
+根据 bookId 查询对应书籍全部信息(不包括评论信息)
 ###接口网址:       
 /ouranbook/book/detailById
 ###接口参数:       

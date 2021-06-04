@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller("/book")
@@ -33,7 +32,7 @@ public class BookController {
 		return bookService.getBriefById(bookId);
 	}
 
-	//根据bookId查询简略书籍信息
+	//根据bookId查询详细书籍信息
 	@GetMapping("/detailById")
 	@ResponseBody
 	public Book getDetailById(@RequestParam("bookId")int bookId){
@@ -48,6 +47,7 @@ public class BookController {
 		pageNumber -= 1 ;
 		//pageNumber * 10; 得到limit 开始查询行数
 		pageNumber *= 10;
+		System.out.println(pageNumber);
 		return bookService.getAll(pageNumber);
 	}
 
@@ -94,18 +94,6 @@ public class BookController {
 		String endTime = formatter.format(date);		//
 		String startTime = formatter.format(date.getTime() - 7*24*60*60*1000);
 		return bookService.getWeekly(startTime,endTime);
-	}
-
-	//添加书籍
-	@PostMapping("/add")
-	@ResponseBody
-	public String addBook(@RequestParam("book") Book book){
-		int count = bookService.addBook(book);
-		if(count == 1){
-			return "OK";
-		}else {
-			return "ERROR";
-		}
 	}
 
 	//修改书籍信息

@@ -51,9 +51,32 @@
 
     <select id="getAll" resultType="com.ouranservice.entity.BookTypes">
         select
-            type_id, type_name
+            type_Id, type_Name
         from
             Book_Types
     </select>
+
+    <insert id="typeAdd">
+        insert into
+            Book_Types(type_Id, type_Name)
+        values
+            (#{typeId},#{typeName})
+    </insert>
+
+    <delete id="typeDelete">
+        delete from
+            Book_Types
+        where
+            type_Id = #{typeId}
+    </delete>
+
+    <update id="typeUpdate">
+        update
+            Book_types
+        set
+            type_name = #{typeName}
+        where
+            type_id = #{typeId}
+    </update>
 
 </mapper>

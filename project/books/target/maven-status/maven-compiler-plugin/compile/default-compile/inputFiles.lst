@@ -4,8 +4,10 @@ D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\bo
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\entity\BookTypes.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\DAO\BookListDAO.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\service\BookCommentService.java
+D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\util\StaticData.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\controller\BookController.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\service\BookListService.java
+D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\entity\BookToType.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\service\BookService.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\controller\BookListController.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\service\BookTypesService.java
@@ -16,3 +18,4 @@ D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\bo
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\DAO\BookTypeDAO.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\controller\BookCommentController.java
 D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\DAO\BookCommentDAO.java
+D:\JavaRealityTrain\Git\ForeverBackgroundBoard\ForeverBackgroundBoard\project\books\src\main\java\com\ouranservice\WebAppConfig.java

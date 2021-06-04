@@ -50,4 +50,14 @@ public class BookCommentService {
     public int getNumber() {
 		return bookCommentDAO.getNumber();
     }
+
+    //获取单本书的评论数量
+    public int getNumberById(int bookId) {
+		return bookCommentDAO.getNumberById(bookId);
+    }
+
+    //回收书评
+    public int recycleComment(BookComment bookComment) {
+		return bookCommentDAO.recycleComment(bookComment);
+    }
 }

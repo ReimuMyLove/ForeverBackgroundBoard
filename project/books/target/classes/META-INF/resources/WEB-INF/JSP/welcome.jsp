@@ -16,7 +16,7 @@
 </head>
 <body class="body">
     <div class="login">
-        <a href="main">麻了</a>
+        <a href="bookData?pageNumber=1">麻了</a>
     </div>
 </body>
 </html>

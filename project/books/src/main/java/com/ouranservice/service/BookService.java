@@ -4,12 +4,11 @@ package com.ouranservice.service;
 import com.ouranservice.DAO.BookDAO;
 import com.ouranservice.DAO.BookTypeDAO;
 import com.ouranservice.entity.Book;
+import com.ouranservice.entity.BookToType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BookService {
@@ -63,4 +62,25 @@ public class BookService {
 	public int getMaxId(){
 		return bookDAO.getMaxId();
 	}
+
+	//将书籍放入回收站
+    public int recycle(Book book) {
+		return bookDAO.recycle(book);
+    }
+
+    //级联添加书籍属性
+	public int addBookType(BookToType bookToType) {
+		return bookDAO.addBookType(bookToType);
+	}
+
+    public int recycleType(BookToType bookToType) {
+		return bookDAO.recycleType(bookToType);
+    }
+
+	public int deleteBookType(int bookId) {
+		return bookDAO.deleteBookType(bookId);
+	}
+
+	//从回收站中查询对应书籍
+
 }

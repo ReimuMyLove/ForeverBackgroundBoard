@@ -1,4 +1,7 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.ouranservice.entity.BookTypes" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: 筱邪丶
   Date: 2021/5/26
@@ -20,6 +23,53 @@
 
     <title>书籍类型管理</title>
     <link href="../css/bookPic.css" rel="stylesheet">
+    <style  rel="stylesheet">
+        table.hoverTable {
+            font-family: verdana,arial,sans-serif;
+            font-size:20px;
+            color:#333333;
+            width: 600px;
+            border-width: 1px;
+            border-color: #ffffff;
+            border-collapse: collapse;
+        }
+        table.hoverTable th {
+            background-color: #f5f5f5;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #ffffff;
+        }
+        table.hoverTable tr {
+            background-color: #ffffff;
+        }
+        table.hoverTable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #ffffff;
+        }
+        a:link{
+            text-underline: none;
+            text-decoration: none;
+            color: #3c3c3c;
+        }
+        a:visited{
+            text-underline: none;
+            text-decoration: none;
+            color: #3c3c3c;
+        }
+        a:hover{
+            text-underline: none;
+            text-decoration: none;
+            color: #3c3c3c;
+        }
+        a:active{
+            text-underline: none;
+            text-decoration: none;
+            color: #3c3c3c;
+        }
+    </style>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/@bootcss/v3.bootcss.com@1.0.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +90,17 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+    <%
+        @SuppressWarnings("unchecked")
+        List<BookTypes> bookTypesList = (ArrayList<BookTypes>)request.getAttribute("bookTypesList");
+        pageContext.setAttribute("bookTypesList",bookTypesList);
+        int number = bookTypesList.size()/2;
+        BookTypes bookTypes = bookTypesList.get(bookTypesList.size()-1);
+        int maxNumber = bookTypes.getTypeId();
+        pageContext.setAttribute("number",number);
+        pageContext.setAttribute("maxNumber",maxNumber);
 
+    %>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -61,7 +121,9 @@
                 <li><a href="#">评论</a></li>
             </ul>
             <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search..." name="searchGoal">
+                <label>
+                    <input type="text" class="form-control" placeholder="Search..." name="searchGoal">
+                </label>
             </form>
         </div>
     </div>
@@ -87,14 +149,92 @@
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">全部书籍信息</h1>
+            <h1 class="page-header">全部类型信息</h1>
             <div class="row placeholders">
+                <!-- CSS goes in the document HEAD or added to your external stylesheet -->
 
+                <!-- Table goes in the document BODY -->
+                <div style="float: left;">
+                    <table class="hoverTable">
+                        <tr>
+                            <th colspan="1" style="text-align: center">TypeId</th>
+                            <th colspan="1" style="text-align: center">TypeName</th>
+                            <th colspan="3" style="text-align: center">option</th>
+                        </tr>
+                        <c:forEach items="${bookTypesList}" var="bookType" begin="0" end="${number}">
+                            <tr onmouseover="this.style.backgroundColor='rgba(222,222,222,0.87)';" onmouseout="this.style.backgroundColor='#ffffff';">
+                                <td>${bookType.typeId}</td>
+                                <td><label>
+                                    <input type="text"
+                                           name="typeName"
+                                           value="${bookType.typeName}"
+                                           style="width: 100px;background: #ffffff;border: none;outline:none;">
+                                </label></td>
+                                <td><a href="typeDelete?typeId=${bookType.typeId}">删除属性</a></td>
+                                <td><a href="typeUpdate?typeId=${bookType.typeId}">修改属性</a></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+                <div>
+                    <table class="hoverTable">
+                        <tr>
+                            <th colspan="1" style="text-align: center">TypeId</th>
+                            <th colspan="1" style="text-align: center">TypeName</th>
+                            <th colspan="3" style="text-align: center">option</th>
+                        </tr>
+                        <c:forEach items="${bookTypesList}" var="bookType" begin="${number+1}">
+                            <form action="typeUpdate">
+                                <tr onmouseover="this.style.backgroundColor='rgba(222,222,222,0.87)';" onmouseout="this.style.backgroundColor='#ffffff';">
+                                    <td>${bookType.typeId}<input type="hidden" name="typeId" value="${bookType.typeId}"></td>
+                                    <td><label>
+                                        <input type="text"
+                                               name="typeName"
+                                               value="${bookType.typeName}"
+                                               style="width: 100px;background: #ffffff;border: none;outline:none;">
+                                    </label></td>
+                                    <td><a href="typeDelete?typeId=${bookType.typeId}">删除属性</a></td>
+                                    <td colspan="1"><input type="submit"
+                                                           value="修改属性"
+                                                           id="update"
+                                                           style="border: none;background: #00000000;outline:none;"></td>
+                                </tr>
+                            </form>
+
+                        </c:forEach>
+                        <tr >
+                            <form method="post" action="typeAdd">
+                                <td>${maxNumber+1}</td>
+                                <td><label>
+                                    <input type="text"
+                                           name="typeName"
+                                           placeholder="新类型..."
+                                           style="width: 100px;background: #ffffff;border: none;outline:none;"
+                                            onchange="addAdmit()">
+                                </label></td>
+                                <td colspan="2"><input type="submit"
+                                                       disabled
+                                                       value="添加"
+                                                       id="add"
+                                                       style="border: none;background: white;outline:none;"></td>
+                            </form>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    function addAdmit(qualifiedName, value){
+        const add = document.getElementById("add");
+        if (add.getAttribute("value") !== null || add.getAttribute("value") !== ""){
+            add.removeAttribute("disabled");
+        }else{
+            add.setAttribute("disabled", "disabled");
+        }
+    }
+</script>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

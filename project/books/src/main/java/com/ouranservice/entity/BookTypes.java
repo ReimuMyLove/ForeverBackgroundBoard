@@ -34,6 +34,11 @@ public class BookTypes {
 		this.books = books;
 	}
 
+	public BookTypes(int typeId, String typeName) {
+		this.typeId = typeId;
+		this.typeName = typeName;
+	}
+
 	public BookTypes(String typeName, List<Book> books) {
 		super();
 		this.typeName = typeName;
@@ -45,7 +50,11 @@ public class BookTypes {
 
 	@Override
 	public String toString() {
-		return "BookTypes [typeId=" + typeId + ", typeName=" + typeName + ", books=" + books.toString() + "]";
+		if (books != null ){
+			return "BookTypes [typeId=" + typeId + ", typeName=" + typeName + ", books=" + books + "]";
+		}else{
+			return "BookTypes [typeId=" + typeId + ", typeName=" + typeName +  "]";
+		}
 	}
 	
 }

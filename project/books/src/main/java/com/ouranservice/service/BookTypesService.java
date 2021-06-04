@@ -38,4 +38,17 @@ public class BookTypesService {
     public List<BookTypes> getAll() {
 		return bookTypeDAO.getAll();
     }
+
+    public int typeAdd(BookTypes bookTypes) {
+		return bookTypeDAO.typeAdd(bookTypes);
+
+    }
+
+	public int typeDelete(int typeId) {
+		return bookTypeDAO.typeDelete(typeId);
+	}
+
+	public int typeUpdate(int typeId, String typeName) {
+		return bookTypeDAO.typeUpdate(typeId,typeName);
+	}
 }

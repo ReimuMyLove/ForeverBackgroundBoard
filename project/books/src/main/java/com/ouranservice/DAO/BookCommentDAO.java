@@ -33,4 +33,10 @@ public interface BookCommentDAO {
 
 	//50条为一页
     int getNumber();
+
+    //根据书籍Id获取评论条数
+    int getNumberById(int bookId);
+
+    //回收评论
+    int recycleComment(BookComment bookComment);
 }
